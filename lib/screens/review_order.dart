@@ -8,6 +8,7 @@ import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/modifiers.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/screens/confirmation.dart';
 
@@ -60,8 +61,9 @@ class ReviewOrder extends StatelessWidget {
           Flexible(
               flex: 5,
               child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  const BoxShadow(
+                decoration:
+                    const BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
                       blurRadius: 15,
                       offset: Offset(-8, 0),
                       color: Color(0xFFF0F0F0),
@@ -72,7 +74,7 @@ class ReviewOrder extends StatelessWidget {
                   children: [
                     Container(
                       child: Column(
-                        children: [_backToMenu(context), CartSummary()],
+                        children: [_backToMenu(context), const CartSummary()],
                       ),
                     ),
                     Container(
@@ -91,7 +93,7 @@ class ReviewOrder extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "PAY",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -100,7 +102,7 @@ class ReviewOrder extends StatelessWidget {
                                           ),
                                           Text(
                                             " (\$${state.total.toStringAsFixed(2)})",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 letterSpacing: 1,
                                                 fontSize: 20),
@@ -137,11 +139,14 @@ class ReviewOrder extends StatelessWidget {
         children: [
           Text(
             "REVIEW ORDER",
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context)
+                .textTheme
+                .headline2
+                ?.copyWith(letterSpacing: 3, color: kSecondaryTextColor),
           ),
-          Expanded(
+          const Expanded(
               child: Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: EdgeInsets.only(left: 16),
             child: Divider(),
           ))
         ],
@@ -157,11 +162,20 @@ class ReviewOrder extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(CupertinoIcons.chevron_back),
+            const Icon(
+              CupertinoIcons.chevron_back,
+              color: kSecondaryTextColor,
+              size: 32,
+            ),
             Text(
               "BACK TO MENU",
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2
+                  ?.copyWith(color: kSecondaryTextColor, letterSpacing: 3),
             )
           ],
         ),
@@ -179,7 +193,9 @@ class CartSummary extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Container(
-        color: Colors.grey,
+        decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: BlocBuilder<CartBloc, CartState>(
             bloc: cartBloc,
@@ -205,10 +221,8 @@ class CartSummary extends StatelessWidget {
         children: [
           Text(
             line,
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                ?.copyWith(fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.headline5?.copyWith(
+                fontWeight: FontWeight.normal, color: kSecondaryTextColor),
           ),
           Text(
             value,
@@ -246,7 +260,7 @@ class ReviewItem extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           Padding(
@@ -298,7 +312,7 @@ class ReviewItem extends StatelessWidget {
                     ),
                     Container(
                       height: 100,
-                      constraints: BoxConstraints(minWidth: 120),
+                      constraints: const BoxConstraints(minWidth: 120),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: PriceLabel(
@@ -315,8 +329,9 @@ class ReviewItem extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Icon(
-                          Icons.close_rounded,
+                          CupertinoIcons.delete_left_fill,
                           size: 32,
+                          color: kSecondaryTextColor,
                         ),
                       ),
                     )

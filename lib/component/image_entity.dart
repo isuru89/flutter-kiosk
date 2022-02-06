@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kioskflutter/constants.dart';
 
 class ItemWithNameAndPrice extends StatelessWidget {
   final double? width;
@@ -31,14 +32,16 @@ class ItemWithNameAndPrice extends StatelessWidget {
             children: [
               Text(
                 (label).toUpperCase(),
-                style: theme.textTheme.headline4,
+                style: theme.textTheme.headline4
+                    ?.copyWith(color: kPrimaryTextColor),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               Text(
                 (price).toUpperCase(),
-                style: theme.textTheme.headline4,
+                style: theme.textTheme.headline4
+                    ?.copyWith(color: kSecondaryTextColor),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -81,7 +84,8 @@ class ItemInCart extends StatelessWidget {
             children: [
               Text(
                 (label).toUpperCase(),
-                style: theme.textTheme.headline5,
+                style: theme.textTheme.headline5
+                    ?.copyWith(color: kPrimaryTextColor),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
@@ -160,7 +164,7 @@ class PriceLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "$currency ${price.toStringAsFixed(2)}",
+      "$currency${price.toStringAsFixed(2)}",
       style: Theme.of(context).textTheme.headline4,
     );
   }

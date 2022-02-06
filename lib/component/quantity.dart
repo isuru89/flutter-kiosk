@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kioskflutter/constants.dart';
 
 class Quantity extends StatelessWidget {
   final int qty;
@@ -103,7 +104,7 @@ class _ChevronDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Icon(
       CupertinoIcons.chevron_down,
-      color: Color.fromARGB(255, 128, 128, 128),
+      color: kSecondaryTextColor,
     );
   }
 }

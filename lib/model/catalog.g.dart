@@ -30,6 +30,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      calories: json['calories'] as int?,
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
@@ -38,6 +39,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'imageUrl': instance.imageUrl,
       'description': instance.description,
       'price': instance.price,
+      'calories': instance.calories,
       'addOnGroupIds': instance.addOnGroupIds,
     };
 

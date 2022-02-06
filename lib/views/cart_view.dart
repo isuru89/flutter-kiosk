@@ -6,6 +6,7 @@ import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 
 class CartViewContainer extends StatelessWidget {
@@ -57,7 +58,10 @@ class CartView extends StatelessWidget {
               children: [
                 Text(
                   "MY CART (${cartItems.length})",
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      ?.copyWith(color: kSecondaryTextColor),
                 ),
                 const Divider()
               ],
@@ -74,12 +78,16 @@ class CartView extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8.0, horizontal: 24.0),
                             child: Container(
-                              height: 180,
+                              height: 200,
                               width: 200,
                               child: MyCartItem(cartItem: e),
                             ),
                           ))
-                      .toList(),
+                      .toList()
+                    ..add(const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 32),
+                      child: Divider(),
+                    )),
                 )),
           ),
           Container(
@@ -101,7 +109,10 @@ class CartView extends StatelessWidget {
                       children: [
                         Text(
                           "TOTAL:",
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4
+                              ?.copyWith(color: kSecondaryTextColor),
                         ),
                         Text(
                           "\$${total.toStringAsFixed(2)}",
@@ -133,7 +144,6 @@ class MyCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(cartItem);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,

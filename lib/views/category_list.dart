@@ -60,7 +60,7 @@ class CategoryList extends StatelessWidget {
                               .selectActiveCategory(e.id);
                         },
                         child: Container(
-                          height: 160,
+                          height: 180,
                           width: 160,
                           child: CategoryItem(
                             label: e.name,

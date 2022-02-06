@@ -14,6 +14,7 @@ import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/modifiers.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
@@ -26,6 +27,25 @@ class AddOnGroupViewModel {
     this.addOnGroups,
     this.addOns,
   );
+
+  String getSubText(AddOnGroup group) {
+    if (_isSingleOption(group)) {
+      return "Select one";
+    }
+
+    if (group.mandatory) {
+      if (group.max == group.min) {
+        return "Select ${group.max} options";
+      } else {
+        return "Select at least ${group.min} to ${group.max} options";
+      }
+    } else {
+      if (group.max > group.min) {
+        return "Select up to ${group.max} options";
+      }
+      return "";
+    }
+  }
 
   List<AddOn> getAddOnsOf(AddOnGroup group) {
     var addOns = this.addOns[group.id];
@@ -285,6 +305,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
     return [
       AddOnTitle(
         addOnGroupTitle: addOnGroup.name,
+        subTitle: addOnGroupViewModel.getSubText(addOnGroup),
       ),
       Scrollbar(
         showTrackOnHover: true,
@@ -363,13 +384,15 @@ class ItemSidePanel extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1?.copyWith(height: 1.5),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: Text(
-            "700 Cal",
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-        ),
+        if (item.calories != null) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            child: Text(
+              "${item.calories} Cal",
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+          )
+        ],
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -384,9 +407,15 @@ class ItemSidePanel extends StatelessWidget {
                         onQuantityChanged(QuantityChangeType.decrement)),
                 Row(
                   children: [
-                    Text(
-                      "TOTAL: ",
-                      style: Theme.of(context).textTheme.headline4,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        "TOTAL: ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            ?.copyWith(color: kSecondaryTextColor),
+                      ),
                     ),
                     PriceLabel(price: item.price),
                   ],
@@ -412,7 +441,7 @@ class ItemSidePanel extends StatelessWidget {
                     text: "CANCEL",
                     onClicked: cancelClicked,
                     inactive: true,
-                    inactiveColor: Colors.grey,
+                    inactiveColor: kSecondaryTextColor,
                   ),
                 ),
               )

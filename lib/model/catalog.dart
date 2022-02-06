@@ -19,10 +19,11 @@ class Category {
 @JsonSerializable()
 class Item {
   Item(this.id, this.name, this.price, this.imageUrl,
-      {this.description = '', this.addOnGroupIds = const []});
+      {this.description = '', this.addOnGroupIds = const [], this.calories});
 
   String id, name, imageUrl, description;
   double price;
+  int? calories;
   List<String> addOnGroupIds;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);

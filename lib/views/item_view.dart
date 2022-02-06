@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class ItemViewContainer extends StatelessWidget {
@@ -40,11 +41,11 @@ class ItemView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(32),
           child: Text(
-            selectedCategory?.name ?? "APETIZERS",
+            selectedCategory?.name ?? "",
             style: Theme.of(context)
                 .textTheme
                 .headline2
-                ?.copyWith(letterSpacing: 3),
+                ?.copyWith(letterSpacing: 3, color: kSecondaryTextColor),
           ),
         ),
         Flexible(

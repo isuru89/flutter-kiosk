@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class AddOnChip extends StatelessWidget {
@@ -51,11 +52,12 @@ class AddOnOption extends StatelessWidget {
           : (onClicked != null
               ? () => onClicked!(addOn.id, !isSelected)
               : null),
-      child: Opacity(
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 400),
         opacity: !isSelected && isDisabled ? 0.2 : 1,
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           constraints:
               const BoxConstraints(minWidth: 120, maxWidth: 120, minHeight: 80),
           decoration: BoxDecoration(
@@ -78,8 +80,10 @@ class AddOnOption extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  addOn.name,
-                  style: theme.textTheme.headline5,
+                  addOn.name.toUpperCase(),
+                  style: theme.textTheme.headline5
+                      ?.copyWith(color: isSelected ? theme.primaryColor : null),
+                  textAlign: TextAlign.center,
                 ),
               ),
               if (addOn.imageUrl != null) ...[
@@ -93,8 +97,9 @@ class AddOnOption extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    "\$ ${addOn.price?.toStringAsFixed(2)}",
-                    style: theme.textTheme.headline6,
+                    "\$${addOn.price?.toStringAsFixed(2)}",
+                    style: theme.textTheme.headline6?.copyWith(
+                        color: isSelected ? Colors.black : kSecondaryTextColor),
                   ),
                 )
               ],
@@ -108,18 +113,36 @@ class AddOnOption extends StatelessWidget {
 
 class AddOnTitle extends StatelessWidget {
   final String addOnGroupTitle;
+  final String? subTitle;
 
-  const AddOnTitle({Key? key, required this.addOnGroupTitle}) : super(key: key);
+  const AddOnTitle({Key? key, required this.addOnGroupTitle, this.subTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    var theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          addOnGroupTitle.toUpperCase(),
-          style: Theme.of(context).textTheme.headline3,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              addOnGroupTitle.toUpperCase(),
+              style: theme.textTheme.headline3,
+            ),
+            const Expanded(child: Divider())
+          ],
         ),
-        const Expanded(child: Divider())
+        if (subTitle != null) ...[
+          Text(
+            subTitle!,
+            style: theme.textTheme.bodyText1?.copyWith(
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: theme.primaryColor),
+          )
+        ]
       ],
     );
   }

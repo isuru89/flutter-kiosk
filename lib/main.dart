@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/screens/item_select.dart';
 import 'package:kioskflutter/screens/menu.dart';
 import 'package:kioskflutter/screens/review_order.dart';
@@ -54,12 +55,15 @@ class _MyApp extends State<MyApp> {
               fontFamily: 'Sarabun',
               primarySwatch: Colors.blue,
               textTheme: const TextTheme(
-                headline1: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-                headline2: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                headline3: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                headline4: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                headline5: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                headline6: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                headline1: TextStyle(fontSize: 36, fontWeight: FontWeight.w800),
+                headline2: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+                headline3: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                headline4: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black),
+                headline5: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                headline6: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               )),
           initialRoute: '/',
         ));

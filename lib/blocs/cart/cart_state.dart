@@ -5,7 +5,11 @@ import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/model/items.dart';
 
 var cartInitialState = CartState(
-    items: const [], total: 0.0, tax: 0.0, serviceCharge: 0.0, subTotal: 0.0);
+    items: normalCartItems,
+    total: 0.0,
+    tax: 0.0,
+    serviceCharge: 0.0,
+    subTotal: 0.0);
 
 class CartState extends Equatable {
   final List<CartItem> items;
