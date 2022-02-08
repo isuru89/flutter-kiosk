@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kioskflutter/component/button.dart';
+import 'package:lottie/lottie.dart';
 
 class Confirmation extends StatefulWidget {
   Confirmation({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class _ConfirmationState extends State<Confirmation> {
   int state = 0;
 
   Future<String> waitForUserInput() {
-    return Future.delayed(const Duration(seconds: 2), () {
+    return Future.delayed(const Duration(seconds: 5), () {
       return "23";
     });
   }
@@ -40,12 +41,16 @@ class _ConfirmationState extends State<Confirmation> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Image.asset("assets/done.gif", width: 200, height: 200),
+        LottieBuilder.asset(
+          "assets/order-completion.json",
+          width: 200,
+          height: 200,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             "ALL DONE",
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline5,
             textAlign: TextAlign.center,
           ),
         ),
@@ -80,8 +85,13 @@ class _ConfirmationState extends State<Confirmation> {
   Widget _showWaitingForSwipe() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset("assets/200.gif", width: 200, height: 200),
+        LottieBuilder.asset(
+          "assets/card-swiping.json",
+          width: 200,
+          height: 200,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
