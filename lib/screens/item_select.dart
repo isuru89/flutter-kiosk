@@ -223,13 +223,15 @@ class _ItemSelectState extends State<ItemSelect> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
       child: Row(
         children: [
           Flexible(
               flex: 7,
               child: Container(
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration:
+                      BoxDecoration(color: theme.backgroundColor, boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 5,
@@ -362,6 +364,8 @@ class ItemSidePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -417,7 +421,10 @@ class ItemSidePanel extends StatelessWidget {
                             ?.copyWith(color: kSecondaryTextColor),
                       ),
                     ),
-                    PriceLabel(price: item.price),
+                    PriceLabel(
+                      price: item.price,
+                      color: theme.primaryColor,
+                    ),
                   ],
                 )
               ],

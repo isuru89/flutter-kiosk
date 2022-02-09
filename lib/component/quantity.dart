@@ -28,21 +28,21 @@ class Quantity extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          "QTY",
-          style: theme.textTheme.headline6,
+        Padding(
+          padding: const EdgeInsets.only(right: 4),
+          child: Text(
+            "QTY",
+            style: theme.textTheme.subtitle1,
+          ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(onTap: onIncrease, child: const _ChevronUp()),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "$qty",
-                style: theme.textTheme.headline4
-                    ?.copyWith(color: theme.primaryColor),
-              ),
+            Text(
+              "$qty",
+              style: theme.textTheme.headline4
+                  ?.copyWith(color: theme.primaryColor),
             ),
             GestureDetector(onTap: onDecrease, child: const _ChevronDown())
           ],
@@ -57,25 +57,20 @@ class Quantity extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 4),
           child: Text(
             "QTY",
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.subtitle1,
           ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(onTap: onIncrease, child: const _ChevronUp()),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: Text(
-                "$qty",
-                style: theme.textTheme.headline4
-                    ?.copyWith(color: theme.primaryColor),
-              ),
+            Text(
+              "$qty",
+              style: theme.textTheme.headline4
+                  ?.copyWith(color: theme.primaryColor),
             ),
             GestureDetector(onTap: onDecrease, child: const _ChevronDown())
           ],

@@ -38,14 +38,15 @@ class CartView extends StatelessWidget {
     if (cartItems.isEmpty) {
       return Container();
     }
+    var theme = Theme.of(context);
 
     return Container(
-      constraints: const BoxConstraints(maxWidth: 240),
-      decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
+      constraints: const BoxConstraints(maxWidth: 300),
+      decoration: BoxDecoration(color: theme.backgroundColor, boxShadow: [
+        const BoxShadow(
             blurRadius: 15,
             offset: Offset(-8, 0),
-            color: Color(0xFFF0F0F0),
+            color: Color(0x33F0F0F0),
             spreadRadius: 4)
       ]),
       child: Column(
@@ -56,12 +57,20 @@ class CartView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "MY CART (${cartItems.length})",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      ?.copyWith(color: kSecondaryTextColor),
+                Row(
+                  children: [
+                    Text(
+                      "MY CART ",
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                    Text(
+                      "(${cartItems.length})",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          ?.copyWith(color: theme.primaryColor),
+                    )
+                  ],
                 ),
                 const Divider()
               ],
@@ -97,7 +106,8 @@ class CartView extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    decoration:
+                        BoxDecoration(color: theme.backgroundColor, boxShadow: [
                       BoxShadow(
                           blurRadius: 15,
                           offset: const Offset(0, -4),
@@ -116,7 +126,10 @@ class CartView extends StatelessWidget {
                         ),
                         Text(
                           "\$${total.toStringAsFixed(2)}",
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4
+                              ?.copyWith(color: theme.primaryColor),
                         )
                       ],
                     ),
@@ -156,19 +169,21 @@ class MyCartItem extends StatelessWidget {
               height: 120,
               price: "\$${cartItem.getItemSubTotal().toStringAsFixed(2)}"),
         ),
-        Quantity(
-            qtyAxis: Axis.vertical,
-            qty: cartItem.quantity,
-            onIncrease: () {
-              context.read<CartBloc>().itemQuantityChanged(
-                  CartItemQuantityChangeEvent(
-                      cartItem.itemRef, 1, QuantityChangeType.increment));
-            },
-            onDecrease: () {
-              context.read<CartBloc>().itemQuantityChanged(
-                  CartItemQuantityChangeEvent(
-                      cartItem.itemRef, 1, QuantityChangeType.decrement));
-            })
+        Expanded(
+          child: Quantity(
+              qtyAxis: Axis.vertical,
+              qty: cartItem.quantity,
+              onIncrease: () {
+                context.read<CartBloc>().itemQuantityChanged(
+                    CartItemQuantityChangeEvent(
+                        cartItem.itemRef, 1, QuantityChangeType.increment));
+              },
+              onDecrease: () {
+                context.read<CartBloc>().itemQuantityChanged(
+                    CartItemQuantityChangeEvent(
+                        cartItem.itemRef, 1, QuantityChangeType.decrement));
+              }),
+        )
       ],
     );
   }

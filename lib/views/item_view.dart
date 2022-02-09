@@ -45,7 +45,7 @@ class ItemView extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headline2
-                ?.copyWith(letterSpacing: 3, color: kSecondaryTextColor),
+                ?.copyWith(letterSpacing: 3),
           ),
         ),
         Flexible(

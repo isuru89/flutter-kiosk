@@ -32,16 +32,14 @@ class ItemWithNameAndPrice extends StatelessWidget {
             children: [
               Text(
                 (label).toUpperCase(),
-                style: theme.textTheme.headline4
-                    ?.copyWith(color: kPrimaryTextColor),
+                style: theme.textTheme.headline4?.copyWith(height: 1),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               Text(
                 (price).toUpperCase(),
-                style: theme.textTheme.headline4
-                    ?.copyWith(color: kSecondaryTextColor),
+                style: theme.textTheme.subtitle2?.copyWith(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -79,20 +77,19 @@ class ItemInCart extends StatelessWidget {
         ),
         Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 (label).toUpperCase(),
-                style: theme.textTheme.headline5
-                    ?.copyWith(color: kPrimaryTextColor),
+                style: theme.textTheme.headline5?.copyWith(fontSize: 16),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
               ),
               Text(
                 (price).toUpperCase(),
-                style: theme.textTheme.headline5,
+                style: theme.textTheme.subtitle1?.copyWith(fontSize: 16),
                 textAlign: TextAlign.left,
               ),
             ],
@@ -133,7 +130,8 @@ class CategoryItem extends StatelessWidget {
             children: [
               Text(
                 (label).toUpperCase(),
-                style: theme.textTheme.headline5?.copyWith(color: color),
+                style: theme.textTheme.bodyText1
+                    ?.copyWith(color: color, fontSize: 16),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -147,7 +145,8 @@ class CategoryItem extends StatelessWidget {
 
   Widget _categoryImage() {
     return ItemImage(
-      imageUrl: imageUrl ?? "https://picsum.photos/$width/$height",
+      imageUrl: imageUrl ??
+          "https://picsum.photos/${width?.toInt()}/${height?.toInt()}",
       width: width,
       height: height,
     );
@@ -157,15 +156,17 @@ class CategoryItem extends StatelessWidget {
 class PriceLabel extends StatelessWidget {
   final double price;
   final String currency;
+  final Color? color;
 
-  const PriceLabel({Key? key, required this.price, this.currency = '\$'})
+  const PriceLabel(
+      {Key? key, required this.price, this.currency = '\$', this.color})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       "$currency${price.toStringAsFixed(2)}",
-      style: Theme.of(context).textTheme.headline4,
+      style: Theme.of(context).textTheme.headline4?.copyWith(color: color),
     );
   }
 }

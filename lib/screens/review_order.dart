@@ -35,6 +35,7 @@ class ReviewOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     List<Widget> itemsMapped = items
         .map((e) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -62,11 +63,11 @@ class ReviewOrder extends StatelessWidget {
               flex: 5,
               child: Container(
                 decoration:
-                    const BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxDecoration(color: theme.backgroundColor, boxShadow: [
                   BoxShadow(
                       blurRadius: 15,
                       offset: Offset(-8, 0),
-                      color: Color(0xFFF0F0F0),
+                      color: Color(0x33F0F0F0),
                       spreadRadius: 4)
                 ]),
                 child: Column(
@@ -91,7 +92,7 @@ class ReviewOrder extends StatelessWidget {
                                 builder: (context, state) => KioskButton(
                                       content: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           const Text(
                                             "PAY",
@@ -142,7 +143,7 @@ class ReviewOrder extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headline2
-                ?.copyWith(letterSpacing: 3, color: kSecondaryTextColor),
+                ?.copyWith(letterSpacing: 3),
           ),
           const Expanded(
               child: Padding(
@@ -189,12 +190,13 @@ class CartSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
+            color: theme.primaryColor?.withOpacity(0.2),
             borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: BlocBuilder<CartBloc, CartState>(

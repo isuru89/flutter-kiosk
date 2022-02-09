@@ -3,7 +3,7 @@ import 'package:kioskflutter/component/button.dart';
 import 'package:lottie/lottie.dart';
 
 class Confirmation extends StatefulWidget {
-  Confirmation({Key? key}) : super(key: key);
+  const Confirmation({Key? key}) : super(key: key);
 
   @override
   State<Confirmation> createState() => _ConfirmationState();
@@ -13,7 +13,7 @@ class _ConfirmationState extends State<Confirmation> {
   int state = 0;
 
   Future<String> waitForUserInput() {
-    return Future.delayed(const Duration(seconds: 5), () {
+    return Future.delayed(const Duration(seconds: 2), () {
       return "23";
     });
   }
@@ -39,7 +39,7 @@ class _ConfirmationState extends State<Confirmation> {
 
   Widget _showOrderNumber() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         LottieBuilder.asset(
           "assets/order-completion.json",
@@ -50,7 +50,8 @@ class _ConfirmationState extends State<Confirmation> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             "ALL DONE",
-            style: Theme.of(context).textTheme.headline5,
+            style:
+                Theme.of(context).textTheme.headline6?.copyWith(fontSize: 20),
             textAlign: TextAlign.center,
           ),
         ),
@@ -60,12 +61,18 @@ class _ConfirmationState extends State<Confirmation> {
             children: [
               Text(
                 "Please take your receipt.",
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
               Text(
                 "Your order is on the way.",
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(fontSize: 18),
                 textAlign: TextAlign.center,
               )
             ],
@@ -76,7 +83,6 @@ class _ConfirmationState extends State<Confirmation> {
             height: 48,
             onClicked: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, "/");
             })
       ],
     );
@@ -96,7 +102,8 @@ class _ConfirmationState extends State<Confirmation> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             "Swipe your card on the terminal to complete your payment.",
-            style: Theme.of(context).textTheme.subtitle1,
+            style:
+                Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 16),
             textAlign: TextAlign.center,
           ),
         )

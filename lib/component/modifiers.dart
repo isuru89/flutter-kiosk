@@ -46,6 +46,7 @@ class AddOnOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+
     return GestureDetector(
       onTap: !isSelected && isDisabled
           ? null
@@ -54,14 +55,17 @@ class AddOnOption extends StatelessWidget {
               : null),
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 400),
-        opacity: !isSelected && isDisabled ? 0.2 : 1,
+        opacity: !isSelected && isDisabled ? 0.5 : 1,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           padding: const EdgeInsets.symmetric(horizontal: 4),
           constraints:
               const BoxConstraints(minWidth: 120, maxWidth: 120, minHeight: 80),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: isSelected
+                  ? theme.primaryColor?.withOpacity(0.1)
+                  : theme.backgroundColor,
+              border: isSelected ? Border.all(color: theme.primaryColor) : null,
               borderRadius: BorderRadius.circular(4),
               boxShadow: isSelected
                   ? [
@@ -81,8 +85,9 @@ class AddOnOption extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   addOn.name.toUpperCase(),
-                  style: theme.textTheme.headline5
-                      ?.copyWith(color: isSelected ? theme.primaryColor : null),
+                  style: theme.textTheme.bodyText1?.copyWith(
+                      fontSize: 16,
+                      color: isSelected ? theme.primaryColor : null),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -98,8 +103,8 @@ class AddOnOption extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     "\$${addOn.price?.toStringAsFixed(2)}",
-                    style: theme.textTheme.headline6?.copyWith(
-                        color: isSelected ? Colors.black : kSecondaryTextColor),
+                    style: theme.textTheme.subtitle1?.copyWith(
+                        color: isSelected ? theme.primaryColor : null),
                   ),
                 )
               ],
@@ -129,7 +134,8 @@ class AddOnTitle extends StatelessWidget {
           children: [
             Text(
               addOnGroupTitle.toUpperCase(),
-              style: theme.textTheme.headline3,
+              style: theme.textTheme.headline3
+                  ?.copyWith(fontWeight: FontWeight.w800),
             ),
             const Expanded(child: Divider())
           ],
@@ -137,10 +143,8 @@ class AddOnTitle extends StatelessWidget {
         if (subTitle != null) ...[
           Text(
             subTitle!,
-            style: theme.textTheme.bodyText1?.copyWith(
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: theme.primaryColor),
+            style: theme.textTheme.subtitle2
+                ?.copyWith(fontWeight: FontWeight.w400),
           )
         ]
       ],

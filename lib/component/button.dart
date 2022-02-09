@@ -34,10 +34,10 @@ class KioskButton extends StatelessWidget {
       child: ElevatedButton(
           style: inactive
               ? ElevatedButton.styleFrom(
-                  primary: inactiveColor, onPrimary: inactiveTextColor)
+                  primary: inactiveColor?.withOpacity(0.5),
+                  onPrimary: inactiveTextColor?.withOpacity(0.5))
               : ElevatedButton.styleFrom(
-                  primary: activeColor,
-                  onPrimary: activeTextColor ?? Colors.white),
+                  primary: activeColor, onPrimary: activeTextColor),
           onPressed: onClicked,
           child: content ??
               Text(

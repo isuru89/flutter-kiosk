@@ -42,6 +42,54 @@ class _MyApp extends State<MyApp> {
             '/review': (ctx) => const ReviewOrderContainer(),
             '/item': (ctx) => const ItemSelectContainer(),
           },
+          themeMode: ThemeMode.dark,
+          darkTheme: ThemeData(
+              // This is the theme of your application.
+              //
+              // Try running your application with "flutter run". You'll see the
+              // application has a blue toolbar. Then, without quitting the app, try
+              // changing the primarySwatch below to Colors.green and then invoke
+              // "hot reload" (press "r" in the console where you ran "flutter run",
+              // or simply save your changes to "hot reload" in a Flutter IDE).
+              // Notice that the counter didn't reset back to zero; the application
+              // is not restarted.
+              brightness: Brightness.dark,
+              fontFamily: 'Sarabun',
+              primaryColor: Colors.lime,
+              primarySwatch: Colors.lime,
+              backgroundColor: Colors.black,
+              dialogTheme: DialogTheme(backgroundColor: Color(0xFF22272e)),
+              textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(onSurface: Colors.black)),
+              textTheme: const TextTheme(
+                  headline1: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white),
+                  headline2: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                  headline3: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                  headline4: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFadbac7)),
+                  headline5: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFadbac7)),
+                  headline6:
+                      TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  bodyText1: TextStyle(
+                      color: Color(0xFFadbac7), fontWeight: FontWeight.w600),
+                  bodyText2: TextStyle(color: Color(0xFFadbac7)),
+                  subtitle1: TextStyle(
+                      color: Color(0xFF768390), fontWeight: FontWeight.bold),
+                  subtitle2: TextStyle(color: Color(0xFF768390)))),
           theme: ThemeData(
               // This is the theme of your application.
               //
@@ -52,8 +100,10 @@ class _MyApp extends State<MyApp> {
               // or simply save your changes to "hot reload" in a Flutter IDE).
               // Notice that the counter didn't reset back to zero; the application
               // is not restarted.
+              brightness: Brightness.light,
               fontFamily: 'Sarabun',
               primarySwatch: Colors.blue,
+              backgroundColor: Colors.black,
               textTheme: const TextTheme(
                 headline1: TextStyle(fontSize: 36, fontWeight: FontWeight.w800),
                 headline2: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
