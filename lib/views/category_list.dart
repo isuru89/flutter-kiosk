@@ -38,13 +38,9 @@ class CategoryList extends StatelessWidget {
     var theme = Theme.of(context);
     return Container(
       height: double.infinity,
-      decoration: BoxDecoration(color: theme.backgroundColor, boxShadow: [
-        BoxShadow(
-            blurRadius: 15,
-            offset: Offset(8, 0),
-            color: Color(0x33F0F0F0),
-            spreadRadius: 2)
-      ]),
+      decoration: BoxDecoration(
+          color: theme.shadowColor,
+          border: Border(right: BorderSide(color: Colors.white10))),
       child: SingleChildScrollView(
           controller: _categoryCtrl,
           scrollDirection: Axis.vertical,

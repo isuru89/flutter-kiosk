@@ -164,9 +164,24 @@ class PriceLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "$currency${price.toStringAsFixed(2)}",
-      style: Theme.of(context).textTheme.headline4?.copyWith(color: color),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 2),
+          child: Text(
+            currency,
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                ?.copyWith(color: color, fontSize: 16),
+          ),
+        ),
+        Text(
+          price.toStringAsFixed(2),
+          style: Theme.of(context).textTheme.headline4?.copyWith(color: color),
+        ),
+      ],
     );
   }
 }
@@ -181,11 +196,20 @@ class ItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      imageUrl,
-      fit: BoxFit.cover,
-      width: width,
-      height: height,
-    );
+    if (imageUrl.startsWith("assets/")) {
+      return Image.asset(
+        imageUrl,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+      );
+    } else {
+      return Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+      );
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
+import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class CatalogBloc extends Cubit<CatalogState> {
@@ -25,6 +26,12 @@ class CatalogBloc extends Cubit<CatalogState> {
   }
 
   void selectActiveItem(String itemId) {
-    emit(state.copyWith(selectedItemId: itemId));
+    emit(state.copyWith(selectedItemId: itemId, selectedCartItemId: ''));
+  }
+
+  void selectActiveCartItem(CartItem cartItem) {
+    print(cartItem);
+    emit(state.copyWith(
+        selectedCartItemId: cartItem.itemRef.id, selectedItemId: ''));
   }
 }

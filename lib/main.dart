@@ -38,7 +38,7 @@ class _MyApp extends State<MyApp> {
           routes: {
             '/': (ctx) => const WelcomeScreen(
                 restaurantName: "ISURU", orderTypes: ["PICKUP", "DELIVERY"]),
-            '/menu': (ctx) => const MenuPage2(),
+            '/menu': (ctx) => const MenuPage(),
             '/review': (ctx) => const ReviewOrderContainer(),
             '/item': (ctx) => const ItemSelectContainer(),
           },
@@ -56,11 +56,12 @@ class _MyApp extends State<MyApp> {
               brightness: Brightness.dark,
               fontFamily: 'Sarabun',
               primaryColor: Colors.lime,
-              primarySwatch: Colors.lime,
-              backgroundColor: Colors.black,
+              shadowColor: Color(0xFF1c2128),
+              backgroundColor: Color(0xFF22272e),
               dialogTheme: DialogTheme(backgroundColor: Color(0xFF22272e)),
-              textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(onSurface: Colors.black)),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.lime, onPrimary: Colors.black)),
               textTheme: const TextTheme(
                   headline1: TextStyle(
                       fontSize: 36,

@@ -21,9 +21,8 @@ class AddOnChip extends StatelessWidget {
       children: [
         Text(
           addOnName,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
-        GestureDetector(onTap: () => onRemoved(id), child: Icon(Icons.close))
       ],
     );
   }
@@ -63,7 +62,7 @@ class AddOnOption extends StatelessWidget {
               const BoxConstraints(minWidth: 120, maxWidth: 120, minHeight: 80),
           decoration: BoxDecoration(
               color: isSelected
-                  ? theme.primaryColor?.withOpacity(0.1)
+                  ? theme.primaryColor.withOpacity(0.1)
                   : theme.backgroundColor,
               border: isSelected ? Border.all(color: theme.primaryColor) : null,
               borderRadius: BorderRadius.circular(4),
@@ -135,7 +134,7 @@ class AddOnTitle extends StatelessWidget {
             Text(
               addOnGroupTitle.toUpperCase(),
               style: theme.textTheme.headline3
-                  ?.copyWith(fontWeight: FontWeight.w800),
+                  ?.copyWith(fontWeight: FontWeight.w800, fontSize: 20),
             ),
             const Expanded(child: Divider())
           ],

@@ -35,55 +35,63 @@ class ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Text(
-            selectedCategory?.name ?? "",
-            style: Theme.of(context)
-                .textTheme
-                .headline2
-                ?.copyWith(letterSpacing: 3),
-          ),
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            controller: _itemCtrl,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Wrap(
-                      runSpacing: 32,
-                      spacing: 16,
-                      alignment: WrapAlignment.start,
-                      children: items
-                          .map((e) => Container(
-                                width: 180,
-                                height: 260,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    context
-                                        .read<CatalogBloc>()
-                                        .selectActiveItem(e.id);
-                                    Navigator.pushNamed(context, '/item');
-                                  },
-                                  child: ItemWithNameAndPrice(
-                                      label: e.name,
-                                      price: "\$${e.price.toStringAsFixed(2)}"),
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                )
-              ],
+    var theme = Theme.of(context);
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: theme.shadowColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Text(
+              selectedCategory?.name ?? "",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2
+                  ?.copyWith(letterSpacing: 3, fontWeight: FontWeight.w800),
             ),
           ),
-        ),
-      ],
+          Flexible(
+            child: SingleChildScrollView(
+              controller: _itemCtrl,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Wrap(
+                        runSpacing: 32,
+                        spacing: 16,
+                        alignment: WrapAlignment.start,
+                        children: items
+                            .map((e) => Container(
+                                  width: 180,
+                                  height: 260,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context
+                                          .read<CatalogBloc>()
+                                          .selectActiveItem(e.id);
+                                      Navigator.pushNamed(context, '/item');
+                                    },
+                                    child: ItemWithNameAndPrice(
+                                        label: e.name,
+                                        price:
+                                            "\$${e.price.toStringAsFixed(2)}"),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

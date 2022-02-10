@@ -28,6 +28,7 @@ class KioskButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       height: height,

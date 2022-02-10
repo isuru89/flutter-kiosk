@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
+import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/modifiers.dart';
@@ -52,6 +53,8 @@ class ReviewOrder extends StatelessWidget {
           Flexible(
               flex: 11,
               child: Container(
+                height: double.infinity,
+                color: theme.backgroundColor,
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -62,14 +65,15 @@ class ReviewOrder extends StatelessWidget {
           Flexible(
               flex: 5,
               child: Container(
-                decoration:
-                    BoxDecoration(color: theme.backgroundColor, boxShadow: [
-                  BoxShadow(
-                      blurRadius: 15,
-                      offset: Offset(-8, 0),
-                      color: Color(0x33F0F0F0),
-                      spreadRadius: 4)
-                ]),
+                decoration: BoxDecoration(color: theme.shadowColor,
+                    // border: Border(left: BorderSide(color: theme.shadowColor)),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 8,
+                          offset: Offset(-2, 0),
+                          color: theme.shadowColor,
+                          spreadRadius: 0),
+                    ]),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -196,7 +200,7 @@ class CartSummary extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Container(
         decoration: BoxDecoration(
-            color: theme.primaryColor?.withOpacity(0.2),
+            color: theme.primaryColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: BlocBuilder<CartBloc, CartState>(
@@ -265,15 +269,20 @@ class ReviewItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              width: 120,
-              color: Colors.tealAccent,
-              child: ItemImage(
-                imageUrl: cartItem.itemRef.imageUrl,
+          GestureDetector(
+            onTap: () {
+              _triggerCartItemEdit(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
                 width: 120,
-                height: 120,
+                color: Colors.tealAccent,
+                child: ItemImage(
+                  imageUrl: cartItem.itemRef.imageUrl,
+                  width: 120,
+                  height: 120,
+                ),
               ),
             ),
           ),
@@ -286,14 +295,19 @@ class ReviewItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Container(
-                        width: 120,
-                        child: hasAddOns
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: children,
-                              )
-                            : _buildItemName(context),
+                      child: GestureDetector(
+                        onTap: () {
+                          _triggerCartItemEdit(context);
+                        },
+                        child: Container(
+                          width: 120,
+                          child: hasAddOns
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: children,
+                                )
+                              : _buildItemName(context),
+                        ),
                       ),
                     ),
                     Container(
@@ -330,11 +344,8 @@ class ReviewItem extends StatelessWidget {
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Icon(
-                          CupertinoIcons.delete_left_fill,
-                          size: 32,
-                          color: kSecondaryTextColor,
-                        ),
+                        child: Icon(CupertinoIcons.delete_left_fill,
+                            size: 32, color: Theme.of(context).primaryColor),
                       ),
                     )
                   ],
@@ -347,10 +358,20 @@ class ReviewItem extends StatelessWidget {
     );
   }
 
+  void _triggerCartItemEdit(BuildContext context) {
+    context.read<CatalogBloc>().selectActiveCartItem(cartItem);
+    Navigator.pushNamed(context, "/item");
+  }
+
   Widget _buildItemName(context) {
-    return Text(
-      cartItem.itemRef.name.toUpperCase(),
-      style: Theme.of(context).textTheme.headline4,
+    return GestureDetector(
+      onTap: () {
+        _triggerCartItemEdit(context);
+      },
+      child: Text(
+        cartItem.itemRef.name.toUpperCase(),
+        style: Theme.of(context).textTheme.headline4,
+      ),
     );
   }
 }

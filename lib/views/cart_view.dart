@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
+import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/quantity.dart';
@@ -43,11 +44,11 @@ class CartView extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
       decoration: BoxDecoration(color: theme.backgroundColor, boxShadow: [
-        const BoxShadow(
-            blurRadius: 15,
-            offset: Offset(-8, 0),
-            color: Color(0x33F0F0F0),
-            spreadRadius: 4)
+        BoxShadow(
+            blurRadius: 8,
+            offset: Offset(-2, 0),
+            color: theme.shadowColor,
+            spreadRadius: 0)
       ]),
       child: Column(
         children: [
@@ -89,7 +90,24 @@ class CartView extends StatelessWidget {
                             child: Container(
                               height: 200,
                               width: 200,
-                              child: MyCartItem(cartItem: e),
+                              child: Dismissible(
+                                key: Key(e.itemRef.id),
+                                child: MyCartItem(cartItem: e),
+                                background: Container(
+                                  color: theme.errorColor,
+                                  child: Center(
+                                    child: Text(
+                                      "Removing",
+                                      style: theme.textTheme.bodyText1,
+                                    ),
+                                  ),
+                                ),
+                                onDismissed: (direction) {
+                                  context.read<CartBloc>().itemModifiedEvent(
+                                      CartItemModificationEvent.fromCartItem(
+                                          e, CartItemModificationType.removed));
+                                },
+                              ),
                             ),
                           ))
                       .toList()
@@ -106,13 +124,12 @@ class CartView extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration:
-                        BoxDecoration(color: theme.backgroundColor, boxShadow: [
+                    decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
-                          blurRadius: 15,
-                          offset: const Offset(0, -4),
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 4)
+                          blurRadius: 8,
+                          offset: Offset(0, -2),
+                          color: Color(0xFF1c2128),
+                          spreadRadius: 0)
                     ]),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,34 +174,40 @@ class MyCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 120,
-          child: ItemInCart(
-              label: cartItem.itemRef.name,
-              width: 120,
-              height: 120,
-              price: "\$${cartItem.getItemSubTotal().toStringAsFixed(2)}"),
-        ),
-        Expanded(
-          child: Quantity(
-              qtyAxis: Axis.vertical,
-              qty: cartItem.quantity,
-              onIncrease: () {
-                context.read<CartBloc>().itemQuantityChanged(
-                    CartItemQuantityChangeEvent(
-                        cartItem.itemRef, 1, QuantityChangeType.increment));
-              },
-              onDecrease: () {
-                context.read<CartBloc>().itemQuantityChanged(
-                    CartItemQuantityChangeEvent(
-                        cartItem.itemRef, 1, QuantityChangeType.decrement));
-              }),
-        )
-      ],
+    return GestureDetector(
+      onTap: () {
+        context.read<CatalogBloc>().selectActiveCartItem(cartItem);
+        Navigator.pushNamed(context, "/item");
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 120,
+            child: ItemInCart(
+                label: cartItem.itemRef.name,
+                width: 120,
+                height: 120,
+                price: "\$${cartItem.getItemSubTotal().toStringAsFixed(2)}"),
+          ),
+          Expanded(
+            child: Quantity(
+                qtyAxis: Axis.vertical,
+                qty: cartItem.quantity,
+                onIncrease: () {
+                  context.read<CartBloc>().itemQuantityChanged(
+                      CartItemQuantityChangeEvent(
+                          cartItem.itemRef, 1, QuantityChangeType.increment));
+                },
+                onDecrease: () {
+                  context.read<CartBloc>().itemQuantityChanged(
+                      CartItemQuantityChangeEvent(
+                          cartItem.itemRef, 1, QuantityChangeType.decrement));
+                }),
+          )
+        ],
+      ),
     );
   }
 }

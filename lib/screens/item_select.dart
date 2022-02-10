@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -8,11 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_event.dart';
+import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/modifiers.dart';
+import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/quantity.dart';
 import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
@@ -21,12 +24,24 @@ import 'package:kioskflutter/model/catalog.dart';
 class AddOnGroupViewModel {
   final List<AddOnGroup> addOnGroups;
   final Map<String, List<AddOn>> addOns;
-  Map<String, Set<String>> selectedAddOns = {};
+  Map<String, Set<String>> selectedAddOns =
+      LinkedHashMap<String, Set<String>>();
 
   AddOnGroupViewModel(
     this.addOnGroups,
     this.addOns,
   );
+
+  void _fillInitialSelectedAddOns(
+      Map<String, List<SelectedAddOn>> addOnsGiven) {
+    if (addOnsGiven.isEmpty) {
+      return;
+    }
+
+    addOnsGiven.forEach((key, value) {
+      selectedAddOns[key] = value.map((e) => e.addOnRef.id).toSet();
+    });
+  }
 
   String getSubText(AddOnGroup group) {
     if (_isSingleOption(group)) {
@@ -57,17 +72,18 @@ class AddOnGroupViewModel {
 
   Map<String, List<SelectedAddOn>> deriveSelectedAddOns() {
     Map<String, List<SelectedAddOn>> map = {};
-    selectedAddOns.forEach((key, value) {
+    for (var addOnGrp in addOnGroups) {
       List<SelectedAddOn> temp = [];
-      value.forEach((e) {
-        var groupAddOns = addOns[key];
+      Set<String> value = selectedAddOns[addOnGrp.id] ?? {};
+      for (var e in value) {
+        var groupAddOns = addOns[addOnGrp.id];
         if (groupAddOns != null) {
           temp.addAll(groupAddOns.where((element) => element.id == e).map(
               (e) => SelectedAddOn(addOnRef: e, unitPrice: e.price ?? 0.0)));
         }
-      });
-      map[key] = temp;
-    });
+      }
+      map[addOnGrp.id] = temp;
+    }
     return map;
   }
 
@@ -133,6 +149,13 @@ class AddOnGroupViewModel {
     return false;
   }
 
+  factory AddOnGroupViewModel.fromCartItem(
+      CatalogState state, CartItem cartItem) {
+    var obj = AddOnGroupViewModel.fromState(state, cartItem.itemRef);
+    obj._fillInitialSelectedAddOns(cartItem.addOns);
+    return obj;
+  }
+
   factory AddOnGroupViewModel.fromState(CatalogState state, Item item) {
     if (item.addOnGroupIds.isEmpty) {
       return AddOnGroupViewModel(const [], const {});
@@ -173,19 +196,35 @@ class ItemSelectContainer extends StatelessWidget {
     final CatalogBloc bloc = BlocProvider.of<CatalogBloc>(context);
     return BlocBuilder<CatalogBloc, CatalogState>(
         bloc: bloc,
-        buildWhen: (prevState, currState) {
-          return prevState.selectedItemId != currState.selectedItemId &&
-              currState.items[currState.selectedItemId] != null;
-        },
         builder: (ctx, state) {
           Item? item = state.items[state.selectedItemId];
+          print("11111");
           if (item != null) {
             return ItemSelect(
               item: item,
               addOnGroupViewModel: AddOnGroupViewModel.fromState(state, item),
             );
           } else {
-            return Center(child: Text("Select an Item !"));
+            print("22222");
+            return BlocBuilder<CartBloc, CartState>(
+                builder: (context, cartState) {
+              CartItem? cartItem;
+              for (var element in cartState.items) {
+                if (element.itemRef.id == state.selectedCartItemId) {
+                  cartItem = element;
+                  break;
+                }
+              }
+
+              if (cartItem != null) {
+                return ItemSelect(
+                    item: cartItem.itemRef,
+                    addOnGroupViewModel:
+                        AddOnGroupViewModel.fromCartItem(state, cartItem));
+              } else {
+                return Center(child: Text("Select an Item !"));
+              }
+            });
           }
         });
   }
@@ -230,15 +269,10 @@ class _ItemSelectState extends State<ItemSelect> {
           Flexible(
               flex: 7,
               child: Container(
-                  decoration:
-                      BoxDecoration(color: theme.backgroundColor, boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    )
-                  ]),
+                  decoration: BoxDecoration(
+                      color: theme.shadowColor,
+                      border:
+                          Border(right: BorderSide(color: Color(0xFF444c56)))),
                   child: ItemSidePanel(
                     item: item,
                     addToCartClicked: () {
@@ -256,7 +290,9 @@ class _ItemSelectState extends State<ItemSelect> {
                   ))),
           Flexible(
               flex: 9,
-              child: Padding(
+              child: Container(
+                height: double.infinity,
+                color: theme.backgroundColor,
                 padding: const EdgeInsets.all(24),
                 child: AddOnPanel(
                   addOnGroupViewModel: addOnGroupViewModel,
@@ -290,6 +326,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
     for (AddOnGroup group in addOnGroupViewModel.addOnGroups) {
       children.addAll(_generateAddOnGroup(context, group));
     }
+    children.add(EndOfSection());
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -378,7 +415,7 @@ class ItemSidePanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Text(
             item.name.toUpperCase(),
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
         Padding(

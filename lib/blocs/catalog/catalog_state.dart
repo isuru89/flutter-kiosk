@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:kioskflutter/model/catalog.dart';
@@ -13,11 +11,13 @@ var initialCatalogState = CatalogState(
     addOnGroups: {for (AddOnGroup g in allAddOnGroups) g.id: g},
     addOns: {for (AddOn a in allAddOns) a.id: a},
     selectedItemId: '',
+    selectedCartItemId: '',
     selectedItemsInCategory: const []);
 
 class CatalogState extends Equatable {
   final String selectedCategoryId;
   final String selectedItemId;
+  final String selectedCartItemId;
   final List<Item> featuredItems;
   final List<Item> selectedItemsInCategory;
   final Map<String, Category> categories;
@@ -28,6 +28,7 @@ class CatalogState extends Equatable {
   CatalogState({
     required this.selectedCategoryId,
     required this.selectedItemId,
+    required this.selectedCartItemId,
     required this.featuredItems,
     required this.selectedItemsInCategory,
     required this.categories,
@@ -41,6 +42,7 @@ class CatalogState extends Equatable {
     return [
       selectedCategoryId,
       selectedItemId,
+      selectedCartItemId,
       featuredItems,
       selectedItemsInCategory,
       categories,
@@ -53,6 +55,7 @@ class CatalogState extends Equatable {
   CatalogState copyWith({
     String? selectedCategoryId,
     String? selectedItemId,
+    String? selectedCartItemId,
     List<Item>? featuredItems,
     List<Item>? selectedItemsInCategory,
     Map<String, Category>? categories,
@@ -63,6 +66,7 @@ class CatalogState extends Equatable {
     return CatalogState(
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       selectedItemId: selectedItemId ?? this.selectedItemId,
+      selectedCartItemId: selectedCartItemId ?? this.selectedCartItemId,
       featuredItems: featuredItems ?? this.featuredItems,
       selectedItemsInCategory:
           selectedItemsInCategory ?? this.selectedItemsInCategory,
@@ -75,6 +79,6 @@ class CatalogState extends Equatable {
 
   @override
   String toString() {
-    return 'CatalogState(selectedCategoryId: $selectedCategoryId, selectedItemId: $selectedItemId, featuredItems: $featuredItems, selectedItemsInCategory: $selectedItemsInCategory, categories: $categories, items: $items, addOnGroups: $addOnGroups, addOns: $addOns)';
+    return 'CatalogState(selectedCategoryId: $selectedCategoryId, selectedItemId: $selectedItemId, selectedCartItemId: $selectedCartItemId, featuredItems: $featuredItems, selectedItemsInCategory: $selectedItemsInCategory, categories: $categories, items: $items, addOnGroups: $addOnGroups, addOns: $addOns)';
   }
 }

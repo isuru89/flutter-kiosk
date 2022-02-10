@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart'; // You have to add this manually, for some reason it cannot be added automatically
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
@@ -31,9 +32,21 @@ class CartBloc extends Cubit<CartState> {
   void itemModifiedEvent(CartItemModificationEvent event) {
     if (event.type == CartItemModificationType.added) {
       var items = [...state.items];
+      CartItem? existingItem;
       if (event.cartItem != null) {
+        existingItem = items.firstWhereOrNull(
+            (element) => element.itemRef.id == event.cartItem?.itemRef.id);
+        if (existingItem != null) {
+          _removeInPlace(items, event.cartItem!.itemRef.id);
+        }
+
         items.add(event.cartItem!);
       } else {
+        existingItem = items.firstWhereOrNull(
+            (element) => element.itemRef.id == event.refItem.id);
+        if (existingItem != null) {
+          _removeInPlace(items, event.refItem.id);
+        }
         items.add(CartItem(event.refItem, event.quantity));
       }
       emit(state.copyWith(items: items));
@@ -42,5 +55,9 @@ class CartBloc extends Cubit<CartState> {
       items.removeWhere((element) => element.itemRef.id == event.refItem.id);
       emit(state.copyWith(items: items));
     }
+  }
+
+  void _removeInPlace(List<CartItem> items, String id) {
+    items.removeWhere((element) => element.itemRef.id == id);
   }
 }
