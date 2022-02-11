@@ -39,19 +39,32 @@ class ItemView extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: theme.shadowColor,
+        color: theme.backgroundColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(32),
-            child: Text(
-              selectedCategory?.name ?? "",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2
-                  ?.copyWith(letterSpacing: 3, fontWeight: FontWeight.w800),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  selectedCategory?.name ?? "",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2
+                      ?.copyWith(letterSpacing: 3, fontWeight: FontWeight.w800),
+                ),
+                if (selectedCategory != null)
+                  SizedBox(
+                    width: 96,
+                    child: Divider(
+                      thickness: 6,
+                      color: theme.primaryColor,
+                    ),
+                  )
+              ],
             ),
           ),
           Flexible(
@@ -77,9 +90,7 @@ class ItemView extends StatelessWidget {
                                       Navigator.pushNamed(context, '/item');
                                     },
                                     child: ItemWithNameAndPrice(
-                                        label: e.name,
-                                        price:
-                                            "\$${e.price.toStringAsFixed(2)}"),
+                                        label: e.name, price: e.price),
                                   ),
                                 ))
                             .toList(),

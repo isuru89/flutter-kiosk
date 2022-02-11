@@ -40,7 +40,7 @@ class CategoryList extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
           color: theme.shadowColor,
-          border: Border(right: BorderSide(color: Colors.white10))),
+          border: Border(right: BorderSide(color: theme.dividerColor))),
       child: SingleChildScrollView(
           controller: _categoryCtrl,
           scrollDirection: Axis.vertical,

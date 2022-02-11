@@ -97,9 +97,3 @@ List<Category> normalCategories = [
   Category(
       "cat-5", "FRIES", generateRandomImage(), ["item07", "item06", "item05"]),
 ];
-
-List<CartItem> normalCartItems = [
-  CartItem(normalItems[0], 1),
-  CartItem(normalItems[4], 1),
-  CartItem(normalItems[3], 1),
-];

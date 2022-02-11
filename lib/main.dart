@@ -56,8 +56,10 @@ class _MyApp extends State<MyApp> {
               brightness: Brightness.dark,
               fontFamily: 'Sarabun',
               primaryColor: Colors.lime,
-              shadowColor: Color(0xFF1c2128),
-              backgroundColor: Color(0xFF22272e),
+              shadowColor: Color(0xFF22272e),
+              backgroundColor: Color(0xFF1c2128),
+              canvasColor: Color(0xFF2d333b),
+              dividerColor: Color(0xFF22272e),
               dialogTheme: DialogTheme(backgroundColor: Color(0xFF22272e)),
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
@@ -104,17 +106,26 @@ class _MyApp extends State<MyApp> {
               brightness: Brightness.light,
               fontFamily: 'Sarabun',
               primarySwatch: Colors.blue,
-              backgroundColor: Colors.black,
+              dividerColor: Colors.grey,
+              shadowColor: Colors.white,
+              backgroundColor: Colors.white,
+              canvasColor: Colors.white,
               textTheme: const TextTheme(
                 headline1: TextStyle(fontSize: 36, fontWeight: FontWeight.w800),
                 headline2: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-                headline3: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                headline3: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                 headline4: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                     color: Colors.black),
                 headline5: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                 headline6: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                bodyText1: TextStyle(
+                    color: Color(0xFFadbac7), fontWeight: FontWeight.w600),
+                bodyText2: TextStyle(color: Color(0xFFadbac7)),
+                subtitle1: TextStyle(
+                    color: Color(0xFF768390), fontWeight: FontWeight.bold),
+                subtitle2: TextStyle(color: Color(0xFF768390)),
               )),
           initialRoute: '/',
         ));

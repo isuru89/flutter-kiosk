@@ -30,13 +30,13 @@ class MenuPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (showCart) {
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      return Row(children: [
         Flexible(flex: 1, child: CategoryListContainer()),
         Expanded(flex: 3, child: ItemViewContainer()),
-        Flexible(flex: 1, fit: FlexFit.loose, child: CartViewContainer()),
+        Flexible(flex: 1, child: CartViewContainer()),
       ]);
     } else {
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      return Row(children: [
         Flexible(flex: 1, child: CategoryListContainer()),
         Expanded(flex: 4, child: ItemViewContainer()),
       ]);

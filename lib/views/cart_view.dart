@@ -43,12 +43,12 @@ class CartView extends StatelessWidget {
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
-      decoration: BoxDecoration(color: theme.backgroundColor, boxShadow: [
+      decoration: BoxDecoration(color: theme.canvasColor, boxShadow: [
         BoxShadow(
             blurRadius: 8,
-            offset: Offset(-2, 0),
-            color: theme.shadowColor,
-            spreadRadius: 0)
+            offset: const Offset(-2, 0),
+            color: theme.dividerColor,
+            spreadRadius: 0),
       ]),
       child: Column(
         children: [
@@ -59,17 +59,28 @@ class CartView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
                       "MY CART ",
                       style: Theme.of(context).textTheme.headline3,
                     ),
-                    Text(
-                      "(${cartItems.length})",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          ?.copyWith(color: theme.primaryColor),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: theme.primaryColor.withOpacity(0.2)),
+                      child: Center(
+                        child: Text(
+                          "${cartItems.length}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              ?.copyWith(
+                                  color: theme.primaryColor, fontSize: 16),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -124,11 +135,12 @@ class CartView extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration: BoxDecoration(boxShadow: [
+                    decoration:
+                        BoxDecoration(color: theme.backgroundColor, boxShadow: [
                       BoxShadow(
                           blurRadius: 8,
                           offset: Offset(0, -2),
-                          color: Color(0xFF1c2128),
+                          color: theme.dividerColor,
                           spreadRadius: 0)
                     ]),
                     child: Row(
@@ -138,16 +150,16 @@ class CartView extends StatelessWidget {
                           "TOTAL:",
                           style: Theme.of(context)
                               .textTheme
-                              .headline4
-                              ?.copyWith(color: kSecondaryTextColor),
+                              .subtitle1
+                              ?.copyWith(fontSize: 20),
                         ),
-                        Text(
-                          "\$${total.toStringAsFixed(2)}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4
+                        PriceLabel(
+                          price: total,
+                          textStyle: theme.textTheme.headline4
                               ?.copyWith(color: theme.primaryColor),
-                        )
+                          priceTextStyle: theme.textTheme.headline4?.copyWith(
+                              color: theme.primaryColor, fontSize: 14),
+                        ),
                       ],
                     ),
                   ),
@@ -189,7 +201,7 @@ class MyCartItem extends StatelessWidget {
                 label: cartItem.itemRef.name,
                 width: 120,
                 height: 120,
-                price: "\$${cartItem.getItemSubTotal().toStringAsFixed(2)}"),
+                price: cartItem.getItemSubTotal()),
           ),
           Expanded(
             child: Quantity(

@@ -30,7 +30,6 @@ class CatalogBloc extends Cubit<CatalogState> {
   }
 
   void selectActiveCartItem(CartItem cartItem) {
-    print(cartItem);
     emit(state.copyWith(
         selectedCartItemId: cartItem.itemRef.id, selectedItemId: ''));
   }

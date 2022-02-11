@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:kioskflutter/component/image_entity.dart';
-import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class AddOnChip extends StatelessWidget {
   final String addOnName;
   final String id;
   final Function(String) onRemoved;
+  final String? prefix;
 
   const AddOnChip(
       {Key? key,
       required this.addOnName,
       required this.id,
-      required this.onRemoved})
+      required this.onRemoved,
+      this.prefix})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class AddOnChip extends StatelessWidget {
     return Row(
       children: [
         Text(
-          addOnName,
+          "${prefix ?? ''}$addOnName",
           style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
@@ -70,9 +71,9 @@ class AddOnOption extends StatelessWidget {
                   ? [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: const Offset(0, 0),
                       )
                     ]
                   : []),

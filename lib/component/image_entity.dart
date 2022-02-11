@@ -5,14 +5,16 @@ class ItemWithNameAndPrice extends StatelessWidget {
   final double? width;
   final double? height;
   final String label;
-  final String price;
+  final double price;
+  final String? currency;
 
   const ItemWithNameAndPrice(
       {Key? key,
       this.width,
       this.height,
       required this.label,
-      required this.price})
+      required this.price,
+      this.currency})
       : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 (label).toUpperCase(),
@@ -37,10 +40,11 @@ class ItemWithNameAndPrice extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
-              Text(
-                (price).toUpperCase(),
-                style: theme.textTheme.subtitle2?.copyWith(fontSize: 20),
-                textAlign: TextAlign.center,
+              PriceLabel(
+                price: price,
+                textStyle: theme.textTheme.subtitle2?.copyWith(fontSize: 20),
+                priceTextStyle:
+                    theme.textTheme.subtitle2?.copyWith(fontSize: 14),
               ),
             ],
           ),
@@ -54,14 +58,16 @@ class ItemInCart extends StatelessWidget {
   final double? width;
   final double? height;
   final String label;
-  final String price;
+  final double price;
+  final String? currency;
 
   const ItemInCart(
       {Key? key,
       this.width,
       this.height,
       required this.label,
-      required this.price})
+      required this.price,
+      this.currency})
       : super(key: key);
 
   @override
@@ -87,10 +93,12 @@ class ItemInCart extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
               ),
-              Text(
-                (price).toUpperCase(),
-                style: theme.textTheme.subtitle1?.copyWith(fontSize: 16),
-                textAlign: TextAlign.left,
+              PriceLabel(
+                price: price,
+                mainAxisAlignment: MainAxisAlignment.start,
+                textStyle: theme.textTheme.subtitle1?.copyWith(fontSize: 16),
+                priceTextStyle:
+                    theme.textTheme.subtitle1?.copyWith(fontSize: 14),
               ),
             ],
           ),
@@ -157,29 +165,42 @@ class PriceLabel extends StatelessWidget {
   final double price;
   final String currency;
   final Color? color;
+  final TextStyle? textStyle;
+  final TextStyle? priceTextStyle;
+  final MainAxisAlignment? mainAxisAlignment;
 
   const PriceLabel(
-      {Key? key, required this.price, this.currency = '\$', this.color})
+      {Key? key,
+      required this.price,
+      this.currency = '\$',
+      this.color,
+      this.textStyle,
+      this.priceTextStyle,
+      this.mainAxisAlignment})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.only(right: 2),
           child: Text(
             currency,
-            style: Theme.of(context)
-                .textTheme
-                .headline4
-                ?.copyWith(color: color, fontSize: 16),
+            style: priceTextStyle ??
+                textStyle ??
+                Theme.of(context)
+                    .textTheme
+                    .headline4
+                    ?.copyWith(color: color, fontSize: 16),
           ),
         ),
         Text(
           price.toStringAsFixed(2),
-          style: Theme.of(context).textTheme.headline4?.copyWith(color: color),
+          style: textStyle ??
+              Theme.of(context).textTheme.headline4?.copyWith(color: color),
         ),
       ],
     );
