@@ -21,17 +21,17 @@ class ItemSelectContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final CatalogBloc bloc = BlocProvider.of<CatalogBloc>(context);
     return BlocBuilder<CatalogBloc, CatalogState>(
-        bloc: bloc,
-        builder: (ctx, state) {
-          Item? item = state.items[state.selectedItemId];
-          if (item != null) {
-            return ItemSelect(
-              item: item,
-              addOnGroupViewModel: AddOnGroupViewModel.fromState(state, item),
-            );
-          } else {
-            return BlocBuilder<CartBloc, CartState>(
-                builder: (context, cartState) {
+      bloc: bloc,
+      builder: (ctx, state) {
+        Item? item = state.items[state.selectedItemId];
+        if (item != null) {
+          return ItemSelect(
+            item: item,
+            addOnGroupViewModel: AddOnGroupViewModel.fromState(state, item),
+          );
+        } else {
+          return BlocBuilder<CartBloc, CartState>(
+            builder: (context, cartState) {
               CartItem? cartItem;
               for (var element in cartState.items) {
                 if (element.itemRef.id == state.selectedCartItemId) {
@@ -42,15 +42,18 @@ class ItemSelectContainer extends StatelessWidget {
 
               if (cartItem != null) {
                 return ItemSelect(
-                    item: cartItem.itemRef,
-                    addOnGroupViewModel:
-                        AddOnGroupViewModel.fromCartItem(state, cartItem));
+                  item: cartItem.itemRef,
+                  addOnGroupViewModel:
+                      AddOnGroupViewModel.fromCartItem(state, cartItem),
+                );
               } else {
-                return Center(child: Text("Select an Item !"));
+                return const Center(child: Text("Select an Item !"));
               }
-            });
-          }
-        });
+            },
+          );
+        }
+      },
+    );
   }
 }
 
@@ -91,37 +94,45 @@ class _ItemSelectState extends State<ItemSelect> {
       child: Row(
         children: [
           Flexible(
-              flex: 7,
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: theme.shadowColor,
-                      border:
-                          Border(right: BorderSide(color: Color(0xFF444c56)))),
-                  child: ItemSidePanel(
-                    item: item,
-                    addToCartClicked: () {
-                      context.read<CartBloc>().itemModifiedEvent(
-                          CartItemModificationEvent.fromCartItem(
-                              CartItem(item, quantity,
-                                  addOns: addOnGroupViewModel
-                                      .deriveSelectedAddOns()),
-                              CartItemModificationType.added));
-                      Navigator.pop(context);
-                    },
-                    cancelClicked: () => Navigator.pop(context),
-                    quantity: quantity,
-                    onQuantityChanged: _whenQuantityChanged,
-                  ))),
+            flex: 7,
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.shadowColor,
+                border: const Border(
+                    right: const BorderSide(color: Color(0xFF444c56))),
+              ),
+              child: ItemSidePanel(
+                item: item,
+                addToCartClicked: () {
+                  context.read<CartBloc>().itemModifiedEvent(
+                        CartItemModificationEvent.fromCartItem(
+                          CartItem(
+                            item,
+                            quantity,
+                            addOns: addOnGroupViewModel.deriveSelectedAddOns(),
+                          ),
+                          CartItemModificationType.added,
+                        ),
+                      );
+                  Navigator.pop(context);
+                },
+                cancelClicked: () => Navigator.pop(context),
+                quantity: quantity,
+                onQuantityChanged: _whenQuantityChanged,
+              ),
+            ),
+          ),
           Flexible(
-              flex: 9,
-              child: Container(
-                height: double.infinity,
-                color: theme.backgroundColor,
-                padding: const EdgeInsets.all(24),
-                child: AddOnPanel(
-                  addOnGroupViewModel: addOnGroupViewModel,
-                ),
-              ))
+            flex: 9,
+            child: Container(
+              height: double.infinity,
+              color: theme.backgroundColor,
+              padding: const EdgeInsets.all(24),
+              child: AddOnPanel(
+                addOnGroupViewModel: addOnGroupViewModel,
+              ),
+            ),
+          )
         ],
       ),
     );

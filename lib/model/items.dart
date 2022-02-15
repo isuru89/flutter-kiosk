@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:kioskflutter/model/cart.dart';
-
 import 'catalog.dart';
 
 var random = Random();

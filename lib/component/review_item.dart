@@ -24,11 +24,14 @@ class ReviewItem extends StatelessWidget {
     if (hasAddOns) {
       for (var records in cartItem.addOns.values) {
         for (var rec in records) {
-          children.add(AddOnChip(
+          children.add(
+            AddOnChip(
               prefix: "• ",
               addOnName: rec.addOnRef.name,
               id: rec.addOnRef.id,
-              onRemoved: _onAddOnRemoved));
+              onRemoved: _onAddOnRemoved,
+            ),
+          );
         }
       }
     }
@@ -88,13 +91,21 @@ class ReviewItem extends StatelessWidget {
                         qty: cartItem.quantity,
                         onDecrease: () {
                           context.read<CartBloc>().itemQuantityChanged(
-                              CartItemQuantityChangeEvent(cartItem.itemRef, 1,
-                                  QuantityChangeType.decrement));
+                                CartItemQuantityChangeEvent(
+                                  cartItem.itemRef,
+                                  1,
+                                  QuantityChangeType.decrement,
+                                ),
+                              );
                         },
                         onIncrease: () {
                           context.read<CartBloc>().itemQuantityChanged(
-                              CartItemQuantityChangeEvent(cartItem.itemRef, 1,
-                                  QuantityChangeType.increment));
+                                CartItemQuantityChangeEvent(
+                                  cartItem.itemRef,
+                                  1,
+                                  QuantityChangeType.increment,
+                                ),
+                              );
                         },
                       ),
                     ),
@@ -111,13 +122,19 @@ class ReviewItem extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         context.read<CartBloc>().itemModifiedEvent(
-                            CartItemModificationEvent.fromCartItem(
-                                cartItem, CartItemModificationType.removed));
+                              CartItemModificationEvent.fromCartItem(
+                                cartItem,
+                                CartItemModificationType.removed,
+                              ),
+                            );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Icon(CupertinoIcons.delete_left_fill,
-                            size: 32, color: Theme.of(context).primaryColor),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Icon(
+                          CupertinoIcons.delete_left_fill,
+                          size: 32,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     )
                   ],

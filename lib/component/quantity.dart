@@ -8,13 +8,13 @@ class Quantity extends StatelessWidget {
   final Function() onDecrease;
   final Axis qtyAxis;
 
-  const Quantity(
-      {Key? key,
-      required this.qty,
-      required this.onIncrease,
-      required this.onDecrease,
-      this.qtyAxis = Axis.horizontal})
-      : super(key: key);
+  const Quantity({
+    Key? key,
+    required this.qty,
+    required this.onIncrease,
+    required this.onDecrease,
+    this.qtyAxis = Axis.horizontal,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

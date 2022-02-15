@@ -8,16 +8,18 @@ class FeaturedItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200,
-        child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => FeaturedItem(
-                  item: demoFeaturedItems[index],
-                ),
-            separatorBuilder: (context, index) => const SizedBox(
-                  width: 32,
-                ),
-            itemCount: demoFeaturedItems.length));
+      height: 200,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => FeaturedItem(
+          item: demoFeaturedItems[index],
+        ),
+        separatorBuilder: (context, index) => const SizedBox(
+          width: 32,
+        ),
+        itemCount: demoFeaturedItems.length,
+      ),
+    );
   }
 }
 
@@ -40,18 +42,17 @@ class FeaturedItem extends StatelessWidget {
           Container(
             height: 200.0,
             decoration: BoxDecoration(
-                color: Colors.white,
-                gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.grey.withOpacity(0),
-                      Colors.black.withOpacity(0.7),
-                    ],
-                    stops: const [
-                      0,
-                      1.0
-                    ])),
+              color: Colors.white,
+              gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [
+                  Colors.grey.withOpacity(0),
+                  Colors.black.withOpacity(0.7),
+                ],
+                stops: const [0, 1.0],
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

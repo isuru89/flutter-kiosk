@@ -10,7 +10,8 @@ class ThemeAwareCard extends StatelessWidget {
     var theme = Theme.of(context);
     return Container(
       color: theme.backgroundColor,
-      decoration: BoxDecoration(border: Border.all(color: Color(0xFF444c56))),
+      decoration:
+          BoxDecoration(border: Border.all(color: const Color(0xFF444c56))),
       child: child,
     );
   }

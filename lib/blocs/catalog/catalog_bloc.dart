@@ -20,9 +20,12 @@ class CatalogBloc extends Cubit<CatalogState> {
         selectedItems.add(it);
       }
     }
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         selectedCategoryId: categoryId,
-        selectedItemsInCategory: selectedItems));
+        selectedItemsInCategory: selectedItems,
+      ),
+    );
   }
 
   void selectActiveItem(String itemId) {
@@ -30,7 +33,11 @@ class CatalogBloc extends Cubit<CatalogState> {
   }
 
   void selectActiveCartItem(CartItem cartItem) {
-    emit(state.copyWith(
-        selectedCartItemId: cartItem.itemRef.id, selectedItemId: ''));
+    emit(
+      state.copyWith(
+        selectedCartItemId: cartItem.itemRef.id,
+        selectedItemId: '',
+      ),
+    );
   }
 }

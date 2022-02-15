@@ -4,15 +4,16 @@ import 'package:kioskflutter/model/catalog.dart';
 import 'package:kioskflutter/model/items.dart';
 
 var initialCatalogState = CatalogState(
-    selectedCategoryId: '',
-    featuredItems: const [],
-    categories: {for (Category c in normalCategories) c.id: c},
-    items: {for (Item it in normalItems) it.id: it},
-    addOnGroups: {for (AddOnGroup g in allAddOnGroups) g.id: g},
-    addOns: {for (AddOn a in allAddOns) a.id: a},
-    selectedItemId: '',
-    selectedCartItemId: '',
-    selectedItemsInCategory: const []);
+  selectedCategoryId: '',
+  featuredItems: const [],
+  categories: {for (Category c in normalCategories) c.id: c},
+  items: {for (Item it in normalItems) it.id: it},
+  addOnGroups: {for (AddOnGroup g in allAddOnGroups) g.id: g},
+  addOns: {for (AddOn a in allAddOns) a.id: a},
+  selectedItemId: '',
+  selectedCartItemId: '',
+  selectedItemsInCategory: const [],
+);
 
 class CatalogState extends Equatable {
   final String selectedCategoryId;
@@ -25,7 +26,7 @@ class CatalogState extends Equatable {
   final Map<String, AddOnGroup> addOnGroups;
   final Map<String, AddOn> addOns;
 
-  CatalogState({
+  const CatalogState({
     required this.selectedCategoryId,
     required this.selectedItemId,
     required this.selectedCartItemId,

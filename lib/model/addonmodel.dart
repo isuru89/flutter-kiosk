@@ -61,8 +61,11 @@ class AddOnGroupViewModel {
       for (var e in value) {
         var groupAddOns = addOns[addOnGrp.id];
         if (groupAddOns != null) {
-          temp.addAll(groupAddOns.where((element) => element.id == e).map(
-              (e) => SelectedAddOn(addOnRef: e, unitPrice: e.price ?? 0.0)));
+          temp.addAll(
+            groupAddOns.where((element) => element.id == e).map(
+                  (e) => SelectedAddOn(addOnRef: e, unitPrice: e.price ?? 0.0),
+                ),
+          );
         }
       }
 

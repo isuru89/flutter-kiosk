@@ -35,7 +35,8 @@ class CartBloc extends Cubit<CartState> {
       CartItem? existingItem;
       if (event.cartItem != null) {
         existingItem = items.firstWhereOrNull(
-            (element) => element.itemRef.id == event.cartItem?.itemRef.id);
+          (element) => element.itemRef.id == event.cartItem?.itemRef.id,
+        );
         if (existingItem != null) {
           _removeInPlace(items, event.cartItem!.itemRef.id);
         }
@@ -43,7 +44,8 @@ class CartBloc extends Cubit<CartState> {
         items.add(event.cartItem!);
       } else {
         existingItem = items.firstWhereOrNull(
-            (element) => element.itemRef.id == event.refItem.id);
+          (element) => element.itemRef.id == event.refItem.id,
+        );
         if (existingItem != null) {
           _removeInPlace(items, event.refItem.id);
         }

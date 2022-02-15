@@ -7,7 +7,6 @@ import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/quantity.dart';
-import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 
 class CartViewContainer extends StatelessWidget {
@@ -17,11 +16,12 @@ class CartViewContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final CartBloc bloc = BlocProvider.of<CartBloc>(context);
     return BlocBuilder<CartBloc, CartState>(
-        bloc: bloc,
-        builder: (ctx, state) => CartView(
-              cartItems: state.items,
-              total: state.total,
-            ));
+      bloc: bloc,
+      builder: (ctx, state) => CartView(
+        cartItems: state.items,
+        total: state.total,
+      ),
+    );
   }
 }
 
@@ -43,13 +43,17 @@ class CartView extends StatelessWidget {
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
-      decoration: BoxDecoration(color: theme.canvasColor, boxShadow: [
-        BoxShadow(
+      decoration: BoxDecoration(
+        color: theme.canvasColor,
+        boxShadow: [
+          BoxShadow(
             blurRadius: 8,
             offset: const Offset(-2, 0),
             color: theme.dividerColor,
-            spreadRadius: 0),
-      ]),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
       child: Column(
         children: [
           Padding(
@@ -69,16 +73,17 @@ class CartView extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: theme.primaryColor.withOpacity(0.2)),
+                        shape: BoxShape.circle,
+                        color: theme.primaryColor.withOpacity(0.2),
+                      ),
                       child: Center(
                         child: Text(
                           "${cartItems.length}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3
-                              ?.copyWith(
-                                  color: theme.primaryColor, fontSize: 16),
+                          style:
+                              Theme.of(context).textTheme.headline3?.copyWith(
+                                    color: theme.primaryColor,
+                                    fontSize: 16,
+                                  ),
                         ),
                       ),
                     )
@@ -90,43 +95,53 @@ class CartView extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-                controller: _cartCtrl,
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: cartItems
-                      .map((e) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 24.0),
-                            child: Container(
-                              height: 200,
-                              width: 200,
-                              child: Dismissible(
-                                key: Key(e.itemRef.id),
-                                child: MyCartItem(cartItem: e),
-                                background: Container(
-                                  color: theme.errorColor,
-                                  child: Center(
-                                    child: Text(
-                                      "Removing",
-                                      style: theme.textTheme.bodyText1,
-                                    ),
-                                  ),
+              controller: _cartCtrl,
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: cartItems
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 24.0,
+                        ),
+                        child: Container(
+                          height: 200,
+                          width: 200,
+                          child: Dismissible(
+                            key: Key(e.itemRef.id),
+                            child: MyCartItem(cartItem: e),
+                            background: Container(
+                              color: theme.errorColor,
+                              child: Center(
+                                child: Text(
+                                  "Removing",
+                                  style: theme.textTheme.bodyText1,
                                 ),
-                                onDismissed: (direction) {
-                                  context.read<CartBloc>().itemModifiedEvent(
-                                      CartItemModificationEvent.fromCartItem(
-                                          e, CartItemModificationType.removed));
-                                },
                               ),
                             ),
-                          ))
-                      .toList()
-                    ..add(const Padding(
+                            onDismissed: (direction) {
+                              context.read<CartBloc>().itemModifiedEvent(
+                                    CartItemModificationEvent.fromCartItem(
+                                      e,
+                                      CartItemModificationType.removed,
+                                    ),
+                                  );
+                            },
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList()
+                  ..add(
+                    const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 32),
                       child: Divider(),
-                    )),
-                )),
+                    ),
+                  ),
+              ),
+            ),
           ),
           Container(
             height: 120,
@@ -135,14 +150,17 @@ class CartView extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration:
-                        BoxDecoration(color: theme.backgroundColor, boxShadow: [
-                      BoxShadow(
+                    decoration: BoxDecoration(
+                      color: theme.backgroundColor,
+                      boxShadow: [
+                        BoxShadow(
                           blurRadius: 8,
                           offset: Offset(0, -2),
                           color: theme.dividerColor,
-                          spreadRadius: 0)
-                    ]),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -158,18 +176,21 @@ class CartView extends StatelessWidget {
                           textStyle: theme.textTheme.headline4
                               ?.copyWith(color: theme.primaryColor),
                           priceTextStyle: theme.textTheme.headline4?.copyWith(
-                              color: theme.primaryColor, fontSize: 14),
+                            color: theme.primaryColor,
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 KioskButton(
-                    text: "CHECKOUT",
-                    height: 60,
-                    onClicked: () {
-                      Navigator.pushNamed(context, '/review');
-                    }),
+                  text: "CHECKOUT",
+                  height: 60,
+                  onClicked: () {
+                    Navigator.pushNamed(context, '/review');
+                  },
+                ),
               ],
             ),
           ),
@@ -198,25 +219,35 @@ class MyCartItem extends StatelessWidget {
           Container(
             width: 120,
             child: ItemInCart(
-                label: cartItem.itemRef.name,
-                width: 120,
-                height: 120,
-                price: cartItem.getItemSubTotal()),
+              label: cartItem.itemRef.name,
+              width: 120,
+              height: 120,
+              price: cartItem.getItemSubTotal(),
+            ),
           ),
           Expanded(
             child: Quantity(
-                qtyAxis: Axis.vertical,
-                qty: cartItem.quantity,
-                onIncrease: () {
-                  context.read<CartBloc>().itemQuantityChanged(
+              qtyAxis: Axis.vertical,
+              qty: cartItem.quantity,
+              onIncrease: () {
+                context.read<CartBloc>().itemQuantityChanged(
                       CartItemQuantityChangeEvent(
-                          cartItem.itemRef, 1, QuantityChangeType.increment));
-                },
-                onDecrease: () {
-                  context.read<CartBloc>().itemQuantityChanged(
+                        cartItem.itemRef,
+                        1,
+                        QuantityChangeType.increment,
+                      ),
+                    );
+              },
+              onDecrease: () {
+                context.read<CartBloc>().itemQuantityChanged(
                       CartItemQuantityChangeEvent(
-                          cartItem.itemRef, 1, QuantityChangeType.decrement));
-                }),
+                        cartItem.itemRef,
+                        1,
+                        QuantityChangeType.decrement,
+                      ),
+                    );
+              },
+            ),
           )
         ],
       ),

@@ -8,13 +8,13 @@ class AddOnChip extends StatelessWidget {
   final Function(String) onRemoved;
   final String? prefix;
 
-  const AddOnChip(
-      {Key? key,
-      required this.addOnName,
-      required this.id,
-      required this.onRemoved,
-      this.prefix})
-      : super(key: key);
+  const AddOnChip({
+    Key? key,
+    required this.addOnName,
+    required this.id,
+    required this.onRemoved,
+    this.prefix,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,13 @@ class AddOnOption extends StatelessWidget {
   final bool isDisabled;
   final Function(String, bool)? onClicked;
 
-  const AddOnOption(
-      {Key? key,
-      required this.addOn,
-      this.isSelected = false,
-      this.onClicked,
-      this.isDisabled = false})
-      : super(key: key);
+  const AddOnOption({
+    Key? key,
+    required this.addOn,
+    this.isSelected = false,
+    this.onClicked,
+    this.isDisabled = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,21 +62,22 @@ class AddOnOption extends StatelessWidget {
           constraints:
               const BoxConstraints(minWidth: 120, maxWidth: 120, minHeight: 80),
           decoration: BoxDecoration(
-              color: isSelected
-                  ? theme.primaryColor.withOpacity(0.1)
-                  : theme.backgroundColor,
-              border: isSelected ? Border.all(color: theme.primaryColor) : null,
-              borderRadius: BorderRadius.circular(4),
-              boxShadow: isSelected
-                  ? [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 6,
-                        offset: const Offset(0, 0),
-                      )
-                    ]
-                  : []),
+            color: isSelected
+                ? theme.primaryColor.withOpacity(0.1)
+                : theme.backgroundColor,
+            border: isSelected ? Border.all(color: theme.primaryColor) : null,
+            borderRadius: BorderRadius.circular(4),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 6,
+                      offset: const Offset(0, 0),
+                    )
+                  ]
+                : [],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -86,8 +87,9 @@ class AddOnOption extends StatelessWidget {
                 child: Text(
                   addOn.name.toUpperCase(),
                   style: theme.textTheme.bodyText1?.copyWith(
-                      fontSize: 16,
-                      color: isSelected ? theme.primaryColor : null),
+                    fontSize: 16,
+                    color: isSelected ? theme.primaryColor : null,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -104,7 +106,8 @@ class AddOnOption extends StatelessWidget {
                   child: Text(
                     "\$${addOn.price?.toStringAsFixed(2)}",
                     style: theme.textTheme.subtitle1?.copyWith(
-                        color: isSelected ? theme.primaryColor : null),
+                      color: isSelected ? theme.primaryColor : null,
+                    ),
                   ),
                 )
               ],

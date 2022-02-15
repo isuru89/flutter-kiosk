@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
@@ -13,14 +12,15 @@ class CategoryListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final CatalogBloc bloc = BlocProvider.of<CatalogBloc>(context);
     return BlocBuilder<CatalogBloc, CatalogState>(
-        bloc: bloc,
-        buildWhen: (previous, current) =>
-            previous.selectedCategoryId != current.selectedCategoryId ||
-            previous.categories != current.categories,
-        builder: (ctx, state) => CategoryList(
-              categories: state.categories.values.toList(),
-              selectedCategory: state.selectedCategoryId,
-            ));
+      bloc: bloc,
+      buildWhen: (previous, current) =>
+          previous.selectedCategoryId != current.selectedCategoryId ||
+          previous.categories != current.categories,
+      builder: (ctx, state) => CategoryList(
+        categories: state.categories.values.toList(),
+        selectedCategory: state.selectedCategoryId,
+      ),
+    );
   }
 }
 
@@ -39,37 +39,42 @@ class CategoryList extends StatelessWidget {
     return Container(
       height: double.infinity,
       decoration: BoxDecoration(
-          color: theme.shadowColor,
-          border: Border(right: BorderSide(color: theme.dividerColor))),
+        color: theme.shadowColor,
+        border: Border(right: BorderSide(color: theme.dividerColor)),
+      ),
       child: SingleChildScrollView(
-          controller: _categoryCtrl,
-          scrollDirection: Axis.vertical,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: categories
-                .map((e) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 24.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          context
-                              .read<CatalogBloc>()
-                              .selectActiveCategory(e.id);
-                        },
-                        child: Container(
-                          height: 180,
-                          width: 160,
-                          child: CategoryItem(
-                            label: e.name,
-                            isSelected: e.id == selectedCategory,
-                            width: 120,
-                            height: 120,
-                          ),
-                        ),
+        controller: _categoryCtrl,
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: categories
+              .map(
+                (e) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 24.0,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<CatalogBloc>().selectActiveCategory(e.id);
+                    },
+                    child: Container(
+                      height: 180,
+                      width: 160,
+                      child: CategoryItem(
+                        key: Key(e.id),
+                        label: e.name,
+                        isSelected: e.id == selectedCategory,
+                        width: 120,
+                        height: 120,
                       ),
-                    ))
-                .toList(),
-          )),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 }

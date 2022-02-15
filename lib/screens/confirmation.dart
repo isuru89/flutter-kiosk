@@ -23,17 +23,19 @@ class _ConfirmationState extends State<Confirmation> {
     return AlertDialog(
       title: Text(""),
       content: Container(
-          height: 360,
-          width: 320,
-          child: FutureBuilder(
-              future: waitForUserInput(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return _showOrderNumber();
-                } else {
-                  return _showWaitingForSwipe();
-                }
-              })),
+        height: 360,
+        width: 320,
+        child: FutureBuilder(
+          future: waitForUserInput(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return _showOrderNumber();
+            } else {
+              return _showWaitingForSwipe();
+            }
+          },
+        ),
+      ),
     );
   }
 
@@ -79,11 +81,12 @@ class _ConfirmationState extends State<Confirmation> {
           ),
         ),
         KioskButton(
-            text: "COMPLETE",
-            height: 48,
-            onClicked: () {
-              Navigator.pop(context);
-            })
+          text: "COMPLETE",
+          height: 48,
+          onClicked: () {
+            Navigator.pop(context);
+          },
+        )
       ],
     );
   }

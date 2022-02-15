@@ -4,7 +4,12 @@ part 'catalog.g.dart';
 
 @JsonSerializable()
 class Category {
-  Category(this.id, this.name, this.imageUrl, this.itemIds);
+  Category(
+    this.id,
+    this.name,
+    this.imageUrl,
+    this.itemIds,
+  );
 
   String id, name;
   String imageUrl;
@@ -18,8 +23,15 @@ class Category {
 
 @JsonSerializable()
 class Item {
-  Item(this.id, this.name, this.price, this.imageUrl,
-      {this.description = '', this.addOnGroupIds = const [], this.calories});
+  Item(
+    this.id,
+    this.name,
+    this.price,
+    this.imageUrl, {
+    this.description = '',
+    this.addOnGroupIds = const [],
+    this.calories,
+  });
 
   String id, name, imageUrl, description;
   double price;
@@ -37,11 +49,14 @@ class Item {
 
 @JsonSerializable()
 class AddOnGroup {
-  AddOnGroup(this.id, this.name,
-      {this.mandatory = false,
-      this.min = 0,
-      this.max = 0,
-      this.addOnIds = const []});
+  AddOnGroup(
+    this.id,
+    this.name, {
+    this.mandatory = false,
+    this.min = 0,
+    this.max = 0,
+    this.addOnIds = const [],
+  });
 
   String id, name;
   bool mandatory;

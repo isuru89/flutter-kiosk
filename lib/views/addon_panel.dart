@@ -26,7 +26,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
     for (AddOnGroup group in addOnGroupViewModel.addOnGroups) {
       children.addAll(_generateAddOnGroup(context, group));
     }
-    children.add(EndOfSection());
+    children.add(const EndOfSection());
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -53,27 +53,30 @@ class _AddOnPanelState extends State<AddOnPanel> {
           scrollDirection: Axis.horizontal,
           controller: _controller,
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: childAddOns
-                  .map((e) => AddOnOption(
-                        addOn: e,
-                        isDisabled: addOnGroupViewModel.isDisabled(addOnGroup),
-                        isSelected:
-                            addOnGroupViewModel.isSelected(addOnGroup.id, e.id),
-                        onClicked: (addOnId, selected) {
-                          setState(() {
-                            updated++;
-                            if (selected) {
-                              addOnGroupViewModel
-                                  .selectAddOns(addOnGroup, [addOnId]);
-                            } else {
-                              addOnGroupViewModel
-                                  .deselectAddOns(addOnGroup, [addOnId]);
-                            }
-                          });
-                        },
-                      ))
-                  .toList()),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: childAddOns
+                .map(
+                  (e) => AddOnOption(
+                    addOn: e,
+                    isDisabled: addOnGroupViewModel.isDisabled(addOnGroup),
+                    isSelected:
+                        addOnGroupViewModel.isSelected(addOnGroup.id, e.id),
+                    onClicked: (addOnId, selected) {
+                      setState(() {
+                        updated++;
+                        if (selected) {
+                          addOnGroupViewModel
+                              .selectAddOns(addOnGroup, [addOnId]);
+                        } else {
+                          addOnGroupViewModel
+                              .deselectAddOns(addOnGroup, [addOnId]);
+                        }
+                      });
+                    },
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ),
       const SizedBox(

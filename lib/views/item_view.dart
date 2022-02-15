@@ -3,24 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
-import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class ItemViewContainer extends StatelessWidget {
+  const ItemViewContainer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final CatalogBloc bloc = BlocProvider.of<CatalogBloc>(context);
     return BlocBuilder<CatalogBloc, CatalogState>(
-        bloc: bloc,
-        buildWhen: (prevState, currState) {
-          return prevState.selectedCategoryId != currState.selectedCategoryId;
-        },
-        builder: (ctx, state) {
-          return ItemView(
-            items: state.selectedItemsInCategory,
-            selectedCategory: state.categories[state.selectedCategoryId],
-          );
-        });
+      bloc: bloc,
+      buildWhen: (prevState, currState) {
+        return prevState.selectedCategoryId != currState.selectedCategoryId;
+      },
+      builder: (ctx, state) {
+        return ItemView(
+          items: state.selectedItemsInCategory,
+          selectedCategory: state.categories[state.selectedCategoryId],
+        );
+      },
+    );
   }
 }
 
@@ -79,20 +81,24 @@ class ItemView extends StatelessWidget {
                         spacing: 16,
                         alignment: WrapAlignment.start,
                         children: items
-                            .map((e) => Container(
-                                  width: 180,
-                                  height: 260,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      context
-                                          .read<CatalogBloc>()
-                                          .selectActiveItem(e.id);
-                                      Navigator.pushNamed(context, '/item');
-                                    },
-                                    child: ItemWithNameAndPrice(
-                                        label: e.name, price: e.price),
+                            .map(
+                              (e) => Container(
+                                width: 180,
+                                height: 260,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<CatalogBloc>()
+                                        .selectActiveItem(e.id);
+                                    Navigator.pushNamed(context, '/item');
+                                  },
+                                  child: ItemWithNameAndPrice(
+                                    label: e.name,
+                                    price: e.price,
                                   ),
-                                ))
+                                ),
+                              ),
+                            )
                             .toList(),
                       ),
                     ),

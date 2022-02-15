@@ -16,21 +16,32 @@ class CartSummary extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Container(
         decoration: BoxDecoration(
-            color: theme.primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8)),
+          color: theme.primaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: BlocBuilder<CartBloc, CartState>(
-            bloc: cartBloc,
-            builder: (context, state) => Column(
-                  children: [
-                    _summaryList(context, "SUB TOTAL",
-                        "\$${state.subTotal.toStringAsFixed(2)}"),
-                    _summaryList(
-                        context, "TAX", "\$${state.tax.toStringAsFixed(2)}"),
-                    _summaryList(context, "SERVICE CHARGE",
-                        "\$${state.serviceCharge.toStringAsFixed(2)}")
-                  ],
-                )),
+          bloc: cartBloc,
+          builder: (context, state) => Column(
+            children: [
+              _summaryList(
+                context,
+                "SUB TOTAL",
+                "\$${state.subTotal.toStringAsFixed(2)}",
+              ),
+              _summaryList(
+                context,
+                "TAX",
+                "\$${state.tax.toStringAsFixed(2)}",
+              ),
+              _summaryList(
+                context,
+                "SERVICE CHARGE",
+                "\$${state.serviceCharge.toStringAsFixed(2)}",
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -44,7 +55,9 @@ class CartSummary extends StatelessWidget {
           Text(
             line,
             style: Theme.of(context).textTheme.headline5?.copyWith(
-                fontWeight: FontWeight.normal, color: kSecondaryTextColor),
+                  fontWeight: FontWeight.normal,
+                  color: kSecondaryTextColor,
+                ),
           ),
           Text(
             value,

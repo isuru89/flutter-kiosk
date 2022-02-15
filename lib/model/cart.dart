@@ -54,7 +54,7 @@ class SelectedAddOn extends Equatable {
   final AddOn addOnRef;
   final double unitPrice;
 
-  SelectedAddOn({
+  const SelectedAddOn({
     required this.addOnRef,
     this.unitPrice = 0,
   });

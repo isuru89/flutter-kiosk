@@ -36,12 +36,14 @@ class ReviewOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     List<Widget> itemsMapped = items
-        .map((e) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: ReviewItem(
-                cartItem: e,
-              ),
-            ))
+        .map(
+          (e) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: ReviewItem(
+              cartItem: e,
+            ),
+          ),
+        )
         .toList();
     itemsMapped.insert(0, _header(context));
 
@@ -50,91 +52,101 @@ class ReviewOrder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(
-              flex: 11,
-              child: Container(
-                height: double.infinity,
-                color: theme.backgroundColor,
-                child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: itemsMapped),
-                ),
-              )),
-          Flexible(
-              flex: 5,
-              child: Container(
-                decoration: BoxDecoration(color: theme.canvasColor,
-                    // border: Border(left: BorderSide(color: theme.shadowColor)),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 8,
-                          offset: Offset(-2, 0),
-                          color: theme.dividerColor,
-                          spreadRadius: 0),
-                    ]),
+            flex: 11,
+            child: Container(
+              height: double.infinity,
+              color: theme.backgroundColor,
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      child: Column(
-                        children: [_backToMenu(context), const CartSummary()],
-                      ),
-                    ),
-                    Container(
-                      height: 150,
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: BlocBuilder<CartBloc, CartState>(
-                                buildWhen: (previous, current) =>
-                                    previous.total != current.total,
-                                builder: (context, state) => KioskButton(
-                                      content: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          const Text(
-                                            "PAY",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 4,
-                                                fontSize: 24),
-                                          ),
-                                          PriceLabel(
-                                            price: state.total,
-                                            textStyle: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 1,
-                                                fontSize: 24),
-                                            priceTextStyle: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 1,
-                                                fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                      text:
-                                          "PAY (\$${state.total.toStringAsFixed(2)})",
-                                      onClicked: () {
-                                        showDialog(
-                                            barrierDismissible: true,
-                                            context: context,
-                                            builder: (_) => Container(
-                                                  child: Confirmation(),
-                                                ));
-                                      },
-                                    )),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: itemsMapped,
                 ),
-              ))
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 5,
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.canvasColor,
+                // border: Border(left: BorderSide(color: theme.shadowColor)),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 8,
+                    offset: Offset(-2, 0),
+                    color: theme.dividerColor,
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [_backToMenu(context), const CartSummary()],
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: BlocBuilder<CartBloc, CartState>(
+                            buildWhen: (previous, current) =>
+                                previous.total != current.total,
+                            builder: (context, state) => KioskButton(
+                              content: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Text(
+                                    "PAY",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 4,
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                  PriceLabel(
+                                    price: state.total,
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      fontSize: 24,
+                                    ),
+                                    priceTextStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              text: "PAY (\$${state.total.toStringAsFixed(2)})",
+                              onClicked: () {
+                                showDialog(
+                                  barrierDismissible: true,
+                                  context: context,
+                                  builder: (_) => Container(
+                                    child: const Confirmation(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -153,10 +165,11 @@ class ReviewOrder extends StatelessWidget {
                 ?.copyWith(letterSpacing: 3),
           ),
           const Expanded(
-              child: Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Divider(),
-          ))
+            child: Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Divider(),
+            ),
+          )
         ],
       ),
     );

@@ -28,26 +28,30 @@ class KioskButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       height: height,
       child: ElevatedButton(
-          style: inactive
-              ? ElevatedButton.styleFrom(
-                  primary: inactiveColor?.withOpacity(0.5),
-                  onPrimary: inactiveTextColor?.withOpacity(0.5))
-              : ElevatedButton.styleFrom(
-                  primary: activeColor, onPrimary: activeTextColor),
-          onPressed: onClicked,
-          child: content ??
-              Text(
-                text,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 4,
-                    fontSize: fontSize),
-              )),
+        style: inactive
+            ? ElevatedButton.styleFrom(
+                primary: inactiveColor?.withOpacity(0.5),
+                onPrimary: inactiveTextColor?.withOpacity(0.5),
+              )
+            : ElevatedButton.styleFrom(
+                primary: activeColor,
+                onPrimary: activeTextColor,
+              ),
+        onPressed: onClicked,
+        child: content ??
+            Text(
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 4,
+                fontSize: fontSize,
+              ),
+            ),
+      ),
     );
   }
 }

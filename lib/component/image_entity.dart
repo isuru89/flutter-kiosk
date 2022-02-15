@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kioskflutter/constants.dart';
 
 class ItemWithNameAndPrice extends StatelessWidget {
   final double? width;
@@ -8,14 +7,14 @@ class ItemWithNameAndPrice extends StatelessWidget {
   final double price;
   final String? currency;
 
-  const ItemWithNameAndPrice(
-      {Key? key,
-      this.width,
-      this.height,
-      required this.label,
-      required this.price,
-      this.currency})
-      : super(key: key);
+  const ItemWithNameAndPrice({
+    Key? key,
+    this.width,
+    this.height,
+    required this.label,
+    required this.price,
+    this.currency,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +60,14 @@ class ItemInCart extends StatelessWidget {
   final double price;
   final String? currency;
 
-  const ItemInCart(
-      {Key? key,
-      this.width,
-      this.height,
-      required this.label,
-      required this.price,
-      this.currency})
-      : super(key: key);
+  const ItemInCart({
+    Key? key,
+    this.width,
+    this.height,
+    required this.label,
+    required this.price,
+    this.currency,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,14 +114,14 @@ class CategoryItem extends StatelessWidget {
   final String? imageUrl;
   final bool isSelected;
 
-  CategoryItem(
-      {Key? key,
-      this.width,
-      this.height,
-      required this.label,
-      this.imageUrl,
-      this.isSelected = false})
-      : super(key: key);
+  const CategoryItem({
+    Key? key,
+    this.width,
+    this.height,
+    required this.label,
+    this.imageUrl,
+    this.isSelected = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -169,15 +168,15 @@ class PriceLabel extends StatelessWidget {
   final TextStyle? priceTextStyle;
   final MainAxisAlignment? mainAxisAlignment;
 
-  const PriceLabel(
-      {Key? key,
-      required this.price,
-      this.currency = '\$',
-      this.color,
-      this.textStyle,
-      this.priceTextStyle,
-      this.mainAxisAlignment})
-      : super(key: key);
+  const PriceLabel({
+    Key? key,
+    required this.price,
+    this.currency = '\$',
+    this.color,
+    this.textStyle,
+    this.priceTextStyle,
+    this.mainAxisAlignment,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

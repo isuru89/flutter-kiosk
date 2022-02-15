@@ -29,8 +29,12 @@ class CartItemModificationEvent extends CartItemEvent {
 
   factory CartItemModificationEvent.fromCartItem(
       CartItem cartItem, CartItemModificationType type) {
-    return CartItemModificationEvent(cartItem.itemRef, type, cartItem.quantity,
-        cartItem: cartItem);
+    return CartItemModificationEvent(
+      cartItem.itemRef,
+      type,
+      cartItem.quantity,
+      cartItem: cartItem,
+    );
   }
 
   @override

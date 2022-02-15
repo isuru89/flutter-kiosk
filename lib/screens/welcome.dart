@@ -1,15 +1,16 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String restaurantName;
   final List<String> orderTypes;
 
-  const WelcomeScreen(
-      {Key? key, required this.restaurantName, required this.orderTypes})
-      : super(key: key);
+  const WelcomeScreen({
+    Key? key,
+    required this.restaurantName,
+    required this.orderTypes,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +81,21 @@ class OrderTypeText extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: Colors.black.withOpacity(0.2),
         ),
-        constraints: BoxConstraints(minWidth: 400, maxWidth: 400),
+        constraints: const BoxConstraints(minWidth: 400, maxWidth: 400),
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 48, color: Colors.white, shadows: [
-            Shadow(
-              offset: Offset(.0, .0),
-              blurRadius: 10.0,
-              color: Color.fromARGB(255, 0, 0, 0),
-            )
-          ]),
+          style: const TextStyle(
+            fontSize: 48,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                offset: Offset(.0, .0),
+                blurRadius: 10.0,
+                color: Color.fromARGB(255, 0, 0, 0),
+              )
+            ],
+          ),
         ),
       ),
     );

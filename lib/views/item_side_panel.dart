@@ -65,11 +65,12 @@ class ItemSidePanel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Quantity(
-                    qty: quantity,
-                    onIncrease: () =>
-                        onQuantityChanged(QuantityChangeType.increment),
-                    onDecrease: () =>
-                        onQuantityChanged(QuantityChangeType.decrement)),
+                  qty: quantity,
+                  onIncrease: () =>
+                      onQuantityChanged(QuantityChangeType.increment),
+                  onDecrease: () =>
+                      onQuantityChanged(QuantityChangeType.decrement),
+                ),
                 Row(
                   children: [
                     Padding(
@@ -98,9 +99,12 @@ class ItemSidePanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                  flex: 9,
-                  child: KioskButton(
-                      text: "ADD TO CART", onClicked: addToCartClicked)),
+                flex: 9,
+                child: KioskButton(
+                  text: "ADD TO CART",
+                  onClicked: addToCartClicked,
+                ),
+              ),
               Flexible(
                 flex: 7,
                 child: Padding(
