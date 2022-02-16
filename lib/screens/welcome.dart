@@ -72,29 +72,33 @@ class OrderTypeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClicked,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 8),
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.black.withOpacity(0.2),
-        ),
-        constraints: const BoxConstraints(minWidth: 400, maxWidth: 400),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 48,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                offset: Offset(.0, .0),
-                blurRadius: 10.0,
-                color: Color.fromARGB(255, 0, 0, 0),
-              )
-            ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: Colors.white,
+        onTap: onClicked,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 8),
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.black.withOpacity(0.2),
+          ),
+          constraints: const BoxConstraints(minWidth: 400, maxWidth: 400),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 48,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  offset: Offset(.0, .0),
+                  blurRadius: 10.0,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )
+              ],
+            ),
           ),
         ),
       ),

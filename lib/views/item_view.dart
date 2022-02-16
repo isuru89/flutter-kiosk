@@ -82,19 +82,23 @@ class ItemView extends StatelessWidget {
                         alignment: WrapAlignment.start,
                         children: items
                             .map(
-                              (e) => Container(
-                                width: 180,
-                                height: 260,
-                                child: GestureDetector(
+                              (e) => Material(
+                                color: Colors.transparent,
+                                child: InkWell(
                                   onTap: () {
                                     context
                                         .read<CatalogBloc>()
                                         .selectActiveItem(e.id);
                                     Navigator.pushNamed(context, '/item');
                                   },
-                                  child: ItemWithNameAndPrice(
-                                    label: e.name,
-                                    price: e.price,
+                                  child: Container(
+                                    width: 180,
+                                    height: 260,
+                                    padding: const EdgeInsets.all(8),
+                                    child: ItemWithNameAndPrice(
+                                      label: e.name,
+                                      price: e.price,
+                                    ),
                                   ),
                                 ),
                               ),

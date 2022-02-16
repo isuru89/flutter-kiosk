@@ -49,24 +49,27 @@ class CategoryList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: categories
               .map(
-                (e) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 24.0,
-                  ),
-                  child: GestureDetector(
+                (e) => Material(
+                  color: Colors.transparent,
+                  child: InkWell(
                     onTap: () {
                       context.read<CatalogBloc>().selectActiveCategory(e.id);
                     },
-                    child: Container(
-                      height: 180,
-                      width: 160,
-                      child: CategoryItem(
-                        key: Key(e.id),
-                        label: e.name,
-                        isSelected: e.id == selectedCategory,
-                        width: 120,
-                        height: 120,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal: 24.0,
+                      ),
+                      child: Container(
+                        height: 180,
+                        width: 160,
+                        child: CategoryItem(
+                          key: Key(e.id),
+                          label: e.name,
+                          isSelected: e.id == selectedCategory,
+                          width: 120,
+                          height: 120,
+                        ),
                       ),
                     ),
                   ),

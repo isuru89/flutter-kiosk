@@ -36,113 +36,117 @@ class ReviewItem extends StatelessWidget {
       }
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              _triggerCartItemEdit(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                width: 120,
-                color: Colors.tealAccent,
-                child: ItemImage(
-                  imageUrl: cartItem.itemRef.imageUrl,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          _triggerCartItemEdit(context);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
                   width: 120,
-                  height: 120,
+                  color: Colors.tealAccent,
+                  child: ItemImage(
+                    imageUrl: cartItem.itemRef.imageUrl,
+                    width: 120,
+                    height: 120,
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (hasAddOns) ...[_buildItemName(context)],
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          _triggerCartItemEdit(context);
-                        },
-                        child: Container(
-                          width: 120,
-                          child: hasAddOns
-                              ? Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16, top: 8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: children,
+                    if (hasAddOns) ...[_buildItemName(context)],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              _triggerCartItemEdit(context);
+                            },
+                            child: Container(
+                              width: 120,
+                              child: hasAddOns
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 16, top: 8),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: children,
+                                      ),
+                                    )
+                                  : _buildItemName(context),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 100,
+                          child: Quantity(
+                            qty: cartItem.quantity,
+                            onDecrease: () {
+                              context.read<CartBloc>().itemQuantityChanged(
+                                    CartItemQuantityChangeEvent(
+                                      cartItem.itemRef,
+                                      1,
+                                      QuantityChangeType.decrement,
+                                    ),
+                                  );
+                            },
+                            onIncrease: () {
+                              context.read<CartBloc>().itemQuantityChanged(
+                                    CartItemQuantityChangeEvent(
+                                      cartItem.itemRef,
+                                      1,
+                                      QuantityChangeType.increment,
+                                    ),
+                                  );
+                            },
+                          ),
+                        ),
+                        Container(
+                          height: 100,
+                          constraints: const BoxConstraints(minWidth: 120),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: PriceLabel(
+                              price: cartItem.getItemSubTotal(),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.read<CartBloc>().itemModifiedEvent(
+                                  CartItemModificationEvent.fromCartItem(
+                                    cartItem,
+                                    CartItemModificationType.removed,
                                   ),
-                                )
-                              : _buildItemName(context),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 100,
-                      child: Quantity(
-                        qty: cartItem.quantity,
-                        onDecrease: () {
-                          context.read<CartBloc>().itemQuantityChanged(
-                                CartItemQuantityChangeEvent(
-                                  cartItem.itemRef,
-                                  1,
-                                  QuantityChangeType.decrement,
-                                ),
-                              );
-                        },
-                        onIncrease: () {
-                          context.read<CartBloc>().itemQuantityChanged(
-                                CartItemQuantityChangeEvent(
-                                  cartItem.itemRef,
-                                  1,
-                                  QuantityChangeType.increment,
-                                ),
-                              );
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: 100,
-                      constraints: const BoxConstraints(minWidth: 120),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: PriceLabel(
-                          price: cartItem.getItemSubTotal(),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        context.read<CartBloc>().itemModifiedEvent(
-                              CartItemModificationEvent.fromCartItem(
-                                cartItem,
-                                CartItemModificationType.removed,
-                              ),
-                            );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Icon(
-                          CupertinoIcons.delete_left_fill,
-                          size: 32,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+                                );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Icon(
+                              CupertinoIcons.delete_left_fill,
+                              size: 32,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

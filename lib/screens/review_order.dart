@@ -176,29 +176,33 @@ class ReviewOrder extends StatelessWidget {
   }
 
   Widget _backToMenu(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
+    return Material(
+      color: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Icon(
-              CupertinoIcons.chevron_back,
-              color: kSecondaryTextColor,
-              size: 32,
-            ),
-            Text(
-              "BACK TO MENU",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2
-                  ?.copyWith(color: kSecondaryTextColor, letterSpacing: 3),
-            )
-          ],
+        child: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            mainAxisAlignment: MainAxisAlignment.start,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              const Icon(
+                CupertinoIcons.chevron_back,
+                color: kSecondaryTextColor,
+                size: 24,
+              ),
+              Text(
+                "BACK TO MENU",
+                style: Theme.of(context).textTheme.headline2?.copyWith(
+                      color: kSecondaryTextColor,
+                      letterSpacing: 3,
+                    ),
+              )
+            ],
+          ),
         ),
       ),
     );

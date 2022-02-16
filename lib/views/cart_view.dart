@@ -207,49 +207,52 @@ class MyCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<CatalogBloc>().selectActiveCartItem(cartItem);
-        Navigator.pushNamed(context, "/item");
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 120,
-            child: ItemInCart(
-              label: cartItem.itemRef.name,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          context.read<CatalogBloc>().selectActiveCartItem(cartItem);
+          Navigator.pushNamed(context, "/item");
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
               width: 120,
-              height: 120,
-              price: cartItem.getItemSubTotal(),
+              child: ItemInCart(
+                label: cartItem.itemRef.name,
+                width: 120,
+                height: 120,
+                price: cartItem.getItemSubTotal(),
+              ),
             ),
-          ),
-          Expanded(
-            child: Quantity(
-              qtyAxis: Axis.vertical,
-              qty: cartItem.quantity,
-              onIncrease: () {
-                context.read<CartBloc>().itemQuantityChanged(
-                      CartItemQuantityChangeEvent(
-                        cartItem.itemRef,
-                        1,
-                        QuantityChangeType.increment,
-                      ),
-                    );
-              },
-              onDecrease: () {
-                context.read<CartBloc>().itemQuantityChanged(
-                      CartItemQuantityChangeEvent(
-                        cartItem.itemRef,
-                        1,
-                        QuantityChangeType.decrement,
-                      ),
-                    );
-              },
-            ),
-          )
-        ],
+            Expanded(
+              child: Quantity(
+                qtyAxis: Axis.vertical,
+                qty: cartItem.quantity,
+                onIncrease: () {
+                  context.read<CartBloc>().itemQuantityChanged(
+                        CartItemQuantityChangeEvent(
+                          cartItem.itemRef,
+                          1,
+                          QuantityChangeType.increment,
+                        ),
+                      );
+                },
+                onDecrease: () {
+                  context.read<CartBloc>().itemQuantityChanged(
+                        CartItemQuantityChangeEvent(
+                          cartItem.itemRef,
+                          1,
+                          QuantityChangeType.decrement,
+                        ),
+                      );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
