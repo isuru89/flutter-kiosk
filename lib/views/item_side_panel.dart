@@ -26,6 +26,7 @@ class ItemSidePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var orientation = MediaQuery.of(context).orientation;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,32 +96,48 @@ class ItemSidePanel extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 9,
-                child: KioskButton(
-                  text: "ADD TO CART",
-                  onClicked: addToCartClicked,
+          child: (orientation == Orientation.landscape)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 9,
+                      child: _addToCartButton(),
+                    ),
+                    Flexible(
+                      flex: 7,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: _cancelButton(),
+                      ),
+                    )
+                  ],
+                )
+              : Column(
+                  children: [
+                    _cancelButton(),
+                    const SizedBox(height: 16),
+                    _addToCartButton(),
+                  ],
                 ),
-              ),
-              Flexible(
-                flex: 7,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: KioskButton(
-                    text: "CANCEL",
-                    onClicked: cancelClicked,
-                    inactive: true,
-                    inactiveColor: kSecondaryTextColor,
-                  ),
-                ),
-              )
-            ],
-          ),
-        )
+        ),
       ],
+    );
+  }
+
+  Widget _cancelButton() {
+    return KioskButton(
+      text: "CANCEL",
+      onClicked: cancelClicked,
+      inactive: true,
+      inactiveColor: kSecondaryTextColor,
+    );
+  }
+
+  Widget _addToCartButton() {
+    return KioskButton(
+      text: "ADD TO CART",
+      onClicked: addToCartClicked,
     );
   }
 }

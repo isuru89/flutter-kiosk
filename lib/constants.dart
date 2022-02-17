@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryTextColor = Color.fromARGB(255, 0, 39, 64);
 const kSecondaryTextColor = Color.fromARGB(255, 164, 164, 164);
 
 var lightThemeData = ThemeData(
@@ -58,6 +57,7 @@ var darkThemeData = ThemeData(
   brightness: Brightness.dark,
   fontFamily: 'Sarabun',
   primaryColor: Colors.lime,
+  errorColor: Colors.red,
   shadowColor: const Color(0xFF22272e),
   backgroundColor: const Color(0xFF1c2128),
   canvasColor: const Color(0xFF2d333b),

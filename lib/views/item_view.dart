@@ -40,6 +40,7 @@ class ItemView extends StatelessWidget {
     var theme = Theme.of(context);
     return Container(
       width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: theme.backgroundColor,
       ),

@@ -47,104 +47,142 @@ class ReviewOrder extends StatelessWidget {
         .toList();
     itemsMapped.insert(0, _header(context));
 
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-            flex: 11,
-            child: Container(
-              height: double.infinity,
-              color: theme.backgroundColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: itemsMapped,
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: double.infinity,
+                    color: theme.backgroundColor,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: itemsMapped,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                _orderSummary(context)
+              ],
+            ),
+          );
+        } else {
+          return Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 11,
+                  child: Container(
+                    height: double.infinity,
+                    color: theme.backgroundColor,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: itemsMapped,
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(flex: 5, child: _orderSummary(context))
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _orderSummary(BuildContext context) {
+    var theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.canvasColor,
+        // border: Border(left: BorderSide(color: theme.shadowColor)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 8,
+            offset: Offset(-2, 0),
+            color: theme.dividerColor,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Column(
+              children: [_backToMenu(context), const CartSummary()],
             ),
           ),
-          Flexible(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.canvasColor,
-                // border: Border(left: BorderSide(color: theme.shadowColor)),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 8,
-                    offset: Offset(-2, 0),
-                    color: theme.dividerColor,
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Column(
-                      children: [_backToMenu(context), const CartSummary()],
-                    ),
-                  ),
-                  Container(
-                    height: 150,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: BlocBuilder<CartBloc, CartState>(
-                            buildWhen: (previous, current) =>
-                                previous.total != current.total,
-                            builder: (context, state) => KioskButton(
-                              content: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Text(
-                                    "PAY",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 4,
-                                      fontSize: 24,
-                                    ),
-                                  ),
-                                  PriceLabel(
-                                    price: state.total,
-                                    textStyle: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                      fontSize: 24,
-                                    ),
-                                    priceTextStyle: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              text: "PAY (\$${state.total.toStringAsFixed(2)})",
-                              onClicked: () {
-                                showDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  builder: (_) => Container(
-                                    child: const Confirmation(),
-                                  ),
-                                );
-                              },
+          Container(
+            height: 150,
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: BlocBuilder<CartBloc, CartState>(
+                    buildWhen: (previous, current) =>
+                        previous.total != current.total,
+                    builder: (context, state) => KioskButton(
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "PAY  (",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 4,
+                              fontSize: 24,
                             ),
                           ),
-                        ),
-                      ],
+                          PriceLabel(
+                            price: state.total,
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              fontSize: 24,
+                            ),
+                            priceTextStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const Text(
+                            ")",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 4,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                      text: "PAY (\$${state.total.toStringAsFixed(2)})",
+                      onClicked: () {
+                        showDialog(
+                          barrierColor: Colors.black87,
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (_) => Container(
+                            child: const Confirmation(),
+                          ),
+                        );
+                      },
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           )
         ],
@@ -157,12 +195,24 @@ class ReviewOrder extends StatelessWidget {
       padding: const EdgeInsets.all(40),
       child: Row(
         children: [
-          Text(
-            "REVIEW ORDER",
-            style: Theme.of(context)
-                .textTheme
-                .headline2
-                ?.copyWith(letterSpacing: 3),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "REVIEW ORDER",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2
+                    ?.copyWith(letterSpacing: 3),
+              ),
+              SizedBox(
+                width: 96,
+                child: Divider(
+                  thickness: 6,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
           ),
           const Expanded(
             child: Padding(
