@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kSecondaryTextColor = Color.fromARGB(255, 164, 164, 164);
+const kBackgroundLight = Color(0x1F000000);
 
 var lightThemeData = ThemeData(
   brightness: Brightness.light,
@@ -8,8 +9,15 @@ var lightThemeData = ThemeData(
   primarySwatch: Colors.blue,
   dividerColor: Colors.grey,
   shadowColor: Colors.white,
-  backgroundColor: Colors.white,
+  backgroundColor: Colors.black12,
   canvasColor: Colors.white,
+  dialogTheme: const DialogTheme(backgroundColor: Colors.white),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: Colors.blue,
+      onPrimary: Colors.white,
+    ),
+  ),
   textTheme: const TextTheme(
     headline1: TextStyle(
       fontSize: 36,
@@ -37,14 +45,14 @@ var lightThemeData = ThemeData(
       fontWeight: FontWeight.w800,
     ),
     bodyText1: TextStyle(
-      color: Color(0xFFadbac7),
+      color: Color(0xFF768390),
       fontWeight: FontWeight.w600,
     ),
     bodyText2: TextStyle(
       color: Color(0xFFadbac7),
     ),
     subtitle1: TextStyle(
-      color: Color(0xFF768390),
+      color: Color(0xFFadbac7),
       fontWeight: FontWeight.bold,
     ),
     subtitle2: TextStyle(
@@ -115,3 +123,8 @@ var darkThemeData = ThemeData(
     ),
   ),
 );
+
+const RestaurantData = {
+  'name': 'Sunshine Road',
+  'availableOrders': ['Dine In', 'Take Out'],
+};

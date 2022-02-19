@@ -36,10 +36,15 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (cartItems.isEmpty) {
-      return Container();
-    }
     var theme = Theme.of(context);
+    if (cartItems.isEmpty) {
+      return Center(
+        child: Text(
+          "No items in cart!",
+          style: theme.textTheme.headline3,
+        ),
+      );
+    }
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
@@ -151,11 +156,11 @@ class CartView extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     decoration: BoxDecoration(
-                      color: theme.backgroundColor,
+                      color: theme.canvasColor,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 8,
-                          offset: Offset(0, -2),
+                          offset: const Offset(0, -2),
                           color: theme.dividerColor,
                           spreadRadius: 0,
                         )

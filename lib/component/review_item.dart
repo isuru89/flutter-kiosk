@@ -121,7 +121,7 @@ class ReviewItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             context.read<CartBloc>().itemModifiedEvent(
                                   CartItemModificationEvent.fromCartItem(

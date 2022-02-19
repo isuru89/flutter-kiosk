@@ -3,13 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  final String restaurantName;
-  final List<String> orderTypes;
-
   const WelcomeScreen({
     Key? key,
-    required this.restaurantName,
-    required this.orderTypes,
   }) : super(key: key);
 
   @override

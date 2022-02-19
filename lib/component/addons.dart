@@ -64,7 +64,7 @@ class AddOnOption extends StatelessWidget {
           decoration: BoxDecoration(
             color: isSelected
                 ? theme.primaryColor.withOpacity(0.1)
-                : theme.backgroundColor,
+                : Colors.transparent,
             border: isSelected ? Border.all(color: theme.primaryColor) : null,
             borderRadius: BorderRadius.circular(4),
             boxShadow: isSelected

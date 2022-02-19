@@ -26,7 +26,7 @@ List<AddOn> allAddOns = [
   AddOn("addon-10", "Capsicums", price: 1),
   AddOn("addon-11", "Mushrooms", price: 1.5),
   AddOn("addon-12", "Pineapple", price: 0.99),
-  AddOn("addon-13", "Bell Peppers", price: 0.25),
+  AddOn("addon-13", "Bell Peppers Bells", price: 0.25),
   AddOn("addon-14", "Jalapeno", price: 0.5),
 ];
 

@@ -38,7 +38,9 @@ class _AddOnPanelState extends State<AddOnPanel> {
   }
 
   List<Widget> _generateAddOnGroup(
-      BuildContext context, AddOnGroup addOnGroup) {
+    BuildContext context,
+    AddOnGroup addOnGroup,
+  ) {
     final ScrollController _controller = ScrollController();
     List<AddOn> childAddOns = addOnGroupViewModel.getAddOnsOf(addOnGroup);
     return [
@@ -80,7 +82,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
         ),
       ),
       const SizedBox(
-        height: 24,
+        height: 42,
       )
     ];
   }

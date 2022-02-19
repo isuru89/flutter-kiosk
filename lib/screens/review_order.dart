@@ -51,6 +51,7 @@ class ReviewOrder extends StatelessWidget {
       builder: (context, orientation) {
         if (orientation == Orientation.portrait) {
           return Container(
+            color: theme.canvasColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

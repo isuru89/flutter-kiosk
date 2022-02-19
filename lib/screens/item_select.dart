@@ -8,6 +8,7 @@ import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
+import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/addonmodel.dart';
 import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/model/catalog.dart';
@@ -26,6 +27,7 @@ class ItemSelectContainer extends StatelessWidget {
         Item? item = state.items[state.selectedItemId];
         if (item != null) {
           return ItemSelect(
+            key: Key(item.id),
             item: item,
             addOnGroupViewModel: AddOnGroupViewModel.fromState(state, item),
           );
@@ -42,6 +44,7 @@ class ItemSelectContainer extends StatelessWidget {
 
               if (cartItem != null) {
                 return ItemSelect(
+                  key: Key(cartItem.itemRef.id),
                   item: cartItem.itemRef,
                   addOnGroupViewModel:
                       AddOnGroupViewModel.fromCartItem(state, cartItem),
@@ -61,12 +64,17 @@ class ItemSelect extends StatefulWidget {
   final Item item;
   final AddOnGroupViewModel addOnGroupViewModel;
 
-  ItemSelect({Key? key, required this.item, required this.addOnGroupViewModel})
-      : super(key: key);
+  const ItemSelect({
+    Key? key,
+    required this.item,
+    required this.addOnGroupViewModel,
+  }) : super(key: key);
 
   @override
-  State<ItemSelect> createState() =>
-      _ItemSelectState(addOnGroupViewModel, item: item);
+  State<ItemSelect> createState() => _ItemSelectState(
+        addOnGroupViewModel,
+        item: item,
+      );
 }
 
 class _ItemSelectState extends State<ItemSelect> {
@@ -74,7 +82,10 @@ class _ItemSelectState extends State<ItemSelect> {
   final AddOnGroupViewModel addOnGroupViewModel;
   int quantity = 1;
 
-  _ItemSelectState(this.addOnGroupViewModel, {required this.item});
+  _ItemSelectState(
+    this.addOnGroupViewModel, {
+    required this.item,
+  });
 
   void _whenQuantityChanged(QuantityChangeType type) {
     if (type == QuantityChangeType.increment) {
@@ -90,7 +101,9 @@ class _ItemSelectState extends State<ItemSelect> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+
     return Container(
+      color: Colors.white,
       child: Row(
         children: [
           Flexible(
@@ -98,8 +111,7 @@ class _ItemSelectState extends State<ItemSelect> {
             child: Container(
               decoration: BoxDecoration(
                 color: theme.shadowColor,
-                border: const Border(
-                    right: const BorderSide(color: Color(0xFF444c56))),
+                border: Border(right: BorderSide(color: theme.dividerColor)),
               ),
               child: ItemSidePanel(
                 item: item,
@@ -122,9 +134,10 @@ class _ItemSelectState extends State<ItemSelect> {
               ),
             ),
           ),
-          Flexible(
+          Expanded(
             flex: 9,
             child: Container(
+              width: double.infinity,
               height: double.infinity,
               color: theme.backgroundColor,
               padding: const EdgeInsets.all(24),

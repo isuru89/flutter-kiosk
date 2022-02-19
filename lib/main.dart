@@ -34,12 +34,9 @@ class _MyApp extends State<MyApp> {
         BlocProvider<CatalogBloc>(create: (_) => _catalogBloc),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Kiosk',
         routes: {
-          '/': (ctx) => const WelcomeScreen(
-                restaurantName: "ISURU",
-                orderTypes: ["PICKUP", "DELIVERY"],
-              ),
+          '/': (ctx) => const WelcomeScreen(),
           '/menu': (ctx) => const MenuPage(),
           '/review': (ctx) => const ReviewOrderContainer(),
           '/item': (ctx) => const ItemSelectContainer(),
