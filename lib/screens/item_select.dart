@@ -110,7 +110,7 @@ class _ItemSelectState extends State<ItemSelect> {
             flex: 7,
             child: Container(
               decoration: BoxDecoration(
-                color: theme.shadowColor,
+                color: theme.canvasColor,
                 border: Border(right: BorderSide(color: theme.dividerColor)),
               ),
               child: ItemSidePanel(

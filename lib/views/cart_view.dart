@@ -61,41 +61,49 @@ class CartView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      "MY CART ",
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: theme.primaryColor.withOpacity(0.2),
+          SafeArea(
+            top: true,
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 24,
+                right: 24,
+                top: 24,
+                bottom: 12,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        "MY CART ",
+                        style: Theme.of(context).textTheme.headline3,
                       ),
-                      child: Center(
-                        child: Text(
-                          "${cartItems.length}",
-                          style:
-                              Theme.of(context).textTheme.headline3?.copyWith(
-                                    color: theme.primaryColor,
-                                    fontSize: 16,
-                                  ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: theme.primaryColor.withOpacity(0.2),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                const Divider()
-              ],
+                        child: Center(
+                          child: Text(
+                            "${cartItems.length}",
+                            style:
+                                Theme.of(context).textTheme.headline3?.copyWith(
+                                      color: theme.primaryColor,
+                                      fontSize: 16,
+                                    ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const Divider()
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -111,7 +119,7 @@ class CartView extends StatelessWidget {
                           vertical: 8.0,
                           horizontal: 24.0,
                         ),
-                        child: Container(
+                        child: SizedBox(
                           height: 200,
                           width: 200,
                           child: Dismissible(
@@ -122,7 +130,7 @@ class CartView extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   "Removing",
-                                  style: theme.textTheme.bodyText1,
+                                  style: theme.textTheme.bodyText2,
                                 ),
                               ),
                             ),
@@ -148,55 +156,57 @@ class CartView extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: 120,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration: BoxDecoration(
-                      color: theme.canvasColor,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8,
-                          offset: const Offset(0, -2),
-                          color: theme.dividerColor,
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "TOTAL:",
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              ?.copyWith(fontSize: 20),
-                        ),
-                        PriceLabel(
-                          price: total,
-                          textStyle: theme.textTheme.headline4
-                              ?.copyWith(color: theme.primaryColor),
-                          priceTextStyle: theme.textTheme.headline4?.copyWith(
-                            color: theme.primaryColor,
-                            fontSize: 14,
+          SafeArea(
+            child: SizedBox(
+              height: 120,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      decoration: BoxDecoration(
+                        color: theme.canvasColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 8,
+                            offset: const Offset(0, -2),
+                            color: theme.dividerColor,
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "TOTAL:",
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(fontSize: 20),
                           ),
-                        ),
-                      ],
+                          PriceLabel(
+                            price: total,
+                            textStyle: theme.textTheme.headline4
+                                ?.copyWith(color: theme.primaryColor),
+                            priceTextStyle: theme.textTheme.headline4?.copyWith(
+                              color: theme.primaryColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                KioskButton(
-                  text: "CHECKOUT",
-                  height: 60,
-                  onClicked: () {
-                    Navigator.pushNamed(context, '/review');
-                  },
-                ),
-              ],
+                  KioskButton(
+                    text: "CHECKOUT",
+                    height: 60,
+                    onClicked: () {
+                      Navigator.pushNamed(context, '/review');
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -208,7 +218,7 @@ class CartView extends StatelessWidget {
 class MyCartItem extends StatelessWidget {
   final CartItem cartItem;
 
-  MyCartItem({Key? key, required this.cartItem}) : super(key: key);
+  const MyCartItem({Key? key, required this.cartItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +233,7 @@ class MyCartItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: 120,
               child: ItemInCart(
                 label: cartItem.itemRef.name,

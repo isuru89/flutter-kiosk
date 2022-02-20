@@ -7,7 +7,8 @@ import 'package:kioskflutter/model/catalog.dart';
 class AddOnPanel extends StatefulWidget {
   final AddOnGroupViewModel addOnGroupViewModel;
 
-  AddOnPanel({Key? key, required this.addOnGroupViewModel}) : super(key: key);
+  const AddOnPanel({Key? key, required this.addOnGroupViewModel})
+      : super(key: key);
 
   @override
   State<AddOnPanel> createState() =>
@@ -28,11 +29,13 @@ class _AddOnPanelState extends State<AddOnPanel> {
     }
     children.add(const EndOfSection());
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: children,
+    return SafeArea(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: children,
+        ),
       ),
     );
   }

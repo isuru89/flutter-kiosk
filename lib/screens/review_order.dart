@@ -59,11 +59,17 @@ class ReviewOrder extends StatelessWidget {
                   child: Container(
                     height: double.infinity,
                     color: theme.backgroundColor,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: itemsMapped,
+                    child: SafeArea(
+                      top: true,
+                      bottom: true,
+                      left: false,
+                      right: false,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: itemsMapped,
+                        ),
                       ),
                     ),
                   ),
@@ -73,27 +79,25 @@ class ReviewOrder extends StatelessWidget {
             ),
           );
         } else {
-          return Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 11,
-                  child: Container(
-                    height: double.infinity,
-                    color: theme.backgroundColor,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: itemsMapped,
-                      ),
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                flex: 11,
+                child: Container(
+                  height: double.infinity,
+                  color: theme.backgroundColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: itemsMapped,
                     ),
                   ),
                 ),
-                Flexible(flex: 5, child: _orderSummary(context))
-              ],
-            ),
+              ),
+              Flexible(flex: 5, child: _orderSummary(context))
+            ],
           );
         }
       },
@@ -105,88 +109,91 @@ class ReviewOrder extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.canvasColor,
-        // border: Border(left: BorderSide(color: theme.shadowColor)),
         boxShadow: [
           BoxShadow(
             blurRadius: 8,
-            offset: Offset(-2, 0),
+            offset: const Offset(-2, 0),
             color: theme.dividerColor,
             spreadRadius: 0,
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: Column(
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        left: false,
+        right: false,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
               children: [_backToMenu(context), const CartSummary()],
             ),
-          ),
-          Container(
-            height: 150,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: BlocBuilder<CartBloc, CartState>(
-                    buildWhen: (previous, current) =>
-                        previous.total != current.total,
-                    builder: (context, state) => KioskButton(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "PAY  (",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                              fontSize: 24,
+            SizedBox(
+              height: 150,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: BlocBuilder<CartBloc, CartState>(
+                      buildWhen: (previous, current) =>
+                          previous.total != current.total,
+                      builder: (context, state) => KioskButton(
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "PAY  (",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 4,
+                                fontSize: 24,
+                              ),
                             ),
-                          ),
-                          PriceLabel(
-                            price: state.total,
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                              fontSize: 24,
+                            PriceLabel(
+                              price: state.total,
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 24,
+                              ),
+                              priceTextStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20,
+                              ),
                             ),
-                            priceTextStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                              fontSize: 20,
+                            const Text(
+                              ")",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 4,
+                                fontSize: 24,
+                              ),
                             ),
-                          ),
-                          const Text(
-                            ")",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                              fontSize: 24,
+                          ],
+                        ),
+                        text: "PAY (\$${state.total.toStringAsFixed(2)})",
+                        onClicked: () {
+                          showDialog(
+                            barrierColor: Colors.black87,
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) => Container(
+                              child: const Confirmation(),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                      text: "PAY (\$${state.total.toStringAsFixed(2)})",
-                      onClicked: () {
-                        showDialog(
-                          barrierColor: Colors.black87,
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (_) => Container(
-                            child: const Confirmation(),
-                          ),
-                        );
-                      },
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -215,12 +222,6 @@ class ReviewOrder extends StatelessWidget {
               ),
             ],
           ),
-          const Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Divider(),
-            ),
-          )
         ],
       ),
     );

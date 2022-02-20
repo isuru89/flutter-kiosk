@@ -140,7 +140,12 @@ class AddOnTitle extends StatelessWidget {
               style: theme.textTheme.headline3
                   ?.copyWith(fontWeight: FontWeight.w800, fontSize: 20),
             ),
-            const Expanded(child: Divider())
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Divider(),
+              ),
+            )
           ],
         ),
         if (subTitle != null) ...[

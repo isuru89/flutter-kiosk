@@ -51,35 +51,36 @@ class _MenuPage2 extends StatelessWidget {
         floatingActionButton: Builder(
           builder: (ctx) {
             return Visibility(
-                visible: showCart,
-                child: BlocBuilder<CartBloc, CartState>(
-                  buildWhen: (previous, current) =>
-                      previous.items.length != current.items.length,
-                  builder: (blocCtx, state) => SizedBox(
-                    width: 64,
-                    height: 64,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        backgroundColor: theme.primaryColor,
-                        child: Badge(
-                          badgeColor: theme.errorColor,
-                          padding: const EdgeInsets.all(6),
-                          position: BadgePosition.topEnd(top: -16),
-                          badgeContent: Text(
-                            "${state.items.length}",
-                            style: theme.textTheme.headline5
-                                ?.copyWith(color: Colors.white),
-                          ),
-                          child: const Icon(
-                            Icons.shopping_cart,
-                            size: 36,
-                          ),
+              visible: showCart,
+              child: BlocBuilder<CartBloc, CartState>(
+                buildWhen: (previous, current) =>
+                    previous.items.length != current.items.length,
+                builder: (blocCtx, state) => SizedBox(
+                  width: 64,
+                  height: 64,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      backgroundColor: theme.primaryColor,
+                      child: Badge(
+                        badgeColor: theme.errorColor,
+                        padding: const EdgeInsets.all(6),
+                        position: BadgePosition.topEnd(top: -16),
+                        badgeContent: Text(
+                          "${state.items.length}",
+                          style: theme.textTheme.headline5
+                              ?.copyWith(color: Colors.white),
                         ),
-                        onPressed: () => Scaffold.of(ctx).openEndDrawer(),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          size: 36,
+                        ),
                       ),
+                      onPressed: () => Scaffold.of(ctx).openEndDrawer(),
                     ),
                   ),
-                ));
+                ),
+              ),
+            );
           },
         ),
         endDrawer: const Drawer(

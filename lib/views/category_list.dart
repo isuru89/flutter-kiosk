@@ -39,43 +39,49 @@ class CategoryList extends StatelessWidget {
     return Container(
       height: double.infinity,
       decoration: BoxDecoration(
-        color: theme.shadowColor,
+        color: theme.canvasColor,
         border: Border(right: BorderSide(color: theme.dividerColor)),
       ),
-      child: SingleChildScrollView(
-        controller: _categoryCtrl,
-        scrollDirection: Axis.vertical,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: categories
-              .map(
-                (e) => Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      context.read<CatalogBloc>().selectActiveCategory(e.id);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 24.0,
-                      ),
-                      child: Container(
-                        height: 180,
-                        width: 160,
-                        child: CategoryItem(
-                          key: Key(e.id),
-                          label: e.name,
-                          isSelected: e.id == selectedCategory,
-                          width: 120,
-                          height: 120,
+      child: SafeArea(
+        top: true,
+        bottom: true,
+        left: false,
+        right: false,
+        child: SingleChildScrollView(
+          controller: _categoryCtrl,
+          scrollDirection: Axis.vertical,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: categories
+                .map(
+                  (e) => Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<CatalogBloc>().selectActiveCategory(e.id);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 24.0,
+                        ),
+                        child: Container(
+                          height: 180,
+                          width: 160,
+                          child: CategoryItem(
+                            key: Key(e.id),
+                            label: e.name,
+                            isSelected: e.id == selectedCategory,
+                            width: 120,
+                            height: 120,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ),
         ),
       ),
     );

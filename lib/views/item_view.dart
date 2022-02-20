@@ -44,75 +44,79 @@ class ItemView extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.backgroundColor,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  selectedCategory?.name ?? "",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2
-                      ?.copyWith(letterSpacing: 3, fontWeight: FontWeight.w800),
-                ),
-                if (selectedCategory != null)
-                  SizedBox(
-                    width: 96,
-                    child: Divider(
-                      thickness: 6,
-                      color: theme.primaryColor,
-                    ),
-                  )
-              ],
-            ),
-          ),
-          Flexible(
-            child: SingleChildScrollView(
-              controller: _itemCtrl,
-              child: Row(
+      child: SafeArea(
+        top: true,
+        bottom: true,
+        left: false,
+        right: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Center(
-                      child: Wrap(
-                        runSpacing: 32,
-                        spacing: 16,
-                        alignment: WrapAlignment.start,
-                        children: items
-                            .map(
-                              (e) => Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    context
-                                        .read<CatalogBloc>()
-                                        .selectActiveItem(e.id);
-                                    Navigator.pushNamed(context, '/item');
-                                  },
-                                  child: Container(
-                                    width: 180,
-                                    height: 260,
-                                    padding: const EdgeInsets.all(8),
-                                    child: ItemWithNameAndPrice(
-                                      label: e.name,
-                                      price: e.price,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                  Text(
+                    selectedCategory?.name ?? "",
+                    style: Theme.of(context).textTheme.headline2?.copyWith(
+                        letterSpacing: 3, fontWeight: FontWeight.w800),
+                  ),
+                  if (selectedCategory != null)
+                    SizedBox(
+                      width: 96,
+                      child: Divider(
+                        thickness: 6,
+                        color: theme.primaryColor,
                       ),
-                    ),
-                  )
+                    )
                 ],
               ),
             ),
-          ),
-        ],
+            Flexible(
+              child: SingleChildScrollView(
+                controller: _itemCtrl,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Wrap(
+                          runSpacing: 32,
+                          spacing: 16,
+                          alignment: WrapAlignment.start,
+                          children: items
+                              .map(
+                                (e) => Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<CatalogBloc>()
+                                          .selectActiveItem(e.id);
+                                      Navigator.pushNamed(context, '/item');
+                                    },
+                                    child: Container(
+                                      width: 180,
+                                      height: 260,
+                                      padding: const EdgeInsets.all(8),
+                                      child: ItemWithNameAndPrice(
+                                        label: e.name,
+                                        price: e.price,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

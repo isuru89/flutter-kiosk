@@ -8,7 +8,7 @@ var lightThemeData = ThemeData(
   fontFamily: 'Sarabun',
   primarySwatch: Colors.blue,
   dividerColor: Colors.grey,
-  shadowColor: Colors.white,
+  shadowColor: Colors.black38,
   backgroundColor: Colors.black12,
   canvasColor: Colors.white,
   dialogTheme: const DialogTheme(backgroundColor: Colors.white),

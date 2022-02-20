@@ -41,7 +41,7 @@ class _MyApp extends State<MyApp> {
           '/review': (ctx) => const ReviewOrderContainer(),
           '/item': (ctx) => const ItemSelectContainer(),
         },
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         darkTheme: darkThemeData,
         theme: lightThemeData,
         initialRoute: '/',
