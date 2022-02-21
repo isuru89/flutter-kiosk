@@ -40,6 +40,7 @@ dependencies:
   equatable: ^2.0.0
   lottie: ^1.2.1
   badges: ^2.0.2
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:

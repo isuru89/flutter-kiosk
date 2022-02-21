@@ -5,7 +5,10 @@ class ItemWithNameAndPrice extends StatelessWidget {
   final double? height;
   final String label;
   final double price;
+  final double? prevPrice;
   final String? currency;
+  final Widget? subContent;
+  final bool circular;
 
   const ItemWithNameAndPrice({
     Key? key,
@@ -13,7 +16,10 @@ class ItemWithNameAndPrice extends StatelessWidget {
     this.height,
     required this.label,
     required this.price,
+    this.prevPrice,
     this.currency,
+    this.subContent,
+    this.circular = false,
   }) : super(key: key);
 
   @override
@@ -22,10 +28,17 @@ class ItemWithNameAndPrice extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ItemImage(
-          imageUrl: "https://picsum.photos/400/400",
-          width: width,
-          height: height,
+        Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            ItemImage(
+              imageUrl: "https://picsum.photos/400/400",
+              width: width,
+              height: height,
+              circular: circular,
+            ),
+            if (subContent != null) subContent!,
+          ],
         ),
         Expanded(
           child: Column(
@@ -41,9 +54,12 @@ class ItemWithNameAndPrice extends StatelessWidget {
               ),
               PriceLabel(
                 price: price,
+                prevPrice: prevPrice,
                 textStyle: theme.textTheme.subtitle2?.copyWith(fontSize: 20),
                 priceTextStyle:
                     theme.textTheme.subtitle2?.copyWith(fontSize: 14),
+                prevPriceTextStyle:
+                    theme.textTheme.subtitle2?.copyWith(fontSize: 16),
               ),
             ],
           ),
@@ -59,6 +75,7 @@ class ItemInCart extends StatelessWidget {
   final String label;
   final double price;
   final String? currency;
+  final bool circular;
 
   const ItemInCart({
     Key? key,
@@ -67,6 +84,7 @@ class ItemInCart extends StatelessWidget {
     required this.label,
     required this.price,
     this.currency,
+    this.circular = false,
   }) : super(key: key);
 
   @override
@@ -79,6 +97,7 @@ class ItemInCart extends StatelessWidget {
           imageUrl: "https://picsum.photos/400/400",
           width: width,
           height: height,
+          circular: circular,
         ),
         Expanded(
           child: Column(
@@ -162,44 +181,89 @@ class CategoryItem extends StatelessWidget {
 
 class PriceLabel extends StatelessWidget {
   final double price;
+  final double? prevPrice;
   final String currency;
   final Color? color;
   final TextStyle? textStyle;
+  final TextStyle? prevPriceTextStyle;
   final TextStyle? priceTextStyle;
   final MainAxisAlignment? mainAxisAlignment;
 
   const PriceLabel({
     Key? key,
     required this.price,
+    this.prevPrice,
     this.currency = '\$',
     this.color,
     this.textStyle,
     this.priceTextStyle,
+    this.prevPriceTextStyle,
     this.mainAxisAlignment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    bool hasPriceDiff = prevPrice != null;
+    var decoration =
+        hasPriceDiff ? TextDecoration.lineThrough : TextDecoration.none;
+
     return Row(
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
+      textBaseline: TextBaseline.alphabetic,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 2),
-          child: Text(
-            currency,
-            style: priceTextStyle ??
-                textStyle ??
-                Theme.of(context)
-                    .textTheme
-                    .headline4
-                    ?.copyWith(color: color, fontSize: 16),
+        if (hasPriceDiff)
+          Opacity(
+            opacity: 0.5,
+            child: Row(
+              children: [
+                Text(
+                  currency,
+                  style: (prevPriceTextStyle ??
+                          priceTextStyle ??
+                          textStyle ??
+                          theme.textTheme.headline4)
+                      ?.copyWith(
+                    color: color,
+                    fontSize: 16,
+                    decoration: decoration,
+                  ),
+                ),
+                Text(
+                  prevPrice!.toStringAsFixed(2),
+                  style: (prevPriceTextStyle ??
+                          textStyle ??
+                          theme.textTheme.headline4)
+                      ?.copyWith(
+                    color: color,
+                    decoration: decoration,
+                  ),
+                ),
+                const SizedBox(
+                  width: 4,
+                )
+              ],
+            ),
           ),
-        ),
-        Text(
-          price.toStringAsFixed(2),
-          style: textStyle ??
-              Theme.of(context).textTheme.headline4?.copyWith(color: color),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 2),
+              child: Text(
+                currency,
+                style: priceTextStyle ??
+                    textStyle ??
+                    theme.textTheme.headline4
+                        ?.copyWith(color: color, fontSize: 16),
+              ),
+            ),
+            Text(
+              price.toStringAsFixed(2),
+              style: textStyle ??
+                  theme.textTheme.headline4?.copyWith(color: color),
+            ),
+          ],
         ),
       ],
     );
@@ -210,26 +274,42 @@ class ItemImage extends StatelessWidget {
   final double? width;
   final double? height;
   final String imageUrl;
+  final bool circular;
 
-  const ItemImage({Key? key, this.width, this.height, required this.imageUrl})
-      : super(key: key);
+  const ItemImage({
+    Key? key,
+    this.width,
+    this.height,
+    required this.imageUrl,
+    this.circular = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Image img;
     if (imageUrl.startsWith("assets/")) {
-      return Image.asset(
+      img = Image.asset(
         imageUrl,
         fit: BoxFit.cover,
         width: width,
         height: height,
       );
     } else {
-      return Image.network(
+      img = Image.network(
         imageUrl,
         fit: BoxFit.cover,
         width: width,
         height: height,
       );
+    }
+
+    if (circular) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(500),
+        child: img,
+      );
+    } else {
+      return img;
     }
   }
 }

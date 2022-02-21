@@ -8,12 +8,14 @@ import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
-import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/addonmodel.dart';
 import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/model/catalog.dart';
 import 'package:kioskflutter/views/addon_panel.dart';
 import 'package:kioskflutter/views/item_side_panel.dart';
+import 'package:uuid/uuid.dart';
+
+var uuid = const Uuid();
 
 class ItemSelectContainer extends StatelessWidget {
   const ItemSelectContainer({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class ItemSelectContainer extends StatelessWidget {
         if (item != null) {
           return ItemSelect(
             key: Key(item.id),
-            item: item,
+            cartItem: CartItem(item, 1),
             addOnGroupViewModel: AddOnGroupViewModel.fromState(state, item),
           );
         } else {
@@ -45,7 +47,7 @@ class ItemSelectContainer extends StatelessWidget {
               if (cartItem != null) {
                 return ItemSelect(
                   key: Key(cartItem.itemRef.id),
-                  item: cartItem.itemRef,
+                  cartItem: cartItem,
                   addOnGroupViewModel:
                       AddOnGroupViewModel.fromCartItem(state, cartItem),
                 );
@@ -61,46 +63,54 @@ class ItemSelectContainer extends StatelessWidget {
 }
 
 class ItemSelect extends StatefulWidget {
-  final Item item;
+  final CartItem cartItem;
   final AddOnGroupViewModel addOnGroupViewModel;
 
   const ItemSelect({
     Key? key,
-    required this.item,
     required this.addOnGroupViewModel,
+    required this.cartItem,
   }) : super(key: key);
 
   @override
-  State<ItemSelect> createState() => _ItemSelectState(
-        addOnGroupViewModel,
-        item: item,
-      );
+  State<ItemSelect> createState() => _ItemSelectState();
 }
 
 class _ItemSelectState extends State<ItemSelect> {
-  final Item item;
-  final AddOnGroupViewModel addOnGroupViewModel;
-  int quantity = 1;
+  CartItem? refCartItem;
 
-  _ItemSelectState(
-    this.addOnGroupViewModel, {
-    required this.item,
-  });
+  _ItemSelectState();
+
+  @override
+  void initState() {
+    super.initState();
+
+    refCartItem = widget.cartItem.copyWith();
+  }
+
+  void _whenAddOnSelected(AddOnGroup group, String addOnId, bool selected) {
+    setState(() {
+      refCartItem = refCartItem!
+          .copyWith(addOns: widget.addOnGroupViewModel.deriveSelectedAddOns());
+    });
+  }
 
   void _whenQuantityChanged(QuantityChangeType type) {
+    int quantity = refCartItem!.quantity;
     if (type == QuantityChangeType.increment) {
       quantity += 1;
     } else {
       quantity = max(quantity - 1, 1);
     }
     setState(() {
-      quantity = quantity;
+      refCartItem = refCartItem!.copyWith(quantity: quantity);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var cartItem = refCartItem!;
 
     return Container(
       color: Colors.white,
@@ -114,14 +124,16 @@ class _ItemSelectState extends State<ItemSelect> {
                 border: Border(right: BorderSide(color: theme.dividerColor)),
               ),
               child: ItemSidePanel(
-                item: item,
+                cartItem: cartItem,
                 addToCartClicked: () {
                   context.read<CartBloc>().itemModifiedEvent(
                         CartItemModificationEvent.fromCartItem(
                           CartItem(
-                            item,
-                            quantity,
-                            addOns: addOnGroupViewModel.deriveSelectedAddOns(),
+                            cartItem.itemRef,
+                            cartItem.quantity,
+                            lineItemId: cartItem.lineItemId ?? uuid.v4(),
+                            addOns: widget.addOnGroupViewModel
+                                .deriveSelectedAddOns(),
                           ),
                           CartItemModificationType.added,
                         ),
@@ -129,7 +141,6 @@ class _ItemSelectState extends State<ItemSelect> {
                   Navigator.pop(context);
                 },
                 cancelClicked: () => Navigator.pop(context),
-                quantity: quantity,
                 onQuantityChanged: _whenQuantityChanged,
               ),
             ),
@@ -142,7 +153,8 @@ class _ItemSelectState extends State<ItemSelect> {
               color: theme.backgroundColor,
               padding: const EdgeInsets.all(24),
               child: AddOnPanel(
-                addOnGroupViewModel: addOnGroupViewModel,
+                addOnGroupViewModel: widget.addOnGroupViewModel,
+                onAddOnSelected: _whenAddOnSelected,
               ),
             ),
           )

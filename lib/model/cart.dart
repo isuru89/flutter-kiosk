@@ -1,14 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:kioskflutter/utils/orders.dart';
 
 import 'catalog.dart';
 
 // ignore: must_be_immutable
 class CartItem extends Equatable {
+  final String? lineItemId;
   final Item itemRef;
   final Map<String, List<SelectedAddOn>> addOns;
   int quantity;
 
-  CartItem(this.itemRef, this.quantity, {this.addOns = const {}});
+  CartItem(
+    this.itemRef,
+    this.quantity, {
+    this.lineItemId,
+    this.addOns = const {},
+  });
 
   CartItem copyWith({
     Item? itemRef,
@@ -18,12 +25,21 @@ class CartItem extends Equatable {
     return CartItem(
       itemRef ?? this.itemRef,
       quantity ?? this.quantity,
+      lineItemId: lineItemId,
       addOns: addOns ?? this.addOns,
     );
   }
 
   double getItemSubTotal() {
-    return (itemRef.price + getTotalAddOnPrice()) * quantity;
+    return calculatePriceAfterDiscount(
+      itemRef,
+      totalBaseAmount: getUnitPrice(),
+      quantity: quantity,
+    );
+  }
+
+  double getUnitPrice() {
+    return itemRef.price + getTotalAddOnPrice();
   }
 
   double getTotalAddOnPrice() {
@@ -44,7 +60,7 @@ class CartItem extends Equatable {
 
   @override
   String toString() =>
-      'CartItem(itemRef: $itemRef, quantity: $quantity, addOns: $addOns)';
+      'CartItem(id: $lineItemId, itemRef: $itemRef, quantity: $quantity, addOns: $addOns)';
 
   @override
   List<Object?> get props => [itemRef, addOns, quantity];

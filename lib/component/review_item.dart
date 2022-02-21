@@ -5,6 +5,7 @@ import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/quantity.dart';
 import 'package:kioskflutter/model/cart.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
 import 'image_entity.dart';
@@ -71,12 +72,14 @@ class ReviewItem extends StatelessWidget {
                             onTap: () {
                               _triggerCartItemEdit(context);
                             },
-                            child: Container(
+                            child: SizedBox(
                               width: 120,
                               child: hasAddOns
                                   ? Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 16, top: 8),
+                                        left: 16,
+                                        top: 8,
+                                      ),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -87,14 +90,15 @@ class ReviewItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 100,
                           child: Quantity(
                             qty: cartItem.quantity,
                             onDecrease: () {
                               context.read<CartBloc>().itemQuantityChanged(
                                     CartItemQuantityChangeEvent(
-                                      cartItem.itemRef,
+                                      cartItem,
+                                      cartItem.lineItemId!,
                                       1,
                                       QuantityChangeType.decrement,
                                     ),
@@ -103,7 +107,8 @@ class ReviewItem extends StatelessWidget {
                             onIncrease: () {
                               context.read<CartBloc>().itemQuantityChanged(
                                     CartItemQuantityChangeEvent(
-                                      cartItem.itemRef,
+                                      cartItem,
+                                      cartItem.lineItemId!,
                                       1,
                                       QuantityChangeType.increment,
                                     ),

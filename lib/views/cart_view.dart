@@ -240,6 +240,7 @@ class MyCartItem extends StatelessWidget {
                 width: 120,
                 height: 120,
                 price: cartItem.getItemSubTotal(),
+                circular: false,
               ),
             ),
             Expanded(
@@ -249,7 +250,8 @@ class MyCartItem extends StatelessWidget {
                 onIncrease: () {
                   context.read<CartBloc>().itemQuantityChanged(
                         CartItemQuantityChangeEvent(
-                          cartItem.itemRef,
+                          cartItem,
+                          cartItem.lineItemId!,
                           1,
                           QuantityChangeType.increment,
                         ),
@@ -258,7 +260,8 @@ class MyCartItem extends StatelessWidget {
                 onDecrease: () {
                   context.read<CartBloc>().itemQuantityChanged(
                         CartItemQuantityChangeEvent(
-                          cartItem.itemRef,
+                          cartItem,
+                          cartItem.lineItemId!,
                           1,
                           QuantityChangeType.decrement,
                         ),

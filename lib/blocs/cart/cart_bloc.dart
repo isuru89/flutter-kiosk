@@ -13,7 +13,7 @@ class CartBloc extends Cubit<CartState> {
   void itemQuantityChanged(CartItemQuantityChangeEvent event) {
     var items = [...state.items];
     int itemIndex =
-        items.indexWhere((element) => element.itemRef.id == event.refItem.id);
+        items.indexWhere((element) => element.lineItemId == event.lineItemId);
     if (itemIndex < 0) {
       return;
     }
@@ -33,33 +33,33 @@ class CartBloc extends Cubit<CartState> {
     if (event.type == CartItemModificationType.added) {
       var items = [...state.items];
       CartItem? existingItem;
-      if (event.cartItem != null) {
+      if (event.cartItem.lineItemId != null) {
         existingItem = items.firstWhereOrNull(
-          (element) => element.itemRef.id == event.cartItem?.itemRef.id,
+          (element) => element.lineItemId == event.cartItem.lineItemId,
         );
         if (existingItem != null) {
-          _removeInPlace(items, event.cartItem!.itemRef.id);
+          _removeInPlace(items, event.cartItem.lineItemId!);
         }
 
-        items.add(event.cartItem!);
+        items.add(event.cartItem);
       } else {
         existingItem = items.firstWhereOrNull(
-          (element) => element.itemRef.id == event.refItem.id,
+          (element) => element.lineItemId == event.lineItemId,
         );
         if (existingItem != null) {
-          _removeInPlace(items, event.refItem.id);
+          _removeInPlace(items, event.lineItemId);
         }
-        items.add(CartItem(event.refItem, event.quantity));
+        items.add(CartItem(event.cartItem.itemRef, event.quantity));
       }
       emit(state.copyWith(items: items));
     } else if (event.type == CartItemModificationType.removed) {
       var items = [...state.items];
-      items.removeWhere((element) => element.itemRef.id == event.refItem.id);
+      items.removeWhere((element) => element.lineItemId == event.lineItemId);
       emit(state.copyWith(items: items));
     }
   }
 
   void _removeInPlace(List<CartItem> items, String id) {
-    items.removeWhere((element) => element.itemRef.id == id);
+    items.removeWhere((element) => element.lineItemId == id);
   }
 }

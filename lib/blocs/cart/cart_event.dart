@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:kioskflutter/model/cart.dart';
-import 'package:kioskflutter/model/catalog.dart';
 
 abstract class CartEvent extends Equatable {}
 
@@ -10,46 +9,55 @@ class CartClearEvent extends CartEvent {
 }
 
 class CartItemEvent extends CartEvent {
-  final Item refItem;
+  final CartItem cartItem;
+  final String lineItemId;
 
-  CartItemEvent(this.refItem);
+  CartItemEvent(this.cartItem, this.lineItemId);
 
   @override
-  List<Object?> get props => [refItem];
+  List<Object?> get props => [cartItem];
 }
 
 class CartItemModificationEvent extends CartItemEvent {
   final CartItemModificationType type;
   final int quantity;
-  final CartItem? cartItem;
 
-  CartItemModificationEvent(Item refItem, this.type, this.quantity,
-      {this.cartItem})
-      : super(refItem);
+  CartItemModificationEvent(
+    CartItem refItem,
+    String lineItemId,
+    this.type,
+    this.quantity,
+  ) : super(refItem, lineItemId);
 
   factory CartItemModificationEvent.fromCartItem(
-      CartItem cartItem, CartItemModificationType type) {
+    CartItem cartItem,
+    CartItemModificationType type,
+  ) {
     return CartItemModificationEvent(
-      cartItem.itemRef,
+      cartItem,
+      cartItem.lineItemId ?? '',
       type,
       cartItem.quantity,
-      cartItem: cartItem,
     );
   }
 
   @override
-  List<Object?> get props => [refItem, type, quantity];
+  List<Object?> get props => [type, quantity];
 }
 
 class CartItemQuantityChangeEvent extends CartItemEvent {
   final int amount;
   final QuantityChangeType changeType;
 
-  CartItemQuantityChangeEvent(Item refItem, this.amount, this.changeType)
-      : super(refItem);
+  CartItemQuantityChangeEvent(
+    CartItem refItem,
+    String lineItemId,
+    this.amount,
+    this.changeType,
+  ) : super(refItem, lineItemId);
 
   @override
-  List<Object?> get props => [refItem, amount, changeType];
+  List<Object?> get props => [amount, changeType];
 }
 
 enum CartItemModificationType { added, removed }

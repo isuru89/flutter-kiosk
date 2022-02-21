@@ -6,25 +6,44 @@ import 'package:kioskflutter/model/catalog.dart';
 
 class AddOnPanel extends StatefulWidget {
   final AddOnGroupViewModel addOnGroupViewModel;
+  final Function(AddOnGroup, String, bool) onAddOnSelected;
 
-  const AddOnPanel({Key? key, required this.addOnGroupViewModel})
-      : super(key: key);
+  const AddOnPanel({
+    Key? key,
+    required this.addOnGroupViewModel,
+    required this.onAddOnSelected,
+  }) : super(key: key);
 
   @override
-  State<AddOnPanel> createState() =>
-      _AddOnPanelState(addOnGroupViewModel: addOnGroupViewModel);
+  State<AddOnPanel> createState() => _AddOnPanelState();
 }
 
 class _AddOnPanelState extends State<AddOnPanel> {
-  final AddOnGroupViewModel addOnGroupViewModel;
   int updated = 0;
 
-  _AddOnPanelState({required this.addOnGroupViewModel});
+  _AddOnPanelState();
+
+  void _whenAddOnSelected(
+    AddOnGroup addOnGroup,
+    String addOnId,
+    bool selected,
+  ) {
+    setState(() {
+      updated++;
+      if (selected) {
+        widget.addOnGroupViewModel.selectAddOns(addOnGroup, [addOnId]);
+      } else {
+        widget.addOnGroupViewModel.deselectAddOns(addOnGroup, [addOnId]);
+      }
+    });
+
+    widget.onAddOnSelected(addOnGroup, addOnId, selected);
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
-    for (AddOnGroup group in addOnGroupViewModel.addOnGroups) {
+    for (AddOnGroup group in widget.addOnGroupViewModel.addOnGroups) {
       children.addAll(_generateAddOnGroup(context, group));
     }
     children.add(const EndOfSection());
@@ -45,11 +64,12 @@ class _AddOnPanelState extends State<AddOnPanel> {
     AddOnGroup addOnGroup,
   ) {
     final ScrollController _controller = ScrollController();
-    List<AddOn> childAddOns = addOnGroupViewModel.getAddOnsOf(addOnGroup);
+    List<AddOn> childAddOns =
+        widget.addOnGroupViewModel.getAddOnsOf(addOnGroup);
     return [
       AddOnTitle(
         addOnGroupTitle: addOnGroup.name,
-        subTitle: addOnGroupViewModel.getSubText(addOnGroup),
+        subTitle: widget.addOnGroupViewModel.getSubText(addOnGroup),
       ),
       Scrollbar(
         showTrackOnHover: true,
@@ -63,20 +83,12 @@ class _AddOnPanelState extends State<AddOnPanel> {
                 .map(
                   (e) => AddOnOption(
                     addOn: e,
-                    isDisabled: addOnGroupViewModel.isDisabled(addOnGroup),
-                    isSelected:
-                        addOnGroupViewModel.isSelected(addOnGroup.id, e.id),
+                    isDisabled:
+                        widget.addOnGroupViewModel.isDisabled(addOnGroup),
+                    isSelected: widget.addOnGroupViewModel
+                        .isSelected(addOnGroup.id, e.id),
                     onClicked: (addOnId, selected) {
-                      setState(() {
-                        updated++;
-                        if (selected) {
-                          addOnGroupViewModel
-                              .selectAddOns(addOnGroup, [addOnId]);
-                        } else {
-                          addOnGroupViewModel
-                              .deselectAddOns(addOnGroup, [addOnId]);
-                        }
-                      });
+                      _whenAddOnSelected(addOnGroup, addOnId, selected);
                     },
                   ),
                 )

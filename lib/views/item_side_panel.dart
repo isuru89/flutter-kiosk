@@ -3,30 +3,29 @@ import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/quantity.dart';
-import 'package:kioskflutter/model/catalog.dart';
+import 'package:kioskflutter/model/cart.dart';
 
 import '../constants.dart';
 
 class ItemSidePanel extends StatelessWidget {
-  final Item item;
-  final int quantity;
+  final CartItem cartItem;
   final Function() addToCartClicked;
   final Function() cancelClicked;
   final Function(QuantityChangeType) onQuantityChanged;
 
-  const ItemSidePanel(
-      {Key? key,
-      required this.item,
-      required this.addToCartClicked,
-      required this.cancelClicked,
-      required this.quantity,
-      required this.onQuantityChanged})
-      : super(key: key);
+  const ItemSidePanel({
+    Key? key,
+    required this.addToCartClicked,
+    required this.cancelClicked,
+    required this.onQuantityChanged,
+    required this.cartItem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var orientation = MediaQuery.of(context).orientation;
+    var item = cartItem.itemRef;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +65,7 @@ class ItemSidePanel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Quantity(
-                  qty: quantity,
+                  qty: cartItem.quantity,
                   onIncrease: () =>
                       onQuantityChanged(QuantityChangeType.increment),
                   onDecrease: () =>
@@ -85,7 +84,7 @@ class ItemSidePanel extends StatelessWidget {
                       ),
                     ),
                     PriceLabel(
-                      price: item.price,
+                      price: cartItem.getItemSubTotal(),
                       color: theme.primaryColor,
                     ),
                   ],
@@ -117,7 +116,7 @@ class ItemSidePanel extends StatelessWidget {
                   children: [
                     _cancelButton(),
                     const SizedBox(height: 16),
-                    _addToCartButton(),
+                    if (item.availableStockCount > 0) _addToCartButton(),
                   ],
                 ),
         ),

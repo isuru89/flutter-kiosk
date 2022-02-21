@@ -4,6 +4,7 @@ import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/model/catalog.dart';
+import 'package:kioskflutter/utils/orders.dart';
 
 class ItemViewContainer extends StatelessWidget {
   const ItemViewContainer({Key? key}) : super(key: key);
@@ -32,8 +33,11 @@ class ItemView extends StatelessWidget {
 
   final ScrollController _itemCtrl = ScrollController();
 
-  ItemView({Key? key, required this.items, this.selectedCategory})
-      : super(key: key);
+  ItemView({
+    Key? key,
+    required this.items,
+    this.selectedCategory,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +45,7 @@ class ItemView extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.backgroundColor,
-      ),
+      color: theme.backgroundColor,
       child: SafeArea(
         top: true,
         bottom: true,
@@ -60,7 +62,9 @@ class ItemView extends StatelessWidget {
                   Text(
                     selectedCategory?.name ?? "",
                     style: Theme.of(context).textTheme.headline2?.copyWith(
-                        letterSpacing: 3, fontWeight: FontWeight.w800),
+                          letterSpacing: 3,
+                          fontWeight: FontWeight.w800,
+                        ),
                   ),
                   if (selectedCategory != null)
                     SizedBox(
@@ -99,9 +103,32 @@ class ItemView extends StatelessWidget {
                                       width: 180,
                                       height: 260,
                                       padding: const EdgeInsets.all(8),
-                                      child: ItemWithNameAndPrice(
-                                        label: e.name,
-                                        price: e.price,
+                                      child: Opacity(
+                                        opacity: isStockAvailable(e) ? 1 : 0.6,
+                                        child: ItemWithNameAndPrice(
+                                          label: e.name,
+                                          price: e.discount == null
+                                              ? e.price
+                                              : calculatePriceAfterDiscount(e),
+                                          prevPrice: e.discount == null
+                                              ? null
+                                              : e.price,
+                                          subContent: !isStockAvailable(e)
+                                              ? Container(
+                                                  width: double.infinity,
+                                                  color: theme.errorColor,
+                                                  child: Text(
+                                                    "Out of stock",
+                                                    style: theme
+                                                        .textTheme.bodyText2
+                                                        ?.copyWith(
+                                                      fontSize: 16,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
                                       ),
                                     ),
                                   ),

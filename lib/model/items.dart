@@ -65,13 +65,16 @@ List<Item> demoFeaturedItems = [
 
 List<Item> normalItems = [
   Item("item01", "Classic TBS Burger", 44, generateRandomImage(),
-      addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"]),
+      addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"],
+      availableStockCount: 0,
+      discount: Chargeable.percentage(0.25)),
   Item("item02", "Cheese Burger", 52, generateRandomImage(),
       addOnGroupIds: ["grp-1", "grp-3"], calories: 345),
   Item("item03", "Mushroom & Swiss", 69, generateRandomImage(),
       addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"], calories: 200),
   Item("item04", "Margherita", 34, generateRandomImage(),
-      addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"]),
+      addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"],
+      discount: Chargeable.percentage(0.3)),
   Item("item05", "Meet Lovers", 60, generateRandomImage(),
       addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"]),
   Item("item06", "Shimps", 62, generateRandomImage(),

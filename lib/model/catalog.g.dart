@@ -31,6 +31,13 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
               .toList() ??
           const [],
       calories: json['calories'] as int?,
+      availableStockCount: json['availableStockCount'] as int? ?? 100,
+      tax: json['tax'] == null
+          ? null
+          : Chargeable.fromJson(json['tax'] as Map<String, dynamic>),
+      discount: json['discount'] == null
+          ? null
+          : Chargeable.fromJson(json['discount'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
@@ -41,6 +48,9 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'price': instance.price,
       'calories': instance.calories,
       'addOnGroupIds': instance.addOnGroupIds,
+      'availableStockCount': instance.availableStockCount,
+      'tax': instance.tax,
+      'discount': instance.discount,
     };
 
 AddOnGroup _$AddOnGroupFromJson(Map<String, dynamic> json) => AddOnGroup(
@@ -77,3 +87,26 @@ Map<String, dynamic> _$AddOnToJson(AddOn instance) => <String, dynamic>{
       'imageUrl': instance.imageUrl,
       'price': instance.price,
     };
+
+Chargeable _$ChargeableFromJson(Map<String, dynamic> json) => Chargeable(
+      $enumDecode(_$ChargeTypeEnumMap, json['type']),
+      (json['amount'] as num).toDouble(),
+      $enumDecode(_$QuantityTypeEnumMap, json['quantityFor']),
+    );
+
+Map<String, dynamic> _$ChargeableToJson(Chargeable instance) =>
+    <String, dynamic>{
+      'quantityFor': _$QuantityTypeEnumMap[instance.quantityFor],
+      'type': _$ChargeTypeEnumMap[instance.type],
+      'amount': instance.amount,
+    };
+
+const _$ChargeTypeEnumMap = {
+  ChargeType.fixed: 'fixed',
+  ChargeType.percentage: 'percentage',
+};
+
+const _$QuantityTypeEnumMap = {
+  QuantityType.unit: 'unit',
+  QuantityType.whole: 'whole',
+};

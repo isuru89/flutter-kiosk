@@ -31,12 +31,18 @@ class Item {
     this.description = '',
     this.addOnGroupIds = const [],
     this.calories,
+    this.availableStockCount = 100,
+    this.tax,
+    this.discount,
   });
 
   String id, name, imageUrl, description;
   double price;
   int? calories;
   List<String> addOnGroupIds;
+  int availableStockCount;
+  Chargeable? tax;
+  Chargeable? discount;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 
@@ -81,3 +87,27 @@ class AddOn {
 
   Map<String, dynamic> toJson() => _$AddOnToJson(this);
 }
+
+@JsonSerializable()
+class Chargeable {
+  QuantityType quantityFor;
+  ChargeType type;
+  double amount;
+
+  Chargeable(this.type, this.amount, this.quantityFor);
+
+  factory Chargeable.fixed(double amount) =>
+      Chargeable(ChargeType.fixed, amount, QuantityType.unit);
+
+  factory Chargeable.percentage(double amount) =>
+      Chargeable(ChargeType.percentage, amount, QuantityType.unit);
+
+  factory Chargeable.fromJson(Map<String, dynamic> json) =>
+      _$ChargeableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChargeableToJson(this);
+}
+
+enum QuantityType { unit, whole }
+
+enum ChargeType { fixed, percentage }

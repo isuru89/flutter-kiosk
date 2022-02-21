@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:kioskflutter/model/cart.dart';
+import 'package:kioskflutter/utils/orders.dart';
 
 var cartInitialState = const CartState(
   items: [],
@@ -31,16 +32,24 @@ class CartState extends Equatable {
     double? serviceCharge,
   }) {
     var allItems = items ?? this.items;
-    var rTax = tax ?? this.tax;
     var rServiceCharge = serviceCharge ?? this.serviceCharge;
     var subTotal = 0.0;
     var total = 0.0;
-
-    if (allItems.isEmpty) {}
+    var rTax = 0.0;
 
     for (var element in allItems) {
-      subTotal += (element.itemRef.price + element.getTotalAddOnPrice()) *
-          element.quantity;
+      var itemFinalPrice = calculatePriceAfterDiscount(
+        element.itemRef,
+        totalBaseAmount: element.itemRef.price + element.getTotalAddOnPrice(),
+        quantity: element.quantity,
+      );
+
+      subTotal += itemFinalPrice;
+      rTax += calculateTax(
+            element.itemRef,
+            itemFinalPrice,
+          ) ??
+          0.0;
     }
     total = subTotal + rTax + rServiceCharge;
 
