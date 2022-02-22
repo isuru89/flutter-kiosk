@@ -6,6 +6,7 @@ import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/quantity.dart';
 import 'package:kioskflutter/model/cart.dart';
 
@@ -38,11 +39,8 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     if (cartItems.isEmpty) {
-      return Center(
-        child: Text(
-          "No items in cart!",
-          style: theme.textTheme.headline3,
-        ),
+      return const CenteredPanel(
+        message: "No items in the cart!",
       );
     }
 
@@ -141,6 +139,9 @@ class CartView extends StatelessWidget {
                                       CartItemModificationType.removed,
                                     ),
                                   );
+                              if (cartItems.length == 1) {
+                                Navigator.pop(context);
+                              }
                             },
                           ),
                         ),

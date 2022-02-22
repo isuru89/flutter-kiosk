@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class KioskButton extends StatelessWidget {
   final String text;
   final double height;
-  final Function() onClicked;
+  final Function()? onClicked;
   final bool inactive;
   final Color? activeColor;
   final Color? activeTextColor;
@@ -12,19 +12,19 @@ class KioskButton extends StatelessWidget {
   final double fontSize;
   final Widget? content;
 
-  const KioskButton(
-      {Key? key,
-      required this.text,
-      this.height = 60,
-      required this.onClicked,
-      this.inactive = false,
-      this.inactiveColor,
-      this.inactiveTextColor,
-      this.activeColor,
-      this.activeTextColor,
-      this.fontSize = 20,
-      this.content})
-      : super(key: key);
+  const KioskButton({
+    Key? key,
+    required this.text,
+    this.height = 60,
+    this.onClicked,
+    this.inactive = false,
+    this.inactiveColor,
+    this.inactiveTextColor,
+    this.activeColor,
+    this.activeTextColor,
+    this.fontSize = 20,
+    this.content,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

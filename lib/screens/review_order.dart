@@ -5,6 +5,7 @@ import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_state.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/review_item.dart';
 import 'package:kioskflutter/constants.dart';
 import 'package:kioskflutter/model/cart.dart';
@@ -64,13 +65,19 @@ class ReviewOrder extends StatelessWidget {
                       bottom: true,
                       left: false,
                       right: false,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: itemsMapped,
-                        ),
-                      ),
+                      child: items.isEmpty
+                          ? const CenteredPanel(
+                              message: "No items found in the cart!",
+                              subMessage:
+                                  "Please navigate back to the menu page and add items.",
+                            )
+                          : SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: itemsMapped,
+                              ),
+                            ),
                     ),
                   ),
                 ),
@@ -129,69 +136,70 @@ class ReviewOrder extends StatelessWidget {
             Column(
               children: [_backToMenu(context), const CartSummary()],
             ),
-            SizedBox(
-              height: 150,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: BlocBuilder<CartBloc, CartState>(
-                      buildWhen: (previous, current) =>
-                          previous.total != current.total,
-                      builder: (context, state) => KioskButton(
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "PAY  (",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 4,
-                                fontSize: 24,
+            if (items.isNotEmpty)
+              SizedBox(
+                height: 150,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: BlocBuilder<CartBloc, CartState>(
+                        buildWhen: (previous, current) =>
+                            previous.total != current.total,
+                        builder: (context, state) => KioskButton(
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "PAY  (",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 4,
+                                  fontSize: 24,
+                                ),
                               ),
-                            ),
-                            PriceLabel(
-                              price: state.total,
-                              textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                fontSize: 24,
+                              PriceLabel(
+                                price: state.total,
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  fontSize: 24,
+                                ),
+                                priceTextStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  fontSize: 20,
+                                ),
                               ),
-                              priceTextStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                fontSize: 20,
+                              const Text(
+                                ")",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 4,
+                                  fontSize: 24,
+                                ),
                               ),
-                            ),
-                            const Text(
-                              ")",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 4,
-                                fontSize: 24,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          text: "PAY (\$${state.total.toStringAsFixed(2)})",
+                          onClicked: items.isEmpty
+                              ? null
+                              : () {
+                                  showDialog(
+                                    barrierColor: Colors.black87,
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (_) => const Confirmation(),
+                                  );
+                                },
                         ),
-                        text: "PAY (\$${state.total.toStringAsFixed(2)})",
-                        onClicked: () {
-                          showDialog(
-                            barrierColor: Colors.black87,
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (_) => Container(
-                              child: const Confirmation(),
-                            ),
-                          );
-                        },
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
+                  ],
+                ),
+              )
           ],
         ),
       ),

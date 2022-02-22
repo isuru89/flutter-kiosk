@@ -9,7 +9,7 @@ var lightThemeData = ThemeData(
   primarySwatch: Colors.blue,
   dividerColor: Colors.grey,
   shadowColor: Colors.black38,
-  backgroundColor: Colors.black12,
+  backgroundColor: const Color(0xFFdfe1e5),
   canvasColor: Colors.white,
   dialogTheme: const DialogTheme(backgroundColor: Colors.white),
   elevatedButtonTheme: ElevatedButtonThemeData(

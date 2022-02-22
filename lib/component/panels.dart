@@ -46,3 +46,41 @@ class EndOfSection extends StatelessWidget {
     );
   }
 }
+
+class CenteredPanel extends StatelessWidget {
+  final String message;
+  final Widget? image;
+  final String? subMessage;
+
+  const CenteredPanel(
+      {Key? key, required this.message, this.image, this.subMessage})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (image != null) image!,
+          Text(
+            message,
+            style: theme.textTheme.headline3,
+            textAlign: TextAlign.center,
+          ),
+          if (subMessage != null) ...[
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              subMessage!,
+              style: theme.textTheme.bodyText1,
+              textAlign: TextAlign.center,
+            )
+          ]
+        ],
+      ),
+    );
+  }
+}

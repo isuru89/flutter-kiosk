@@ -42,11 +42,19 @@ class _AddOnPanelState extends State<AddOnPanel> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.addOnGroupViewModel.addOnGroups.isEmpty) {
+      return const CenteredPanel(
+        message: "No Add-On is required for this item!",
+      );
+    }
+
     List<Widget> children = [];
     for (AddOnGroup group in widget.addOnGroupViewModel.addOnGroups) {
       children.addAll(_generateAddOnGroup(context, group));
     }
-    children.add(const EndOfSection());
+    if (children.isNotEmpty) {
+      children.add(const EndOfSection());
+    }
 
     return SafeArea(
       child: SingleChildScrollView(

@@ -69,7 +69,9 @@ List<Item> normalItems = [
       availableStockCount: 0,
       discount: Chargeable.percentage(0.25)),
   Item("item02", "Cheese Burger", 52, generateRandomImage(),
-      addOnGroupIds: ["grp-1", "grp-3"], calories: 345),
+      addOnGroupIds: ["grp-1", "grp-3"],
+      calories: 345,
+      tax: Chargeable.fixed(5)),
   Item("item03", "Mushroom & Swiss", 69, generateRandomImage(),
       addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"], calories: 200),
   Item("item04", "Margherita", 34, generateRandomImage(),
@@ -84,7 +86,7 @@ List<Item> normalItems = [
   Item("item08", "Dornfleder", 2.6, generateRandomImage(),
       addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"]),
   Item("item09", "Cabernet Franc", 5.5, generateRandomImage(),
-      addOnGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"]),
+      addOnGroupIds: []),
 ];
 
 List<Category> normalCategories = [
@@ -97,4 +99,5 @@ List<Category> normalCategories = [
   Category("cat-4", "PASTA & GRILLS", generateRandomImage(), ["item08"]),
   Category(
       "cat-5", "FRIES", generateRandomImage(), ["item07", "item06", "item05"]),
+  Category("cat-5", "NOTHING HERE", generateRandomImage(), []),
 ];

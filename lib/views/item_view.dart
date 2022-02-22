@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/model/catalog.dart';
 import 'package:kioskflutter/utils/orders.dart';
 
@@ -41,6 +42,11 @@ class ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      return const CenteredPanel(
+          message: "No items available in this category!");
+    }
+
     var theme = Theme.of(context);
     return Container(
       width: double.infinity,

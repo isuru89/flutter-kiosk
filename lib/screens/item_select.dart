@@ -111,13 +111,14 @@ class _ItemSelectState extends State<ItemSelect> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var cartItem = refCartItem!;
+    bool hasAddOns = widget.addOnGroupViewModel.addOnGroups.isNotEmpty;
 
     return Container(
       color: Colors.white,
       child: Row(
         children: [
           Flexible(
-            flex: 7,
+            flex: hasAddOns ? 7 : 9,
             child: Container(
               decoration: BoxDecoration(
                 color: theme.canvasColor,
@@ -145,16 +146,19 @@ class _ItemSelectState extends State<ItemSelect> {
               ),
             ),
           ),
-          Expanded(
-            flex: 9,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: theme.backgroundColor,
-              padding: const EdgeInsets.all(24),
-              child: AddOnPanel(
-                addOnGroupViewModel: widget.addOnGroupViewModel,
-                onAddOnSelected: _whenAddOnSelected,
+          Visibility(
+            visible: hasAddOns,
+            child: Expanded(
+              flex: hasAddOns ? 9 : 7,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: theme.backgroundColor,
+                padding: const EdgeInsets.all(24),
+                child: AddOnPanel(
+                  addOnGroupViewModel: widget.addOnGroupViewModel,
+                  onAddOnSelected: _whenAddOnSelected,
+                ),
               ),
             ),
           )
