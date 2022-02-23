@@ -84,3 +84,32 @@ class CenteredPanel extends StatelessWidget {
     );
   }
 }
+
+class UnavailableContent extends StatelessWidget {
+  final bool circular;
+
+  const UnavailableContent({
+    Key? key,
+    this.circular = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Container(
+      width: double.infinity,
+      color: theme.errorColor,
+      padding: circular
+          ? const EdgeInsets.only(bottom: 12, top: 8)
+          : const EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        "Out of stock",
+        style: theme.textTheme.bodyText2?.copyWith(
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}

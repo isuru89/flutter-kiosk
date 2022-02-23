@@ -9,6 +9,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
   final String? currency;
   final Widget? subContent;
   final bool circular;
+  final double opacity;
 
   const ItemWithNameAndPrice({
     Key? key,
@@ -20,6 +21,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
     this.currency,
     this.subContent,
     this.circular = false,
+    this.opacity = 1,
   }) : super(key: key);
 
   @override
@@ -29,15 +31,16 @@ class ItemWithNameAndPrice extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Stack(
-          alignment: AlignmentDirectional.bottomCenter,
+          alignment: AlignmentDirectional.bottomStart,
           children: [
             ItemImage(
               imageUrl: "https://picsum.photos/400/400",
               width: width,
               height: height,
               circular: circular,
+              subContent: subContent,
+              opacity: opacity,
             ),
-            if (subContent != null) subContent!,
           ],
         ),
         Expanded(
@@ -275,6 +278,8 @@ class ItemImage extends StatelessWidget {
   final double? height;
   final String imageUrl;
   final bool circular;
+  final Widget? subContent;
+  final double opacity;
 
   const ItemImage({
     Key? key,
@@ -282,24 +287,39 @@ class ItemImage extends StatelessWidget {
     this.height,
     required this.imageUrl,
     this.circular = false,
+    this.subContent,
+    this.opacity = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Image img;
+    Widget img;
     if (imageUrl.startsWith("assets/")) {
-      img = Image.asset(
-        imageUrl,
-        fit: BoxFit.cover,
-        width: width,
-        height: height,
+      img = Opacity(
+        opacity: opacity,
+        child: Image.asset(
+          imageUrl,
+          fit: BoxFit.cover,
+          width: width,
+          height: height,
+        ),
       );
     } else {
-      img = Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-        width: width,
-        height: height,
+      img = Opacity(
+        opacity: opacity,
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
+          width: width,
+          height: height,
+        ),
+      );
+    }
+
+    if (subContent != null) {
+      img = Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [img, subContent!],
       );
     }
 

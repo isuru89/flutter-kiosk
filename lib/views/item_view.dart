@@ -4,6 +4,7 @@ import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/panels.dart';
+import 'package:kioskflutter/feature_flags.dart';
 import 'package:kioskflutter/model/catalog.dart';
 import 'package:kioskflutter/utils/orders.dart';
 
@@ -109,32 +110,20 @@ class ItemView extends StatelessWidget {
                                       width: 180,
                                       height: 260,
                                       padding: const EdgeInsets.all(8),
-                                      child: Opacity(
-                                        opacity: isStockAvailable(e) ? 1 : 0.6,
-                                        child: ItemWithNameAndPrice(
-                                          label: e.name,
-                                          price: e.discount == null
-                                              ? e.price
-                                              : calculatePriceAfterDiscount(e),
-                                          prevPrice: e.discount == null
-                                              ? null
-                                              : e.price,
-                                          subContent: !isStockAvailable(e)
-                                              ? Container(
-                                                  width: double.infinity,
-                                                  color: theme.errorColor,
-                                                  child: Text(
-                                                    "Out of stock",
-                                                    style: theme
-                                                        .textTheme.bodyText2
-                                                        ?.copyWith(
-                                                      fontSize: 16,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                )
-                                              : null,
-                                        ),
+                                      child: ItemWithNameAndPrice(
+                                        opacity: isStockAvailable(e) ? 1 : 0.4,
+                                        label: e.name,
+                                        price: e.discount == null
+                                            ? e.price
+                                            : calculatePriceAfterDiscount(e),
+                                        prevPrice:
+                                            e.discount == null ? null : e.price,
+                                        circular: kCircularItemImages,
+                                        subContent: !isStockAvailable(e)
+                                            ? const UnavailableContent(
+                                                circular: kCircularItemImages,
+                                              )
+                                            : null,
                                       ),
                                     ),
                                   ),

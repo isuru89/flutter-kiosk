@@ -1,2 +1,2 @@
-const kCircularItemImages = true;
+const kCircularItemImages = false;
 const kCircularCategoryImages = true;
