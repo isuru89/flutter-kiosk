@@ -226,8 +226,10 @@ class MyCartItem extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          context.read<CatalogBloc>().selectActiveCartItem(cartItem);
+        onTap: () async {
+          var bloc = context.read<CatalogBloc>();
+          await bloc.loadAddOnsOfItem(itemId: cartItem.itemRef.id);
+          bloc.selectActiveCartItem(cartItem);
           Navigator.pushNamed(context, "/item");
         },
         child: Row(

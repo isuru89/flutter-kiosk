@@ -156,8 +156,10 @@ class ReviewItem extends StatelessWidget {
     );
   }
 
-  void _triggerCartItemEdit(BuildContext context) {
-    context.read<CatalogBloc>().selectActiveCartItem(cartItem);
+  void _triggerCartItemEdit(BuildContext context) async {
+    var bloc = context.read<CatalogBloc>();
+    await bloc.loadAddOnsOfItem(itemId: cartItem.itemRef.id);
+    bloc.selectActiveCartItem(cartItem);
     Navigator.pushNamed(context, "/item");
   }
 

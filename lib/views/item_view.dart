@@ -43,6 +43,11 @@ class ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (selectedCategory == null) {
+      return const CenteredPanel(
+        message: "Select a category",
+      );
+    }
     if (items.isEmpty) {
       return const CenteredPanel(
           message: "No items available in this category!");
@@ -100,10 +105,10 @@ class ItemView extends StatelessWidget {
                                 (e) => Material(
                                   color: Colors.transparent,
                                   child: InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<CatalogBloc>()
-                                          .selectActiveItem(e.id);
+                                    onTap: () async {
+                                      var bloc = context.read<CatalogBloc>();
+                                      await bloc.loadAddOnsOfItem(itemId: e.id);
+                                      bloc.selectActiveItem(e.id);
                                       Navigator.pushNamed(context, '/item');
                                     },
                                     child: Container(

@@ -1,21 +1,39 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:kioskflutter/model/catalog.dart';
-import 'package:kioskflutter/model/items.dart';
 
-var initialCatalogState = CatalogState(
-  selectedCategoryId: '',
-  featuredItems: const [],
-  categories: {for (Category c in normalCategories) c.id: c},
-  items: {for (Item it in normalItems) it.id: it},
-  addOnGroups: {for (AddOnGroup g in allAddOnGroups) g.id: g},
-  addOns: {for (AddOn a in allAddOns) a.id: a},
-  selectedItemId: '',
-  selectedCartItemId: '',
-  selectedItemsInCategory: const [],
-);
+enum CatalogStatusType {
+  loading,
+  success,
+  error,
+}
+
+class CatalogStatus extends Equatable {
+  final CatalogStatusType status;
+  final String? error;
+  final bool partially;
+
+  const CatalogStatus(this.status, this.error, {this.partially = false});
+
+  factory CatalogStatus.success({bool partially = false}) {
+    return CatalogStatus(CatalogStatusType.success, null, partially: partially);
+  }
+
+  factory CatalogStatus.error(String errorMessage) {
+    return CatalogStatus(CatalogStatusType.error, errorMessage);
+  }
+
+  factory CatalogStatus.loading() {
+    return const CatalogStatus(CatalogStatusType.loading, null);
+  }
+
+  @override
+  List<Object?> get props => [status, error];
+}
 
 class CatalogState extends Equatable {
+  final CatalogStatus status;
+
   final String selectedCategoryId;
   final String selectedItemId;
   final String selectedCartItemId;
@@ -36,6 +54,7 @@ class CatalogState extends Equatable {
     required this.items,
     required this.addOnGroups,
     required this.addOns,
+    required this.status,
   });
 
   @override
@@ -63,6 +82,7 @@ class CatalogState extends Equatable {
     Map<String, Item>? items,
     Map<String, AddOnGroup>? addOnGroups,
     Map<String, AddOn>? addOns,
+    CatalogStatus? status,
   }) {
     return CatalogState(
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
@@ -75,6 +95,7 @@ class CatalogState extends Equatable {
       items: items ?? this.items,
       addOnGroups: addOnGroups ?? this.addOnGroups,
       addOns: addOns ?? this.addOns,
+      status: status ?? this.status,
     );
   }
 
@@ -82,4 +103,22 @@ class CatalogState extends Equatable {
   String toString() {
     return 'CatalogState(selectedCategoryId: $selectedCategoryId, selectedItemId: $selectedItemId, selectedCartItemId: $selectedCartItemId, featuredItems: $featuredItems, selectedItemsInCategory: $selectedItemsInCategory, categories: $categories, items: $items, addOnGroups: $addOnGroups, addOns: $addOns)';
   }
+}
+
+const _loadingCatalogStatus = CatalogStatus(CatalogStatusType.loading, null);
+
+class CatalogLoadingState extends CatalogState {
+  const CatalogLoadingState()
+      : super(
+          selectedCartItemId: '',
+          selectedCategoryId: '',
+          selectedItemId: '',
+          selectedItemsInCategory: const [],
+          featuredItems: const [],
+          categories: const {},
+          items: const {},
+          addOns: const {},
+          addOnGroups: const {},
+          status: _loadingCatalogStatus,
+        );
 }

@@ -57,8 +57,10 @@ class CategoryList extends StatelessWidget {
                   (e) => Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () {
-                        context.read<CatalogBloc>().selectActiveCategory(e.id);
+                      onTap: () async {
+                        var bloc = context.read<CatalogBloc>();
+                        await bloc.loadItems(categoryId: e.id);
+                        bloc.selectActiveCategory(e.id);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
