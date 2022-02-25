@@ -77,7 +77,7 @@ class AddOnGroup {
 
 @JsonSerializable()
 class AddOn {
-  AddOn(this.id, this.name, {this.price});
+  AddOn(this.id, this.name, {this.price, this.imageUrl});
 
   String id, name;
   String? imageUrl;

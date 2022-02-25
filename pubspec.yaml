@@ -41,6 +41,7 @@ dependencies:
   lottie: ^1.2.1
   badges: ^2.0.2
   uuid: ^3.0.6
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:

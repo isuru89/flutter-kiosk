@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_state.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/component/labels.dart';
 import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/feature_flags.dart';
 import 'package:kioskflutter/model/catalog.dart';
@@ -29,28 +31,32 @@ class ItemViewContainer extends StatelessWidget {
   }
 }
 
-class ItemView extends StatelessWidget {
+class ItemView extends StatefulWidget {
   final List<Item> items;
   final Category? selectedCategory;
 
-  final ScrollController _itemCtrl = ScrollController();
+  const ItemView({Key? key, required this.items, this.selectedCategory})
+      : super(key: key);
 
-  ItemView({
-    Key? key,
-    required this.items,
-    this.selectedCategory,
-  }) : super(key: key);
+  @override
+  State<ItemView> createState() => _ItemViewState();
+}
+
+class _ItemViewState extends State<ItemView> {
+  final ScrollController _itemCtrl = ScrollController();
+  bool showOutOfStock = true;
 
   @override
   Widget build(BuildContext context) {
-    if (selectedCategory == null) {
+    if (widget.selectedCategory == null) {
       return const CenteredPanel(
         message: "Select a category",
       );
     }
-    if (items.isEmpty) {
+    if (widget.items.isEmpty) {
       return const CenteredPanel(
-          message: "No items available in this category!");
+        message: "No items available in this category!",
+      );
     }
 
     var theme = Theme.of(context);
@@ -68,24 +74,32 @@ class ItemView extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(32),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    selectedCategory?.name ?? "",
-                    style: Theme.of(context).textTheme.headline2?.copyWith(
-                          letterSpacing: 3,
-                          fontWeight: FontWeight.w800,
-                        ),
+                  Expanded(
+                    child: MainHeader(
+                      title: widget.selectedCategory?.name,
+                    ),
                   ),
-                  if (selectedCategory != null)
-                    SizedBox(
-                      width: 96,
-                      child: Divider(
-                        thickness: 6,
-                        color: theme.primaryColor,
+                  Row(
+                    children: [
+                      Text(
+                        "Show Out of Stocks",
+                        style: theme.textTheme.bodyText1,
                       ),
-                    )
+                      CupertinoSwitch(
+                        activeColor: theme.primaryColor,
+                        value: showOutOfStock,
+                        onChanged: (value) {
+                          setState(() {
+                            showOutOfStock = value;
+                          });
+                        },
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -97,43 +111,13 @@ class ItemView extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Wrap(
-                          runSpacing: 32,
-                          spacing: 16,
+                          runSpacing: kMenuViewItemVerticleSpacing,
+                          spacing: kMenuViewItemHorizonatalSpacing,
                           alignment: WrapAlignment.start,
-                          children: items
-                              .map(
-                                (e) => Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      var bloc = context.read<CatalogBloc>();
-                                      await bloc.loadAddOnsOfItem(itemId: e.id);
-                                      bloc.selectActiveItem(e.id);
-                                      Navigator.pushNamed(context, '/item');
-                                    },
-                                    child: Container(
-                                      width: 180,
-                                      height: 260,
-                                      padding: const EdgeInsets.all(8),
-                                      child: ItemWithNameAndPrice(
-                                        opacity: isStockAvailable(e) ? 1 : 0.4,
-                                        label: e.name,
-                                        price: e.discount == null
-                                            ? e.price
-                                            : calculatePriceAfterDiscount(e),
-                                        prevPrice:
-                                            e.discount == null ? null : e.price,
-                                        circular: kCircularItemImages,
-                                        subContent: !isStockAvailable(e)
-                                            ? const UnavailableContent(
-                                                circular: kCircularItemImages,
-                                              )
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
+                          children: widget.items
+                              .where((element) =>
+                                  showOutOfStock || isStockAvailable(element))
+                              .map((e) => _buildItem(context, e))
                               .toList(),
                         ),
                       ),
@@ -143,6 +127,40 @@ class ItemView extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItem(BuildContext context, Item item) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () async {
+          var bloc = context.read<CatalogBloc>();
+          await bloc.loadAddOnsOfItem(itemId: item.id);
+          bloc.selectActiveItem(item.id);
+          Navigator.pushNamed(context, '/item');
+        },
+        child: Container(
+          width: 180,
+          height: 320,
+          padding: const EdgeInsets.all(8),
+          child: ItemWithNameAndPrice(
+            opacity: isStockAvailable(item) ? 1 : 0.4,
+            label: item.name,
+            imageUrl: item.imageUrl,
+            price: item.discount == null
+                ? item.price
+                : calculatePriceAfterDiscount(item),
+            prevPrice: item.discount == null ? null : item.price,
+            circular: kCircularItemImages,
+            subContent: !isStockAvailable(item)
+                ? const UnavailableContent(
+                    circular: kCircularItemImages,
+                  )
+                : null,
+          ),
         ),
       ),
     );

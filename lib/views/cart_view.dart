@@ -47,7 +47,7 @@ class CartView extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
       decoration: BoxDecoration(
-        color: theme.canvasColor,
+        color: theme.backgroundColor,
         boxShadow: [
           BoxShadow(
             blurRadius: 8,
@@ -59,48 +59,63 @@ class CartView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SafeArea(
-            top: true,
-            bottom: false,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
-                top: 24,
-                bottom: 12,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        "MY CART ",
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: theme.primaryColor.withOpacity(0.2),
+          Container(
+            decoration: BoxDecoration(
+              color: theme.canvasColor,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 8,
+                  offset: const Offset(0, -2),
+                  color: theme.dividerColor,
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            child: SafeArea(
+              top: true,
+              bottom: false,
+              child: Container(
+                color: theme.canvasColor,
+                padding: const EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                  top: 24,
+                  bottom: 12,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          "MY CART ",
+                          style: Theme.of(context).textTheme.headline3,
                         ),
-                        child: Center(
-                          child: Text(
-                            "${cartItems.length}",
-                            style:
-                                Theme.of(context).textTheme.headline3?.copyWith(
-                                      color: theme.primaryColor,
-                                      fontSize: 16,
-                                    ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: theme.primaryColor.withOpacity(0.2),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Divider()
-                ],
+                          child: Center(
+                            child: Text(
+                              "${cartItems.length}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline3
+                                  ?.copyWith(
+                                    color: theme.primaryColor,
+                                    fontSize: 16,
+                                  ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -111,42 +126,7 @@ class CartView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: cartItems
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 24.0,
-                        ),
-                        child: SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: Dismissible(
-                            key: Key(e.itemRef.id),
-                            child: MyCartItem(cartItem: e),
-                            background: Container(
-                              color: theme.errorColor,
-                              child: Center(
-                                child: Text(
-                                  "Removing",
-                                  style: theme.textTheme.bodyText2,
-                                ),
-                              ),
-                            ),
-                            onDismissed: (direction) {
-                              context.read<CartBloc>().itemModifiedEvent(
-                                    CartItemModificationEvent.fromCartItem(
-                                      e,
-                                      CartItemModificationType.removed,
-                                    ),
-                                  );
-                              if (cartItems.length == 1) {
-                                Navigator.pop(context);
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    )
+                    .map((e) => _buildCartItem(context, theme, e))
                     .toList()
                   ..add(
                     const Padding(
@@ -158,6 +138,10 @@ class CartView extends StatelessWidget {
             ),
           ),
           SafeArea(
+            bottom: true,
+            top: false,
+            left: false,
+            right: false,
             child: SizedBox(
               height: 120,
               child: Column(
@@ -214,6 +198,47 @@ class CartView extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildCartItem(
+    BuildContext context,
+    ThemeData theme,
+    CartItem cartItem,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 24.0,
+      ),
+      child: SizedBox(
+        height: 200,
+        width: 200,
+        child: Dismissible(
+          key: Key(cartItem.itemRef.id),
+          child: MyCartItem(cartItem: cartItem),
+          background: Container(
+            color: theme.errorColor,
+            child: Center(
+              child: Text(
+                "Removing",
+                style: theme.textTheme.bodyText2,
+              ),
+            ),
+          ),
+          onDismissed: (direction) {
+            context.read<CartBloc>().itemModifiedEvent(
+                  CartItemModificationEvent.fromCartItem(
+                    cartItem,
+                    CartItemModificationType.removed,
+                  ),
+                );
+            if (cartItems.length == 1) {
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ),
+    );
+  }
 }
 
 class MyCartItem extends StatelessWidget {
@@ -239,6 +264,7 @@ class MyCartItem extends StatelessWidget {
             SizedBox(
               width: 120,
               child: ItemInCart(
+                imageUrl: cartItem.itemRef.imageUrl,
                 label: cartItem.itemRef.name,
                 width: 120,
                 height: 120,

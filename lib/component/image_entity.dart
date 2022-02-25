@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ItemWithNameAndPrice extends StatelessWidget {
   final double? width;
   final double? height;
+  final String? imageUrl;
   final String label;
   final double price;
   final double? prevPrice;
@@ -17,6 +19,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
     this.height,
     required this.label,
     required this.price,
+    this.imageUrl,
     this.prevPrice,
     this.currency,
     this.subContent,
@@ -34,7 +37,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
           alignment: AlignmentDirectional.bottomStart,
           children: [
             ItemImage(
-              imageUrl: "https://picsum.photos/400/400",
+              imageUrl: imageUrl ?? "https://picsum.photos/400/400",
               width: width,
               height: height,
               circular: circular,
@@ -51,7 +54,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
               Text(
                 (label).toUpperCase(),
                 style: theme.textTheme.headline4?.copyWith(height: 1),
-                maxLines: 2,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
@@ -75,6 +78,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
 class ItemInCart extends StatelessWidget {
   final double? width;
   final double? height;
+  final String? imageUrl;
   final String label;
   final double price;
   final String? currency;
@@ -88,6 +92,7 @@ class ItemInCart extends StatelessWidget {
     required this.price,
     this.currency,
     this.circular = false,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -97,7 +102,7 @@ class ItemInCart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ItemImage(
-          imageUrl: "https://picsum.photos/400/400",
+          imageUrl: imageUrl ?? "https://picsum.photos/400/400",
           width: width,
           height: height,
           circular: circular,
@@ -307,8 +312,8 @@ class ItemImage extends StatelessWidget {
     } else {
       img = Opacity(
         opacity: opacity,
-        child: Image.network(
-          imageUrl,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
           fit: BoxFit.cover,
           width: width,
           height: height,

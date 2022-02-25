@@ -76,6 +76,7 @@ class CategoryList extends StatelessWidget {
                             isSelected: e.id == selectedCategory,
                             width: 120,
                             height: 120,
+                            imageUrl: e.imageUrl,
                           ),
                         ),
                       ),
