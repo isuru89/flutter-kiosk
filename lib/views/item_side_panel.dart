@@ -39,7 +39,9 @@ class ItemSidePanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Text(
             item.name.toUpperCase(),
-            style: Theme.of(context).textTheme.headline2,
+            style: Theme.of(context).textTheme.headline2?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
           ),
         ),
         Padding(

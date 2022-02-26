@@ -11,7 +11,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
   final String? currency;
   final Widget? subContent;
   final bool circular;
-  final double opacity;
+  final bool isStockAvailable;
 
   const ItemWithNameAndPrice({
     Key? key,
@@ -24,7 +24,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
     this.currency,
     this.subContent,
     this.circular = false,
-    this.opacity = 1,
+    this.isStockAvailable = true,
   }) : super(key: key);
 
   @override
@@ -32,6 +32,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
     var theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Stack(
           alignment: AlignmentDirectional.bottomStart,
@@ -42,7 +43,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
               height: height,
               circular: circular,
               subContent: subContent,
-              opacity: opacity,
+              isStockAvailable: isStockAvailable,
             ),
           ],
         ),
@@ -54,14 +55,15 @@ class ItemWithNameAndPrice extends StatelessWidget {
               Text(
                 (label).toUpperCase(),
                 style: theme.textTheme.headline4?.copyWith(height: 1),
-                maxLines: 3,
+                maxLines: prevPrice != null ? 3 : 4,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               PriceLabel(
                 price: price,
                 prevPrice: prevPrice,
-                textStyle: theme.textTheme.subtitle2?.copyWith(fontSize: 20),
+                textStyle: theme.textTheme.subtitle2
+                    ?.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
                 priceTextStyle:
                     theme.textTheme.subtitle2?.copyWith(fontSize: 14),
                 prevPriceTextStyle:
@@ -216,15 +218,15 @@ class PriceLabel extends StatelessWidget {
     var decoration =
         hasPriceDiff ? TextDecoration.lineThrough : TextDecoration.none;
 
-    return Row(
+    return Column(
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      textBaseline: TextBaseline.alphabetic,
       children: [
         if (hasPriceDiff)
           Opacity(
             opacity: 0.5,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   currency,
@@ -255,6 +257,7 @@ class PriceLabel extends StatelessWidget {
             ),
           ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 2),
@@ -284,7 +287,7 @@ class ItemImage extends StatelessWidget {
   final String imageUrl;
   final bool circular;
   final Widget? subContent;
-  final double opacity;
+  final bool isStockAvailable;
 
   const ItemImage({
     Key? key,
@@ -293,30 +296,37 @@ class ItemImage extends StatelessWidget {
     required this.imageUrl,
     this.circular = false,
     this.subContent,
-    this.opacity = 1,
+    this.isStockAvailable = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Widget img;
     if (imageUrl.startsWith("assets/")) {
-      img = Opacity(
-        opacity: opacity,
-        child: Image.asset(
-          imageUrl,
-          fit: BoxFit.cover,
-          width: width,
-          height: height,
-        ),
+      img = Image.asset(
+        imageUrl,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
       );
     } else {
+      img = CachedNetworkImage(
+        imageUrl: imageUrl,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+      );
+    }
+
+    if (!isStockAvailable) {
       img = Opacity(
-        opacity: opacity,
-        child: CachedNetworkImage(
-          imageUrl: imageUrl,
-          fit: BoxFit.cover,
-          width: width,
-          height: height,
+        opacity: 0.8,
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(1),
+            BlendMode.saturation,
+          ),
+          child: img,
         ),
       );
     }

@@ -4,8 +4,11 @@ class MainHeader extends StatelessWidget {
   final String? title;
   final bool showUnderline;
 
-  const MainHeader({Key? key, this.title, this.showUnderline = true})
-      : super(key: key);
+  const MainHeader({
+    Key? key,
+    this.title,
+    this.showUnderline = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
