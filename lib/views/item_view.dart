@@ -147,7 +147,9 @@ class _ItemViewState extends State<ItemView> {
           height: 320,
           padding: const EdgeInsets.all(8),
           child: ItemWithNameAndPrice(
-            opacity: isStockAvailable(item) ? 1 : 0.4,
+            width: 160,
+            height: 160,
+            isStockAvailable: isStockAvailable(item),
             label: item.name,
             imageUrl: item.imageUrl,
             price: item.discount == null

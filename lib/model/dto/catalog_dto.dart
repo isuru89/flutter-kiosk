@@ -3,6 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'catalog_dto.g.dart';
 
 @JsonSerializable()
+class FullCatalogDTO {
+  final List<CategoryDTO> categories;
+  final List<ItemDTO> items;
+  final List<AddOnGroupDTO> addOnGroups;
+  final List<AddOnDTO> addOns;
+
+  FullCatalogDTO(this.categories, this.items, this.addOnGroups, this.addOns);
+
+  factory FullCatalogDTO.fromJson(Map<String, dynamic> json) =>
+      _$FullCatalogDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FullCatalogDTOToJson(this);
+}
+
+@JsonSerializable()
 class CategoryDTO {
   CategoryDTO(
     this.id,

@@ -1,0 +1,691 @@
+{
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "APETIZERS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/c2526b91-485f-498e-b946-3e979c9bf80a.jpg",
+      "itemIds": [
+        "item01-01",
+        "item01-02",
+        "item01-03"
+      ]
+    },
+    {
+      "id": "cat-2",
+      "name": "SALADS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/57445310-48c3-485c-91bd-4a1c748b129b.jpg",
+      "itemIds": [
+        "item02-01",
+        "item02-02",
+        "item02-03",
+        "item02-04",
+        "item02-05",
+        "item02-06"
+      ]
+    },
+    {
+      "id": "cat-3",
+      "name": "SOUPS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/c29011f9-caa6-4da5-a724-ca886febea61.jpg",
+      "itemIds": [
+        "item03-01"
+      ]
+    },
+    {
+      "id": "cat-4",
+      "name": "RICE BOWLS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/538b29c2-f976-4af8-944c-e787a1939987.jpg",
+      "itemIds": [
+        "item04-01",
+        "item04-02",
+        "item04-03"
+      ]
+    },
+    {
+      "id": "cat-5",
+      "name": "TACOS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1f0264e7-1941-416a-8a6a-c12f539c3292.jpg",
+      "itemIds": [
+        "item05-01",
+        "item05-02",
+        "item05-03",
+        "item05-04"
+      ]
+    },
+    {
+      "id": "cat-6",
+      "name": "PASTAS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1b51cccd-5908-4480-95c3-fbf7a06ca91e.jpg",
+      "itemIds": [
+        "item06-01",
+        "item06-02",
+        "item06-03"
+      ]
+    },
+    {
+      "id": "cat-7",
+      "name": "Burgers",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/9c04403a-00f0-41d5-8662-018f866486b1.jpg",
+      "itemIds": [
+        "item07-01",
+        "item07-02",
+        "item07-03"
+      ]
+    },
+    {
+      "id": "cat-8",
+      "name": "DESSERTS",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/f49e7dd1-ad1e-431e-ae3b-4a3628174a9b.jpg",
+      "itemIds": [
+        "item08-01"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "item01-01",
+      "name": "Crispy Seafood Trio",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/67105e46-296b-4299-a5bf-ece071e05611.jpg",
+      "description": "A premium appetizer for our seafood lovers. Three favorites calamari, shrimp and fish - breaded with tortilla chips for a toasty flavor you'll only find at Chili's. Served with chipotle aioli, jalepeno aioli & lemon aioli.",
+      "basePrice": 16.45,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 0,
+      "tax": null,
+      "discount": {
+        "quantityFor": "unit",
+        "type": "percentage",
+        "amount": 0.25
+      }
+    },
+    {
+      "id": "item01-02",
+      "name": "Smoked Wings",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/5ad3967c-64b3-492f-8ee1-85c15b56375d.jpg",
+      "description": "",
+      "basePrice": 12.0,
+      "addOnGroupIds": [],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item01-03",
+      "name": "Southwestern Eggrolls",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/e47d3d19-f615-4455-9e28-505d799b5709.jpg",
+      "description": "",
+      "basePrice": 10.95,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-3"
+      ],
+      "availableStockCount": 100,
+      "tax": {
+        "quantityFor": "unit",
+        "type": "fixed",
+        "amount": 5.0
+      },
+      "discount": null
+    },
+    {
+      "id": "item02-01",
+      "name": "BBQ Chicken Salad",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/9aec1d74-f8bf-492d-8a92-1ba722aa4672.jpg",
+      "description": "",
+      "basePrice": 13.15,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item02-02",
+      "name": "Caribbean Salad - Chicken",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/188a5886-2239-43fd-b93f-d07fc2aefbb0.jpg",
+      "description": "",
+      "basePrice": 13.15,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item02-03",
+      "name": "Caribbean Salad - Shrimps",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/188a5886-2239-43fd-b93f-d07fc2aefbb0.jpg",
+      "description": "",
+      "basePrice": 13.15,
+      "calories": 200,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item02-04",
+      "name": "Santa Fe Salad - Chicken",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/a2260730-911b-45f1-bb05-ba7d05d5fe69.jpg",
+      "description": "",
+      "basePrice": 13.15,
+      "calories": 200,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item02-05",
+      "name": "Caesor Salad",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/e7ed0c4e-8268-403f-92be-673426ec382e.jpg",
+      "description": "Classic caesar salad made with romaine lettuce and tossed with a creamy homemade dressing.",
+      "basePrice": 6.2,
+      "calories": 200,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item02-06",
+      "name": "Chicken Caesor Salad",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/ca2f12f7-747d-40d1-bc37-a3c1fa01ec53.jpg",
+      "description": "Classic caesar salad made with romaine lettuce and tossed with a creamy homemade dressing.",
+      "basePrice": 7.99,
+      "calories": 200,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item03-01",
+      "name": "Cream of Mushroom Chicken Soup - Bowl",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/c29011f9-caa6-4da5-a724-ca886febea61.jpg",
+      "description": "",
+      "basePrice": 34.0,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": {
+        "quantityFor": "unit",
+        "type": "percentage",
+        "amount": 0.3
+      }
+    },
+    {
+      "id": "item04-01",
+      "name": "Chiptole Fresh Mex Bowl - Chicken with Shrimps",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/538b29c2-f976-4af8-944c-e787a1939987.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item04-02",
+      "name": "Chiptole Fresh Mex Bowl - Shrimp",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/538b29c2-f976-4af8-944c-e787a1939987.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item04-03",
+      "name": "Mongolian Rice with Chicken",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/b5bdc3a4-091e-4b5e-92f8-b0e7f7446e05.jpg",
+      "description": "With homemade chillie paste.",
+      "basePrice": 8.0,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item05-01",
+      "name": "Veggie Tacos 3pcs",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1f0264e7-1941-416a-8a6a-c12f539c3292.jpg",
+      "description": "",
+      "basePrice": 16.45,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item05-02",
+      "name": "Grilled Cajun Chicken Tacos",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/d732d503-eaaa-4140-94ab-c1cd1cee3e23.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item05-03",
+      "name": "Crispy Chicken Tacos 3pcs",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1f0264e7-1941-416a-8a6a-c12f539c3292.jpg",
+      "description": "",
+      "basePrice": 18.65,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item05-04",
+      "name": "Crispy Chicken Tacos 2pcs",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1f0264e7-1941-416a-8a6a-c12f539c3292.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item06-01",
+      "name": "Cajun Pasta Alfredo - Shrimps",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/1b51cccd-5908-4480-95c3-fbf7a06ca91e.jpg",
+      "description": "",
+      "basePrice": 17.55,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item06-02",
+      "name": "Cajun Pasta Alfredo - Chicken",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/7b41c383-6909-4da2-a89a-cfc6258c686c.jpg",
+      "description": "",
+      "basePrice": 15.35,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item06-03",
+      "name": "Spaghetti Carbonara",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/038b8f79-e274-4b06-86d6-1474ee4107f9.jpg",
+      "description": "",
+      "basePrice": 8.5,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item07-01",
+      "name": "Grilled Chicken Burger",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/afa3d14c-c9e3-4723-9bc9-68b21265a447.jpg",
+      "description": "",
+      "basePrice": 9.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item07-02",
+      "name": "Oldtimer - Chicken",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/8a2b3542-54e8-45dd-9848-6bed3d262f03.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item07-03",
+      "name": "Ranch Burger",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/9643fb64-b287-4bef-a42f-79f7ba7723ea.jpg",
+      "description": "",
+      "basePrice": 14.25,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item08-01",
+      "name": "Brownie Sundae",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/f49e7dd1-ad1e-431e-ae3b-4a3628174a9b.jpg",
+      "description": "",
+      "basePrice": 13.15,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item08-02",
+      "name": "Chocolate Biscuit Pudding",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/8c405614-063e-4edf-904b-8af31959f786.jpg",
+      "description": "",
+      "basePrice": 4.8,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item08-03",
+      "name": "Fire & Ice",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/13abeb93-d488-4a27-8202-e3745d0d8926.jpg",
+      "description": "",
+      "basePrice": 6.5,
+      "calories": null,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    },
+    {
+      "id": "item08-04",
+      "name": "Oreo & Cream in a Jar",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/b3a18c4c-7db9-4602-b3e2-b518a59ac8e6.jpg",
+      "description": "",
+      "basePrice": 5.0,
+      "addOnGroupIds": [
+        "grp-1",
+        "grp-2",
+        "grp-3",
+        "grp-4"
+      ],
+      "availableStockCount": 100,
+      "tax": null,
+      "discount": null
+    }
+  ],
+  "addOnGroups": [
+    {
+      "id": "grp-1",
+      "name": "Select Your Size",
+      "mandatory": true,
+      "min": 1,
+      "max": 1,
+      "addOnIds": [
+        "addon-1",
+        "addon-2",
+        "addon-3"
+      ]
+    },
+    {
+      "id": "grp-2",
+      "name": "Select Your Toppings",
+      "mandatory": false,
+      "min": 0,
+      "max": 3,
+      "addOnIds": [
+        "addon-4",
+        "addon-5",
+        "addon-6",
+        "addon-7",
+        "addon-8",
+        "addon-9",
+        "addon-10"
+      ]
+    },
+    {
+      "id": "grp-3",
+      "name": "Select Your Side",
+      "mandatory": false,
+      "min": 0,
+      "max": 2,
+      "addOnIds": [
+        "addon-11",
+        "addon-12",
+        "addon-13"
+      ]
+    },
+    {
+      "id": "grp-4",
+      "name": "Select Your Bottom",
+      "mandatory": false,
+      "min": 0,
+      "max": 2,
+      "addOnIds": [
+        "addon-13",
+        "addon-12",
+        "addon-11",
+        "addon-10"
+      ]
+    },
+    {
+      "id": "grp-5",
+      "name": "Select Your Drink",
+      "mandatory": false,
+      "min": 0,
+      "max": 2,
+      "addOnIds": [
+        "addon-7",
+        "addon-8",
+        "addon-9"
+      ]
+    }
+  ],
+  "addOns": [
+    {
+      "id": "addon-1",
+      "name": "Small",
+      "imageUrl": null,
+      "price": null
+    },
+    {
+      "id": "addon-2",
+      "name": "Medium",
+      "imageUrl": null,
+      "price": null
+    },
+    {
+      "id": "addon-3",
+      "name": "Large",
+      "imageUrl": null,
+      "price": null
+    },
+    {
+      "id": "addon-4",
+      "name": "Onions",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPKWJEOvH8dg3m51BTmvFf5945kOs1xNkeEg&usqp=CAU",
+      "price": 0.5
+    },
+    {
+      "id": "addon-5",
+      "name": "Fries",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/e38db861-afc9-45bf-92ba-a426e42984cf.jpg",
+      "price": 0.99
+    },
+    {
+      "id": "addon-6",
+      "name": "Tomatoes",
+      "imageUrl": "https://media.istockphoto.com/photos/tomato-isolated-on-white-background-picture-id466175630?b=1&k=20&m=466175630&s=170667a&w=0&h=kT346TmkFGmZolABRU1fIVKNdvq7w-EUZViKyCKI13Q=",
+      "price": 0.25
+    },
+    {
+      "id": "addon-7",
+      "name": "Sauces",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/6818a7fb-e060-4ed4-b9c2-de0faef4fee9.jpg",
+      "price": 0.49
+    },
+    {
+      "id": "addon-8",
+      "name": "Bacon (Chicken)",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/fe79d56a-1142-47d6-b5c7-694fb1291d9a.jpg",
+      "price": 1.99
+    },
+    {
+      "id": "addon-9",
+      "name": "Black Olives",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSKoalj6sg0AWv_Z8Uhg5ocQur8l6m1SnaM3t4wpaBhd34rtEl5oaIM4puwoDCopemp4M&usqp=CAU",
+      "price": 0.5
+    },
+    {
+      "id": "addon-10",
+      "name": "Capsicums",
+      "imageUrl": "https://4.imimg.com/data4/LM/NA/MY-9989851/1-500x500.jpg",
+      "price": 1.0
+    },
+    {
+      "id": "addon-11",
+      "name": "Mushrooms",
+      "imageUrl": "https://africa-images.com/public/photos/t/S/tSlvQvPZaFBNZ6dQ8hLqSwXj1/tSlvQvPZaFBNZ6dQ8hLqSwXj1_smaller.jpg",
+      "price": 1.5
+    },
+    {
+      "id": "addon-12",
+      "name": "Pineapple",
+      "imageUrl": "https://static5.depositphotos.com/1000188/481/i/600/depositphotos_4810705-stock-photo-fresh-slice-pineapple-on-white.jpg",
+      "price": 0.99
+    },
+    {
+      "id": "addon-13",
+      "name": "Cheese",
+      "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/5dfedf9b-3a67-4c8e-b56b-4674f86e64ed.jpg",
+      "price": 0.5
+    }
+  ]
+}

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/constants.dart';
-import 'package:kioskflutter/model/items.dart';
 import 'package:kioskflutter/repository/catalog_repo.dart';
 import 'package:kioskflutter/repository/local_catalog_repo.dart';
 import 'package:kioskflutter/screens/item_select.dart';
@@ -14,6 +13,7 @@ import 'package:kioskflutter/screens/welcome.dart';
 
 void main() {
   LicenseRegistry.addLicense(() async* {});
+
   runApp(const MyApp());
 }
 
@@ -25,10 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 final ICatalogRepository catalogRepository = LocalCatalogRepository(
-  normalCategories,
-  normalItems,
-  allAddOnGroups,
-  allAddOns,
+  "assets/data/data-food.json",
 );
 
 class _MyApp extends State<MyApp> {

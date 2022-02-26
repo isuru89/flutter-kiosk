@@ -6,6 +6,30 @@ part of 'catalog_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+FullCatalogDTO _$FullCatalogDTOFromJson(Map<String, dynamic> json) =>
+    FullCatalogDTO(
+      (json['categories'] as List<dynamic>)
+          .map((e) => CategoryDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['items'] as List<dynamic>)
+          .map((e) => ItemDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['addOnGroups'] as List<dynamic>)
+          .map((e) => AddOnGroupDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['addOns'] as List<dynamic>)
+          .map((e) => AddOnDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$FullCatalogDTOToJson(FullCatalogDTO instance) =>
+    <String, dynamic>{
+      'categories': instance.categories,
+      'items': instance.items,
+      'addOnGroups': instance.addOnGroups,
+      'addOns': instance.addOns,
+    };
+
 CategoryDTO _$CategoryDTOFromJson(Map<String, dynamic> json) => CategoryDTO(
       json['id'] as String,
       json['name'] as String,

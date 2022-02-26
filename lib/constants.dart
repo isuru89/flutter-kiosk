@@ -26,6 +26,7 @@ var lightThemeData = ThemeData(
     headline2: TextStyle(
       fontSize: 28,
       fontWeight: FontWeight.w600,
+      color: Color(0xFF37383B),
     ),
     headline3: TextStyle(
       fontSize: 24,
@@ -34,7 +35,7 @@ var lightThemeData = ThemeData(
     headline4: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w800,
-      color: Colors.black,
+      color: Color(0xFF0B214A),
     ),
     headline5: TextStyle(
       fontSize: 16,
@@ -45,7 +46,7 @@ var lightThemeData = ThemeData(
       fontWeight: FontWeight.w800,
     ),
     bodyText1: TextStyle(
-      color: Color(0xFF768390),
+      color: Color(0xFF37383B),
       fontWeight: FontWeight.w600,
     ),
     bodyText2: TextStyle(

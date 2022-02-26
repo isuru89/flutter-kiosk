@@ -1,22 +1,27 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
+import 'package:flutter/services.dart';
 import 'package:kioskflutter/model/catalog.dart';
+import 'package:kioskflutter/model/dto/catalog_dto.dart';
+import 'package:kioskflutter/model/dto/transformer.dart';
 import 'package:kioskflutter/repository/catalog_repo.dart';
 
 class LocalCatalogRepository implements ICatalogRepository {
-  final List<Category> categoryList;
-  final List<Item> itemList;
-  final List<AddOnGroup> addOnGroupList;
-  final List<AddOn> addOnList;
+  final String dataFile;
+  _LocalDataHolder? dataHolder;
 
   LocalCatalogRepository(
-    this.categoryList,
-    this.itemList,
-    this.addOnGroupList,
-    this.addOnList,
-  );
+    this.dataFile,
+  ) {
+    dataHolder = _LocalDataHolder(dataFile);
+  }
 
   @override
   Future<List<AddOnGroup>> getAddOnGroups({String? itemId}) async {
+    var addOnGroupList = dataHolder!.addOnGroups!;
+    var itemList = dataHolder!.items!;
+
     if (itemId == null) {
       return addOnGroupList;
     } else {
@@ -37,6 +42,10 @@ class LocalCatalogRepository implements ICatalogRepository {
 
   @override
   Future<List<AddOn>> getAddOns({String? itemId}) async {
+    var addOnList = dataHolder!.addOns!;
+    var addOnGroupList = dataHolder!.addOnGroups!;
+    var itemList = dataHolder!.items!;
+
     if (itemId == null) {
       return addOnList;
     } else {
@@ -64,11 +73,17 @@ class LocalCatalogRepository implements ICatalogRepository {
 
   @override
   Future<List<Category>> getCategories() async {
-    return categoryList;
+    await dataHolder?.parse();
+    return dataHolder!.categories!;
   }
 
   @override
   Future<List<Item>> getItems({String? categoryId}) async {
+    await dataHolder?.parse();
+
+    var itemList = dataHolder!.items!;
+    var categoryList = dataHolder!.categories!;
+
     if (categoryId == null) {
       return itemList;
     } else {
@@ -86,5 +101,43 @@ class LocalCatalogRepository implements ICatalogRepository {
       }
       return items;
     }
+  }
+}
+
+class _LocalDataHolder {
+  final String resourcePath;
+  bool _parsed = false;
+
+  FullCatalogDTO? catalog;
+
+  List<Category>? categories;
+  List<Item>? items;
+  List<AddOnGroup>? addOnGroups;
+  List<AddOn>? addOns;
+
+  _LocalDataHolder(this.resourcePath);
+
+  Future<void> parse() async {
+    if (_parsed) {
+      return;
+    }
+
+    categories = null;
+    items = null;
+    addOnGroups = null;
+    addOns = null;
+
+    var dataRaw = await rootBundle.loadString(resourcePath);
+    Map<String, dynamic> data = jsonDecode(dataRaw);
+
+    catalog = FullCatalogDTO.fromJson(data);
+
+    categories = catalog!.categories.map((e) => transformCategory(e)).toList();
+    items = catalog!.items.map((e) => transformItemDTO(e)).toList();
+    addOnGroups =
+        catalog!.addOnGroups.map((e) => transformAddOnGroupDTO(e)).toList();
+    addOns = catalog!.addOns.map((e) => transformAddOnDTO(e)).toList();
+
+    _parsed = true;
   }
 }

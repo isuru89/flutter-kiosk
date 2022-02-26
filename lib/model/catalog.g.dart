@@ -79,7 +79,8 @@ AddOn _$AddOnFromJson(Map<String, dynamic> json) => AddOn(
       json['id'] as String,
       json['name'] as String,
       price: (json['price'] as num?)?.toDouble(),
-    )..imageUrl = json['imageUrl'] as String?;
+      imageUrl: json['imageUrl'] as String?,
+    );
 
 Map<String, dynamic> _$AddOnToJson(AddOn instance) => <String, dynamic>{
       'id': instance.id,
