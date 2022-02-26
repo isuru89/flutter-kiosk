@@ -3,6 +3,7 @@ import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/lang_constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 
 import '../constants.dart';
@@ -12,6 +13,7 @@ class ItemSidePanel extends StatelessWidget {
   final Function() addToCartClicked;
   final Function() cancelClicked;
   final Function(QuantityChangeType) onQuantityChanged;
+  final bool allowAddToCart;
 
   const ItemSidePanel({
     Key? key,
@@ -19,6 +21,7 @@ class ItemSidePanel extends StatelessWidget {
     required this.cancelClicked,
     required this.onQuantityChanged,
     required this.cartItem,
+    this.allowAddToCart = true,
   }) : super(key: key);
 
   @override
@@ -48,7 +51,11 @@ class ItemSidePanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
             item.description,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(height: 1.5),
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  height: 1.5,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
           ),
         ),
         if (item.calories != null) ...[
@@ -128,7 +135,7 @@ class ItemSidePanel extends StatelessWidget {
 
   Widget _cancelButton() {
     return KioskButton(
-      text: "CANCEL",
+      text: klItemSelectCancelButton,
       onClicked: cancelClicked,
       inactive: true,
       inactiveColor: kSecondaryTextColor,
@@ -136,9 +143,12 @@ class ItemSidePanel extends StatelessWidget {
   }
 
   Widget _addToCartButton() {
-    return KioskButton(
-      text: "ADD TO CART",
-      onClicked: addToCartClicked,
+    return Visibility(
+      visible: allowAddToCart,
+      child: KioskButton(
+        text: klItemSelectAddToCartButton,
+        onClicked: addToCartClicked,
+      ),
     );
   }
 }

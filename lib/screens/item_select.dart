@@ -52,6 +52,7 @@ class ItemSelectContainer extends StatelessWidget {
                       AddOnGroupViewModel.fromCartItem(state, cartItem),
                 );
               } else {
+                Navigator.of(context).pushNamed("/menu");
                 return const Center(child: Text("Select an Item !"));
               }
             },

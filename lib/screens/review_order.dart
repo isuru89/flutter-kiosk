@@ -8,6 +8,7 @@ import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/review_item.dart';
 import 'package:kioskflutter/constants.dart';
+import 'package:kioskflutter/lang_constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 import 'package:kioskflutter/screens/confirmation.dart';
 import 'package:kioskflutter/views/cart_summary.dart';
@@ -153,7 +154,7 @@ class ReviewOrder extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "PAY  (",
+                                "$klReviewOrderPay  (",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 4,
@@ -183,7 +184,8 @@ class ReviewOrder extends StatelessWidget {
                               ),
                             ],
                           ),
-                          text: "PAY (\$${state.total.toStringAsFixed(2)})",
+                          text:
+                              "$klReviewOrderPay (\$${state.total.toStringAsFixed(2)})",
                           onClicked: items.isEmpty
                               ? null
                               : () {
@@ -215,7 +217,7 @@ class ReviewOrder extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "REVIEW ORDER",
+                klReviewOrderHeaderLabel,
                 style: Theme.of(context)
                     .textTheme
                     .headline2
@@ -255,7 +257,7 @@ class ReviewOrder extends StatelessWidget {
                 size: 24,
               ),
               Text(
-                "BACK TO MENU",
+                klReviewOrderBackToMenuLabel,
                 style: Theme.of(context).textTheme.headline2?.copyWith(
                       color: kSecondaryTextColor,
                       letterSpacing: 3,

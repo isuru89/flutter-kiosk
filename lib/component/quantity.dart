@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kioskflutter/constants.dart';
+import 'package:kioskflutter/lang_constants.dart';
 
 class Quantity extends StatelessWidget {
   final int qty;
@@ -31,7 +32,7 @@ class Quantity extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 4),
           child: Text(
-            "QTY",
+            klCommonQuantity,
             style: theme.textTheme.subtitle1,
           ),
         ),
@@ -59,7 +60,7 @@ class Quantity extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
           child: Text(
-            "QTY",
+            klCommonQuantity,
             style: theme.textTheme.subtitle1,
           ),
         ),

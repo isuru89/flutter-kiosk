@@ -8,6 +8,7 @@ import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/lang_constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 
 class CartViewContainer extends StatelessWidget {
@@ -90,7 +91,7 @@ class CartView extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          "MY CART ",
+                          "$klCartViewMyCartHeaderLabel ",
                           style: Theme.of(context).textTheme.headline3,
                         ),
                         Container(
@@ -164,7 +165,7 @@ class CartView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "TOTAL:",
+                            klCartViewTotal,
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1
@@ -184,7 +185,7 @@ class CartView extends StatelessWidget {
                     ),
                   ),
                   KioskButton(
-                    text: "CHECKOUT",
+                    text: klCartViewCheckout,
                     height: 60,
                     onClicked: () {
                       Navigator.pushNamed(context, '/review');
