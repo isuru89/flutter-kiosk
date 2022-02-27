@@ -95,13 +95,19 @@ class ReviewOrder extends StatelessWidget {
                 child: Container(
                   height: double.infinity,
                   color: theme.backgroundColor,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: itemsMapped,
-                    ),
-                  ),
+                  child: items.isEmpty
+                      ? const CenteredPanel(
+                          message: "No items found in the cart!",
+                          subMessage:
+                              "Please navigate back to the menu page and add items.",
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: itemsMapped,
+                          ),
+                        ),
                 ),
               ),
               Flexible(flex: 5, child: _orderSummary(context))

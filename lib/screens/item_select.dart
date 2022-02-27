@@ -79,20 +79,21 @@ class ItemSelect extends StatefulWidget {
 
 class _ItemSelectState extends State<ItemSelect> {
   CartItem? refCartItem;
-
-  _ItemSelectState();
+  bool moreRequired = false;
 
   @override
   void initState() {
     super.initState();
 
     refCartItem = widget.cartItem.copyWith();
+    moreRequired = widget.addOnGroupViewModel.requiredMore;
   }
 
   void _whenAddOnSelected(AddOnGroup group, String addOnId, bool selected) {
     setState(() {
       refCartItem = refCartItem!
           .copyWith(addOns: widget.addOnGroupViewModel.deriveSelectedAddOns());
+      moreRequired = widget.addOnGroupViewModel.requiredMore;
     });
   }
 
@@ -144,6 +145,7 @@ class _ItemSelectState extends State<ItemSelect> {
                 },
                 cancelClicked: () => Navigator.pop(context),
                 onQuantityChanged: _whenQuantityChanged,
+                allowAddToCart: !moreRequired,
               ),
             ),
           ),

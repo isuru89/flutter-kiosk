@@ -48,18 +48,20 @@ class _ItemViewState extends State<ItemView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     if (widget.selectedCategory == null) {
-      return const CenteredPanel(
+      return CenteredPanel(
+        backgroundColor: theme.backgroundColor,
         message: "Select a category",
       );
     }
     if (widget.items.isEmpty) {
-      return const CenteredPanel(
+      return CenteredPanel(
+        backgroundColor: theme.backgroundColor,
         message: "No items available in this category!",
       );
     }
 
-    var theme = Theme.of(context);
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -87,7 +89,8 @@ class _ItemViewState extends State<ItemView> {
                     children: [
                       Text(
                         "Show Out of Stocks",
-                        style: theme.textTheme.bodyText1,
+                        style: theme.textTheme.bodyText1
+                            ?.copyWith(fontWeight: FontWeight.w400),
                       ),
                       CupertinoSwitch(
                         activeColor: theme.primaryColor,

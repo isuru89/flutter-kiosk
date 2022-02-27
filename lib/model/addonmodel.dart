@@ -9,11 +9,19 @@ class AddOnGroupViewModel {
   final Map<String, List<AddOn>> addOns;
   Map<String, Set<String>> selectedAddOns =
       LinkedHashMap<String, Set<String>>();
+  bool _mandatoryGroupsExists = false;
+  bool requiredMore = false;
 
   AddOnGroupViewModel(
     this.addOnGroups,
     this.addOns,
-  );
+  ) {
+    if (addOnGroups.isNotEmpty) {
+      _mandatoryGroupsExists =
+          addOnGroups.indexWhere((element) => element.mandatory) >= 0;
+      _derivePendingMoreStatus();
+    }
+  }
 
   void _fillInitialSelectedAddOns(
       Map<String, List<SelectedAddOn>> addOnsGiven) {
@@ -28,7 +36,7 @@ class AddOnGroupViewModel {
 
   String getSubText(AddOnGroup group) {
     if (_isSingleOption(group)) {
-      return "Select one";
+      return "Select only one";
     }
 
     if (group.mandatory) {
@@ -51,6 +59,28 @@ class AddOnGroupViewModel {
       return addOns;
     }
     return [];
+  }
+
+  bool? isAddOnGroupFulfilled(AddOnGroup group) {
+    if (group.mandatory) {
+      Set<String>? selectedSet = selectedAddOns[group.id];
+      if (selectedSet == null || selectedSet.length < group.min) {
+        return false;
+      }
+      return true;
+    } else {
+      if (group.max > 0) {
+        Set<String>? selectedSet = selectedAddOns[group.id];
+        if (selectedSet != null) {
+          if (selectedSet.length == group.max) {
+            return true;
+          } else if (selectedSet.length > group.max) {
+            return false;
+          }
+        }
+      }
+      return null;
+    }
   }
 
   Map<String, List<SelectedAddOn>> deriveSelectedAddOns() {
@@ -92,6 +122,8 @@ class AddOnGroupViewModel {
     } else {
       selectedAddOns[group.id] = Set.from(addOns);
     }
+
+    _derivePendingMoreStatus();
   }
 
   void selectAddOns(AddOnGroup group, List<String> addOns) {
@@ -110,6 +142,26 @@ class AddOnGroupViewModel {
       selected.addAll(addOns);
     } else {
       selectedAddOns[group.id] = Set.from(addOns);
+    }
+
+    _derivePendingMoreStatus();
+  }
+
+  void _derivePendingMoreStatus() {
+    if (!_mandatoryGroupsExists) {
+      requiredMore = false;
+      return;
+    }
+
+    requiredMore = false;
+    for (var ag in addOnGroups) {
+      if (ag.mandatory) {
+        Set<String>? selectedSet = selectedAddOns[ag.id];
+        if (selectedSet == null || selectedSet.length < ag.min) {
+          requiredMore = true;
+          return;
+        }
+      }
     }
   }
 

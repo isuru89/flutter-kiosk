@@ -67,7 +67,7 @@ class CategoryList extends StatelessWidget {
                           vertical: 8.0,
                           horizontal: 24.0,
                         ),
-                        child: Container(
+                        child: SizedBox(
                           height: 180,
                           width: 160,
                           child: CategoryItem(

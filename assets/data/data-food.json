@@ -77,7 +77,10 @@
       "name": "DESSERTS",
       "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/f49e7dd1-ad1e-431e-ae3b-4a3628174a9b.jpg",
       "itemIds": [
-        "item08-01"
+        "item08-01",
+        "item08-02",
+        "item08-03",
+        "item08-04"
       ]
     }
   ],
@@ -531,10 +534,7 @@
       "description": "",
       "basePrice": 5.0,
       "addOnGroupIds": [
-        "grp-1",
-        "grp-2",
-        "grp-3",
-        "grp-4"
+        "grp-5"
       ],
       "availableStockCount": 100,
       "tax": null,
@@ -557,8 +557,7 @@
     {
       "id": "grp-2",
       "name": "Select Your Toppings",
-      "mandatory": false,
-      "min": 0,
+      "min": 1,
       "max": 3,
       "addOnIds": [
         "addon-4",
@@ -602,9 +601,9 @@
       "min": 0,
       "max": 2,
       "addOnIds": [
-        "addon-7",
-        "addon-8",
-        "addon-9"
+        "addon-14",
+        "addon-15",
+        "addon-16"
       ]
     }
   ],
@@ -686,6 +685,24 @@
       "name": "Cheese",
       "imageUrl": "https://s3.ap-southeast-1.amazonaws.com/eatts-live/5dfedf9b-3a67-4c8e-b56b-4674f86e64ed.jpg",
       "price": 0.5
+    },
+    {
+      "id": "addon-14",
+      "name": "Coke",
+      "imageUrl": null,
+      "price": 2.99
+    },
+    {
+      "id": "addon-15",
+      "name": "Pepsi",
+      "imageUrl": null,
+      "price": 2.5
+    },
+    {
+      "id": "addon-16",
+      "name": "7-Up",
+      "imageUrl": null,
+      "price": 2.10
     }
   ]
 }

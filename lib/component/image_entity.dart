@@ -53,7 +53,7 @@ class ItemWithNameAndPrice extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                (label).toUpperCase(),
+                label.toUpperCase(),
                 style: theme.textTheme.headline4?.copyWith(height: 1),
                 maxLines: prevPrice != null ? 3 : 4,
                 overflow: TextOverflow.ellipsis,
@@ -160,9 +160,12 @@ class CategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _categoryImage(),
+        const SizedBox(
+          height: 8,
+        ),
         Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 (label).toUpperCase(),
@@ -321,13 +324,7 @@ class ItemImage extends StatelessWidget {
     if (!isStockAvailable) {
       img = Opacity(
         opacity: 0.8,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(1),
-            BlendMode.saturation,
-          ),
-          child: img,
-        ),
+        child: GrayScaleImage(child: img, doGrayScale: true),
       );
     }
 
@@ -345,6 +342,32 @@ class ItemImage extends StatelessWidget {
       );
     } else {
       return img;
+    }
+  }
+}
+
+class GrayScaleImage extends StatelessWidget {
+  final Widget child;
+  final bool doGrayScale;
+
+  const GrayScaleImage({
+    Key? key,
+    required this.child,
+    required this.doGrayScale,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!doGrayScale) {
+      return child;
+    } else {
+      return ColorFiltered(
+        colorFilter: const ColorFilter.mode(
+          Colors.black,
+          BlendMode.saturation,
+        ),
+        child: child,
+      );
     }
   }
 }

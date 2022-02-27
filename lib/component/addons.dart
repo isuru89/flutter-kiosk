@@ -94,10 +94,13 @@ class AddOnOption extends StatelessWidget {
                 ),
               ),
               if (addOn.imageUrl != null) ...[
-                ItemImage(
-                  imageUrl: addOn.imageUrl ?? "https://picsum.photos/100/100",
-                  width: 100,
-                  height: 100,
+                GrayScaleImage(
+                  doGrayScale: !isSelected && isDisabled,
+                  child: ItemImage(
+                    imageUrl: addOn.imageUrl ?? "https://picsum.photos/100/100",
+                    width: 100,
+                    height: 100,
+                  ),
                 )
               ],
               if (addOn.price != null) ...[
@@ -105,7 +108,7 @@ class AddOnOption extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     "\$${addOn.price?.toStringAsFixed(2)}",
-                    style: theme.textTheme.subtitle1?.copyWith(
+                    style: theme.textTheme.subtitle2?.copyWith(
                       color: isSelected ? theme.primaryColor : null,
                     ),
                   ),
@@ -122,9 +125,14 @@ class AddOnOption extends StatelessWidget {
 class AddOnTitle extends StatelessWidget {
   final String addOnGroupTitle;
   final String? subTitle;
+  final bool? allGood;
 
-  const AddOnTitle({Key? key, required this.addOnGroupTitle, this.subTitle})
-      : super(key: key);
+  const AddOnTitle({
+    Key? key,
+    required this.addOnGroupTitle,
+    this.subTitle,
+    this.allGood,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +145,13 @@ class AddOnTitle extends StatelessWidget {
           children: [
             Text(
               addOnGroupTitle.toUpperCase(),
-              style: theme.textTheme.headline3
-                  ?.copyWith(fontWeight: FontWeight.w800, fontSize: 20),
+              style: theme.textTheme.headline3?.copyWith(
+                fontWeight: FontWeight.w800,
+                fontSize: 20,
+              ),
+            ),
+            AllGoodStatus(
+              allGood: allGood,
             ),
             const Expanded(
               child: Padding(
@@ -157,5 +170,34 @@ class AddOnTitle extends StatelessWidget {
         ]
       ],
     );
+  }
+}
+
+class AllGoodStatus extends StatelessWidget {
+  final bool? allGood;
+  const AllGoodStatus({Key? key, this.allGood}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    if (allGood == null) {
+      return Container();
+    } else if (allGood!) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Icon(
+          Icons.check_circle,
+          color: theme.primaryColor,
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Icon(
+          Icons.warning,
+          color: theme.errorColor,
+        ),
+      );
+    }
   }
 }

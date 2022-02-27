@@ -143,12 +143,9 @@ class ItemSidePanel extends StatelessWidget {
   }
 
   Widget _addToCartButton() {
-    return Visibility(
-      visible: allowAddToCart,
-      child: KioskButton(
-        text: klItemSelectAddToCartButton,
-        onClicked: addToCartClicked,
-      ),
+    return KioskButton(
+      text: klItemSelectAddToCartButton,
+      onClicked: allowAddToCart ? addToCartClicked : null,
     );
   }
 }

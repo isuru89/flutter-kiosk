@@ -78,6 +78,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
       AddOnTitle(
         addOnGroupTitle: addOnGroup.name,
         subTitle: widget.addOnGroupViewModel.getSubText(addOnGroup),
+        allGood: widget.addOnGroupViewModel.isAddOnGroupFulfilled(addOnGroup),
       ),
       Scrollbar(
         showTrackOnHover: true,

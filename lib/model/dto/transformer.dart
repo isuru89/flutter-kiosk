@@ -31,6 +31,7 @@ AddOnGroup transformAddOnGroupDTO(AddOnGroupDTO groupDTO) {
     groupDTO.id,
     groupDTO.name,
     addOnIds: groupDTO.addOnIds,
+    mandatory: groupDTO.min > 0,
     min: groupDTO.min,
     max: groupDTO.max,
   );
