@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kioskflutter/component/image_entity.dart';
+import 'package:kioskflutter/feature_flags.dart';
 import 'package:kioskflutter/model/catalog.dart';
 
 class AddOnChip extends StatelessWidget {
@@ -100,6 +101,7 @@ class AddOnOption extends StatelessWidget {
                     imageUrl: addOn.imageUrl ?? "https://picsum.photos/100/100",
                     width: 100,
                     height: 100,
+                    circular: kCircularItemImages,
                   ),
                 )
               ],

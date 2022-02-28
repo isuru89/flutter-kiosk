@@ -33,23 +33,30 @@ class CartBloc extends Cubit<CartState> {
     if (event.type == CartItemModificationType.added) {
       var items = [...state.items];
       CartItem? existingItem;
+      int existingIndex = -1;
       if (event.cartItem.lineItemId != null) {
-        existingItem = items.firstWhereOrNull(
+        existingIndex = items.indexWhere(
           (element) => element.lineItemId == event.cartItem.lineItemId,
         );
+        existingItem = existingIndex > -1 ? items[existingIndex] : null;
         if (existingItem != null) {
           _removeInPlace(items, event.cartItem.lineItemId!);
+          items.insert(existingIndex, event.cartItem);
+        } else {
+          items.add(event.cartItem);
         }
-
-        items.add(event.cartItem);
       } else {
-        existingItem = items.firstWhereOrNull(
-          (element) => element.lineItemId == event.lineItemId,
+        existingIndex = items.indexWhere(
+          (element) => element.lineItemId == event.cartItem.lineItemId,
         );
+        existingItem = existingIndex > -1 ? items[existingIndex] : null;
         if (existingItem != null) {
           _removeInPlace(items, event.lineItemId);
+          items.insert(
+              existingIndex, CartItem(event.cartItem.itemRef, event.quantity));
+        } else {
+          items.add(CartItem(event.cartItem.itemRef, event.quantity));
         }
-        items.add(CartItem(event.cartItem.itemRef, event.quantity));
       }
       emit(state.copyWith(items: items));
     } else if (event.type == CartItemModificationType.removed) {

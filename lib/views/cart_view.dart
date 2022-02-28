@@ -8,6 +8,7 @@ import 'package:kioskflutter/component/button.dart';
 import 'package:kioskflutter/component/image_entity.dart';
 import 'package:kioskflutter/component/panels.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/feature_flags.dart';
 import 'package:kioskflutter/lang_constants.dart';
 import 'package:kioskflutter/model/cart.dart';
 
@@ -206,6 +207,7 @@ class CartView extends StatelessWidget {
     CartItem cartItem,
   ) {
     return Padding(
+      key: Key(cartItem.lineItemId!),
       padding: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 24.0,
@@ -214,7 +216,7 @@ class CartView extends StatelessWidget {
         height: 200,
         width: 200,
         child: Dismissible(
-          key: Key(cartItem.itemRef.id),
+          key: Key("ci-${cartItem.lineItemId!}"),
           child: MyCartItem(cartItem: cartItem),
           background: Container(
             color: theme.errorColor,
@@ -270,7 +272,7 @@ class MyCartItem extends StatelessWidget {
                 width: 120,
                 height: 120,
                 price: cartItem.getItemSubTotal(),
-                circular: false,
+                circular: kCircularItemImages,
               ),
             ),
             Expanded(

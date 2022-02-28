@@ -38,7 +38,7 @@ class ItemSelectContainer extends StatelessWidget {
             builder: (context, cartState) {
               CartItem? cartItem;
               for (var element in cartState.items) {
-                if (element.itemRef.id == state.selectedCartItemId) {
+                if (element.lineItemId == state.selectedCartItemId) {
                   cartItem = element;
                   break;
                 }
@@ -46,7 +46,7 @@ class ItemSelectContainer extends StatelessWidget {
 
               if (cartItem != null) {
                 return ItemSelect(
-                  key: Key(cartItem.itemRef.id),
+                  key: Key(cartItem.lineItemId!),
                   cartItem: cartItem,
                   addOnGroupViewModel:
                       AddOnGroupViewModel.fromCartItem(state, cartItem),

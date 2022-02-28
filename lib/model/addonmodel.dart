@@ -194,6 +194,7 @@ class AddOnGroupViewModel {
       CatalogState state, CartItem cartItem) {
     var obj = AddOnGroupViewModel.fromState(state, cartItem.itemRef);
     obj._fillInitialSelectedAddOns(cartItem.addOns);
+    obj._derivePendingMoreStatus();
     return obj;
   }
 

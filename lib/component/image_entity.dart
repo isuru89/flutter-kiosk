@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kioskflutter/feature_flags.dart';
 
 class ItemWithNameAndPrice extends StatelessWidget {
   final double? width;
@@ -188,6 +189,7 @@ class CategoryItem extends StatelessWidget {
           "https://picsum.photos/${width?.toInt()}/${height?.toInt()}",
       width: width,
       height: height,
+      circular: kCircularCategoryImages,
     );
   }
 }

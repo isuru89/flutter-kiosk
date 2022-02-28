@@ -55,6 +55,7 @@ class CategoryList extends StatelessWidget {
             children: categories
                 .map(
                   (e) => Material(
+                    key: Key(e.id),
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () async {
@@ -71,7 +72,6 @@ class CategoryList extends StatelessWidget {
                           height: 180,
                           width: 160,
                           child: CategoryItem(
-                            key: Key(e.id),
                             label: e.name,
                             isSelected: e.id == selectedCategory,
                             width: 120,

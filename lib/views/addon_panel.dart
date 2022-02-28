@@ -76,11 +76,13 @@ class _AddOnPanelState extends State<AddOnPanel> {
         widget.addOnGroupViewModel.getAddOnsOf(addOnGroup);
     return [
       AddOnTitle(
+        key: Key("addontitle-${addOnGroup.id}"),
         addOnGroupTitle: addOnGroup.name,
         subTitle: widget.addOnGroupViewModel.getSubText(addOnGroup),
         allGood: widget.addOnGroupViewModel.isAddOnGroupFulfilled(addOnGroup),
       ),
       Scrollbar(
+        key: Key("addonscroll-${addOnGroup.id}"),
         showTrackOnHover: true,
         controller: _controller,
         child: SingleChildScrollView(
@@ -91,6 +93,7 @@ class _AddOnPanelState extends State<AddOnPanel> {
             children: childAddOns
                 .map(
                   (e) => AddOnOption(
+                    key: Key("ag-${addOnGroup.id}-${e.id}"),
                     addOn: e,
                     isDisabled:
                         widget.addOnGroupViewModel.isDisabled(addOnGroup),

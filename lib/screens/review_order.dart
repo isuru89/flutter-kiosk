@@ -40,6 +40,7 @@ class ReviewOrder extends StatelessWidget {
     List<Widget> itemsMapped = items
         .map(
           (e) => Padding(
+            key: Key("cartitem-${e.lineItemId}"),
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ReviewItem(
               cartItem: e,

@@ -4,6 +4,7 @@ import 'package:kioskflutter/blocs/cart/cart_bloc.dart';
 import 'package:kioskflutter/blocs/cart/cart_event.dart';
 import 'package:kioskflutter/blocs/catalog/catalog_bloc.dart';
 import 'package:kioskflutter/component/quantity.dart';
+import 'package:kioskflutter/feature_flags.dart';
 import 'package:kioskflutter/model/cart.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -49,13 +50,13 @@ class ReviewItem extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
+                child: SizedBox(
                   width: 120,
-                  color: Colors.tealAccent,
                   child: ItemImage(
                     imageUrl: cartItem.itemRef.imageUrl,
                     width: 120,
                     height: 120,
+                    circular: kCircularItemImages,
                   ),
                 ),
               ),

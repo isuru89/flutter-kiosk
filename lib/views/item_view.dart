@@ -137,6 +137,7 @@ class _ItemViewState extends State<ItemView> {
 
   Widget _buildItem(BuildContext context, Item item) {
     return Material(
+      key: Key(item.id),
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
